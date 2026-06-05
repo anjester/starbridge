@@ -25,6 +25,10 @@
 .counter span{position:relative!important;z-index:1!important;letter-spacing:-.02em!important}
 .plus{width:14px!important;height:14px!important;border-radius:999px!important;background:rgba(255,255,255,.22)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:10px!important;font-weight:900!important;color:#fff!important;cursor:pointer!important;position:relative!important;z-index:1!important;flex-shrink:0!important;line-height:1!important}
 .plus:active{background:rgba(255,255,255,.4)!important}
+
+.mode-card{cursor:pointer;border-radius:18px;overflow:hidden;transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
+.mode-card:active{transform:scale(.97)}
+.mode-card:hover img{transform:scale(1.02)}
 </style>
 <style>
 :root{
@@ -390,7 +394,7 @@ select:focus{border-color:rgba(255,211,77,.5)}
       <div class="logo-wrap"><img id="logoImg" src="" alt="StarBridge"/></div>
       <div class="grid">
         <div class="card-wrap" onclick="goTo('play')"><img id="cardSfida" src="" alt="Sfida del Giorno"/></div>
-        <div class="card-wrap" onclick="goTo('play')"><img id="cardModes" src="" alt="Modalità di Gioco"/></div>
+        <div class="card-wrap" onclick="goTo('modes')"><img id="cardModes" src="" alt="Modalità di Gioco"/></div>
         <div class="card-wrap" onclick="goTo('mondo')"><img id="cardPopcorn" src="" alt="Pop Corn"/></div>
         <div class="card-wrap" onclick="goTo('rank')"><img id="cardOscar" src="" alt="Oscar Collection"/></div>
       </div>
@@ -542,6 +546,32 @@ select:focus{border-color:rgba(255,211,77,.5)}
   </div>
 </div>
 
+
+<!-- MODALITÀ DI GIOCO -->
+<div class="screen hidden" id="screenModes">
+  <div style="height:100%;overflow-y:auto;overflow-x:hidden;padding:0 12px 12px;scrollbar-width:none;">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:12px;padding:14px 0 10px;flex-shrink:0">
+      <button onclick="goTo('home')" style="background:rgba(255,211,77,.15);border:1.5px solid rgba(255,211,77,.4);color:var(--gold);border-radius:12px;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">←</button>
+      <h1 style="font-family:'acumin-pro','Syne',sans-serif;font-size:clamp(22px,6vw,32px);font-weight:900;color:var(--gold);letter-spacing:-.02em;text-transform:uppercase;margin:0">Modalità di Gioco</h1>
+    </div>
+    <!-- Descrizione -->
+    <p style="color:rgba(255,255,255,.72);font-size:13px;line-height:1.55;margin-bottom:16px;padding:0 4px">
+      Collega due attori passando da film in comune.<br/>
+      Scegli tra tutti i film e tutti gli attori.<br/>
+      Se il collegamento è sbagliato, perdi un Oscar.
+    </p>
+    <!-- Card Modalità Libera -->
+    <div class="mode-card" onclick="startMode('relaxed')" id="cardLibera">
+      <img id="imgCardLibera" src="" alt="Modalità Libera" style="width:100%;border-radius:18px;display:block;box-shadow:0 4px 22px rgba(0,0,0,.5);transition:transform .18s ease"/>
+    </div>
+    <!-- Card Contro il Tempo -->
+    <div class="mode-card" style="margin-top:12px" onclick="startMode('timed')" id="cardTempo">
+      <img id="imgCardTempo" src="" alt="Contro il Tempo" style="width:100%;border-radius:18px;display:block;box-shadow:0 4px 22px rgba(0,0,0,.5);transition:transform .18s ease"/>
+    </div>
+  </div>
+</div>
+
 <!-- CLASSIFICA -->
 <div class="screen hidden" id="screenRank">
   <div class="placeholder">
@@ -569,6 +599,21 @@ select:focus{border-color:rgba(255,211,77,.5)}
   </div>
 </div>
 
+
+<!-- ALERT USCITA -->
+<div id="exitAlert" style="display:none;position:fixed;inset:0;z-index:8000;align-items:center;justify-content:center;">
+  <div style="position:absolute;inset:0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:rgba(2,8,20,.65)" onclick="closeExitAlert()"></div>
+  <div style="position:relative;z-index:1;background:linear-gradient(135deg,#0d2060,#061435);border:1.5px solid rgba(255,211,77,.35);border-radius:24px;padding:28px 24px;max-width:320px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6)">
+    <div style="font-size:40px;margin-bottom:12px">🎬</div>
+    <h3 style="font-family:'acumin-pro','Syne',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:-.01em">Uscire dalla partita?</h3>
+    <p style="color:rgba(226,239,255,.72);font-size:13px;line-height:1.5;margin-bottom:22px">Il tuo progresso andrà perso. Sei sicuro di voler uscire?</p>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button onclick="closeExitAlert()" style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:999px;padding:12px;font-family:'acumin-pro','Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer">✕ Rimani</button>
+      <button onclick="confirmExit()" style="flex:1;background:linear-gradient(135deg,#e83030,#c02020);border:none;color:#fff;border-radius:999px;padding:12px;font-family:'acumin-pro','Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer">Esci →</button>
+    </div>
+  </div>
+</div>
+
 <!-- AD -->
 <div class="ad-bar"><span>Pubblicità</span></div>
 
@@ -587,6 +632,7 @@ select:focus{border-color:rgba(255,211,77,.5)}
 // ── NAVIGAZIONE ──
 const SCREENS = {
   home:    'screenHome',
+  modes:   'screenModes',
   play:    'screenPlay',
   rank:    'screenRank',
   mondo:   'screenMondo',
@@ -594,7 +640,19 @@ const SCREENS = {
 };
 let currentTab = 'home';
 
+let _pendingTab = null;
+
 function goTo(tab) {
+  // Se partita in corso e si tenta di uscire → mostra alert
+  if (currentTab === 'play' && tab !== 'play' && typeof state !== 'undefined' && state === 'playing') {
+    _pendingTab = tab;
+    showExitAlert();
+    return;
+  }
+  _navigateTo(tab);
+}
+
+function _navigateTo(tab) {
   Object.values(SCREENS).forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('hidden');
@@ -602,13 +660,49 @@ function goTo(tab) {
   const target = document.getElementById(SCREENS[tab]);
   if (target) target.classList.remove('hidden');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('btn-' + tab);
+  const navTab = ['home','rank','play','mondo','profile'].includes(tab) ? tab : 'home';
+  const btn = document.getElementById('btn-' + navTab);
   if (btn) btn.classList.add('active');
   currentTab = tab;
-  // Inizializza gioco al primo accesso
-  if (tab === 'play' && typeof initGame === 'function') {
-    initGame();
+  if (tab === 'play' && typeof initGame === 'function') initGame();
+}
+
+function showExitAlert() {
+  const al = document.getElementById('exitAlert');
+  if (al) { al.style.display = 'flex'; }
+  // Pausa timer se in modalità timed
+  if (typeof tid !== 'undefined' && tid) { clearInterval(tid); }
+}
+
+function closeExitAlert() {
+  const al = document.getElementById('exitAlert');
+  if (al) al.style.display = 'none';
+  _pendingTab = null;
+  // Riprende timer se in corso
+  if (typeof state !== 'undefined' && state === 'playing' && typeof GAME_MODES !== 'undefined') {
+    const m = GAME_MODES[typeof mode !== 'undefined' ? mode : 'timed'];
+    if (m && m.timed && typeof tick !== 'undefined') {
+      if (typeof tid !== 'undefined') { clearInterval(tid); }
+      tid = setInterval(tick, 1000);
+    }
   }
+}
+
+function confirmExit() {
+  const al = document.getElementById('exitAlert');
+  if (al) al.style.display = 'none';
+  // Ferma il timer
+  if (typeof tid !== 'undefined') clearInterval(tid);
+  const dest = _pendingTab || 'home';
+  _pendingTab = null;
+  _navigateTo(dest);
+}
+
+function startMode(mode) {
+  // Imposta la modalità e vai al gioco
+  window._startMode = mode;
+  _navigateTo('play');
+  if (typeof initGame === 'function') initGame();
 }
 
 // ── INJECT IMMAGINI ──
