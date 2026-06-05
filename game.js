@@ -296,7 +296,8 @@ function init() {
   startChallenge(0);
 }
 
-function buildChallengeButtons() {
+function buildChallengeButtons() { return; // rimosso UI tabs
+
   const list = $("challengeList");
   list.innerHTML = "";
   challenges.forEach((ch, i) => {
@@ -466,9 +467,14 @@ function render() { renderHud(); renderCur(); updateSel(); renderPath(); }
 function renderHud() {
   const m = GAME_MODES[mode];
   $("tv").textContent = m.timed ? fmtTime(secsLeft) : "∞";
-  $("sv").textContent = calcScore();
+  $("sv").textContent = m.training ? "–" : calcScore();
   $("dv").textContent = `${path.length}/6`;
-  $("ov").textContent = oscars;
+  $("ov").textContent = m.training ? "∞" : oscars;
+  const ml = $("modeLabel");
+  if(ml){
+    const labels={"timed":"⏱ Contro il Tempo","relaxed":"🎬 Libera","training":"🎓 Allenamento"};
+    ml.textContent = labels[mode] || mode;
+  }
 }
 
 function renderCur() {
