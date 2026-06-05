@@ -1,3 +1,10 @@
+// ── ASSETS globale — dipende da assets.js ──
+(function() {
+  if (!window.ASSETS) window.ASSETS = {};
+  if (typeof IMG   !== 'undefined') Object.assign(window.ASSETS, IMG);
+  if (typeof EXTRA !== 'undefined') Object.assign(window.ASSETS, EXTRA);
+})();
+
 
 const GAME_MODES = {
   timed:   { label:"A tempo",     timed:true,  seconds:180, startOscars:4, scoreMultiplier:1.35, oscarPts:18, speedDiv:10, hintCost:1, training:false },
@@ -539,6 +546,7 @@ function renderProgression(){
 }
 
 function injectAssets(){
+  var ASSETS = window.ASSETS || {};
   const icPc=$("icPc"); if(icPc) icPc.src=ASSETS.img_popcorn||"";
   const icPl=$("icPl"); if(icPl) icPl.src=ASSETS.img_pellicola||"";
   const icOs=$("icOs"); if(icOs) icOs.src=ASSETS.img_oscar||"";
