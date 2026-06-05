@@ -536,25 +536,27 @@ select:focus{border-color:rgba(255,211,77,.5)}
 
 <!-- MODALITÀ DI GIOCO -->
 <div class="screen hidden" id="screenModes">
-  <div style="height:100%;overflow-y:auto;overflow-x:hidden;padding:0 12px 12px;scrollbar-width:none;">
-    <!-- Header -->
-    <div style="display:flex;align-items:center;gap:12px;padding:14px 0 10px;flex-shrink:0">
-      <button onclick="goTo('home')" style="background:rgba(255,211,77,.15);border:1.5px solid rgba(255,211,77,.4);color:var(--gold);border-radius:12px;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">←</button>
-      <h1 style="font-family:'acumin-pro','Syne',sans-serif;font-size:clamp(22px,6vw,32px);font-weight:900;color:var(--gold);letter-spacing:-.02em;text-transform:uppercase;margin:0">Modalità di Gioco</h1>
+  <div style="height:100%;overflow-y:auto;overflow-x:hidden;padding:0 14px 14px;scrollbar-width:none;display:flex;flex-direction:column;">
+    <!-- Header con freccia reale + titolo immagine -->
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 0 8px;flex-shrink:0">
+      <button onclick="goTo('home')" style="background:none;border:none;padding:0;cursor:pointer;flex-shrink:0">
+        <img id="imgArrow" src="" alt="←" style="width:44px;height:44px;object-fit:contain"/>
+      </button>
+      <img id="imgTxtMod" src="" alt="Modalità di Gioco" style="height:36px;object-fit:contain;mix-blend-mode:screen;flex:1"/>
     </div>
-    <!-- Descrizione -->
-    <p style="color:rgba(255,255,255,.72);font-size:13px;line-height:1.55;margin-bottom:16px;padding:0 4px">
+    <!-- Descrizione centrata -->
+    <p style="color:rgba(255,255,255,.82);font-size:15px;line-height:1.6;margin-bottom:18px;padding:0 6px;text-align:center;font-family:'acumin-pro','DM Sans',sans-serif;">
       Collega due attori passando da film in comune.<br/>
       Scegli tra tutti i film e tutti gli attori.<br/>
       Se il collegamento è sbagliato, perdi un Oscar.
     </p>
     <!-- Card Modalità Libera -->
-    <div class="mode-card" onclick="startMode('relaxed')" id="cardLibera">
-      <img id="imgCardLibera" src="" alt="Modalità Libera" style="width:100%;border-radius:18px;display:block;box-shadow:0 4px 22px rgba(0,0,0,.5);transition:transform .18s ease"/>
+    <div class="mode-card" onclick="startMode('relaxed')">
+      <img id="imgCardLibera" src="" alt="Modalità Libera" style="width:100%;border-radius:18px;display:block;box-shadow:0 6px 24px rgba(0,0,0,.6)"/>
     </div>
     <!-- Card Contro il Tempo -->
-    <div class="mode-card" style="margin-top:12px" onclick="startMode('timed')" id="cardTempo">
-      <img id="imgCardTempo" src="" alt="Contro il Tempo" style="width:100%;border-radius:18px;display:block;box-shadow:0 4px 22px rgba(0,0,0,.5);transition:transform .18s ease"/>
+    <div class="mode-card" style="margin-top:12px" onclick="startMode('timed')">
+      <img id="imgCardTempo" src="" alt="Contro il Tempo" style="width:100%;border-radius:18px;display:block;box-shadow:0 6px 24px rgba(0,0,0,.6)"/>
     </div>
   </div>
 </div>
