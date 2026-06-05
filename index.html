@@ -558,8 +558,14 @@ function goTo(tab) {
 function injectImages() {
   if (typeof IMG === 'undefined' || typeof EXTRA === 'undefined') return;
   // Top bar
-  const icO = document.getElementById('icOscar');    if(icO) icO.src = EXTRA.oscar_sm || '';
-  const icP = document.getElementById('icPopcorn');  if(icP) icP.src = EXTRA.popcorn_sm || '';
+  // Top bar icone reali
+  const icO = document.getElementById('icOscar');    if(icO) icO.src = EXTRA.ic_oscar||EXTRA.oscar_sm||'';
+  const icP = document.getElementById('icPopcorn');  if(icP) icP.src = EXTRA.ic_popcorn||EXTRA.popcorn_sm||'';
+  const icH = document.getElementById('icHeart');    if(icH) icH.src = EXTRA.ic_heart||'';
+  // Pill background
+  ['pillOscar','pillPopcorn','pillHeart'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.src=EXTRA.ic_pill||'';
+  });
   // Logo
   const lg = document.getElementById('logoImg');     if(lg) lg.src = EXTRA.logo || '';
   // Cards
