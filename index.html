@@ -14,6 +14,13 @@
   .card-title, .eyebrow, .slabel, .small-label {
     font-family: 'acumin-pro', 'Syne', system-ui, sans-serif !important;
   }
+/* TOP BAR FORCE FIX */
+.topbar{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:7px 10px 3px!important;flex-shrink:0!important}
+.counter{display:inline-flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:3px!important;position:relative!important;width:30vw!important;max-width:110px!important;min-width:75px!important;height:34px!important;padding:0 6px!important;font-family:'acumin-pro',sans-serif!important;font-weight:800!important;font-size:13px!important;color:#ffd34d!important;white-space:nowrap!important;flex-shrink:0!important}
+.counter-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:fill!important;z-index:0!important;border-radius:999px!important}
+.counter img.ic{width:20px!important;height:20px!important;object-fit:contain!important;position:relative!important;z-index:1!important;flex-shrink:0!important}
+.counter span{position:relative!important;z-index:1!important}
+.plus{width:16px!important;height:16px!important;border-radius:999px!important;background:rgba(255,255,255,.22)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:11px!important;font-weight:900!important;color:#fff!important;cursor:pointer!important;position:relative!important;z-index:1!important;flex-shrink:0!important}
 </style>
 <style>
 :root{
@@ -318,6 +325,13 @@ select:focus{border-color:rgba(255,211,77,.5)}
   cursor:pointer;transition:all .2s ease;
 }
 .btn-home-back:hover{background:rgba(86,167,255,.2);transform:translateY(-1px)}
+/* TOP BAR FORCE FIX */
+.topbar{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:7px 10px 3px!important;flex-shrink:0!important}
+.counter{display:inline-flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:3px!important;position:relative!important;width:30vw!important;max-width:110px!important;min-width:75px!important;height:34px!important;padding:0 6px!important;font-family:'acumin-pro',sans-serif!important;font-weight:800!important;font-size:13px!important;color:#ffd34d!important;white-space:nowrap!important;flex-shrink:0!important}
+.counter-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:fill!important;z-index:0!important;border-radius:999px!important}
+.counter img.ic{width:20px!important;height:20px!important;object-fit:contain!important;position:relative!important;z-index:1!important;flex-shrink:0!important}
+.counter span{position:relative!important;z-index:1!important}
+.plus{width:16px!important;height:16px!important;border-radius:999px!important;background:rgba(255,255,255,.22)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:11px!important;font-weight:900!important;color:#fff!important;cursor:pointer!important;position:relative!important;z-index:1!important;flex-shrink:0!important}
 </style>
 </head>
 <body>
@@ -338,9 +352,21 @@ select:focus{border-color:rgba(255,211,77,.5)}
 <div class="screen" id="screenHome">
   <div class="home-wrap">
     <div class="topbar">
-      <div class="counter"><img id="icOscar" src="" alt=""/><span id="oscarCount">1.618</span></div>
-      <div class="counter"><img id="icPopcorn" src="" alt=""/><span>25</span><div class="plus">+</div></div>
-      <div class="counter" style="color:#ff7070"><span style="font-size:17px">❤️</span><span>5</span><div class="plus">+</div></div>
+      <div class="counter">
+        <img class="counter-bg" id="pillOscar" src="" alt=""/>
+        <img class="ic" id="icOscar" src="" alt=""/>
+        <span id="oscarCount">1.618</span>
+      </div>
+      <div class="counter">
+        <img class="counter-bg" id="pillPopcorn" src="" alt=""/>
+        <img class="ic" id="icPopcorn" src="" alt=""/>
+        <span>25</span><div class="plus">+</div>
+      </div>
+      <div class="counter">
+        <img class="counter-bg" id="pillHeart" src="" alt=""/>
+        <img class="ic" id="icHeart" src="" alt=""/>
+        <span>5</span><div class="plus">+</div>
+      </div>
     </div>
     <div class="home-scroll">
       <div class="logo-wrap"><img id="logoImg" src="" alt="StarBridge"/></div>
