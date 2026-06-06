@@ -160,12 +160,11 @@ html,body{height:100%;overflow:hidden;
   pointer-events:none;
   border-radius:14px;
 }
-.nav-btn.active .nav-btn-bg{opacity:0}
+/* nav-btn-bg removed */
 .nav-btn img.nav-icon{
   width:min(52px,12vw);height:min(52px,12vw);
   object-fit:contain;position:relative;z-index:1;
   transition:filter .2s,transform .2s;
-  mix-blend-mode:screen;
 }
 .nav-btn.active img.nav-icon{
   filter:drop-shadow(0 0 10px rgba(255,200,50,.9)) drop-shadow(0 0 20px rgba(255,160,0,.5)) brightness(1.2);
@@ -661,7 +660,6 @@ select:focus{border-color:rgba(255,211,77,.5)}
   <div class="nav-bg"></div>
 
   <button class="nav-btn active" id="btn-home" onclick="goTo('home')">
-    <div class="nav-btn-bg"></div>
     <img class="nav-icon" id="btnHome" src="" alt=""/>
     <span>HOME</span>
   </button>
@@ -669,7 +667,6 @@ select:focus{border-color:rgba(255,211,77,.5)}
   <div class="nav-sep"></div>
 
   <button class="nav-btn" id="btn-rank" onclick="goTo('rank')">
-    <div class="nav-btn-bg"></div>
     <img class="nav-icon" id="btnRank" src="" alt=""/>
     <span>CLASSIFICA</span>
   </button>
@@ -677,7 +674,6 @@ select:focus{border-color:rgba(255,211,77,.5)}
   <div class="nav-sep"></div>
 
   <button class="nav-btn" id="btn-play" onclick="goTo('modes')">
-    <div class="nav-btn-bg"></div>
     <img class="nav-icon" id="btnPlay" src="" alt=""/>
     <span>GIOCA</span>
   </button>
@@ -685,7 +681,6 @@ select:focus{border-color:rgba(255,211,77,.5)}
   <div class="nav-sep"></div>
 
   <button class="nav-btn" id="btn-mondo" onclick="goTo('mondo')">
-    <div class="nav-btn-bg"></div>
     <img class="nav-icon" id="btnMondo" src="" alt=""/>
     <span>POPCORN</span>
   </button>
@@ -693,7 +688,6 @@ select:focus{border-color:rgba(255,211,77,.5)}
   <div class="nav-sep"></div>
 
   <button class="nav-btn" id="btn-profile" onclick="goTo('profile')">
-    <div class="nav-btn-bg"></div>
     <img class="nav-icon" id="btnProfile" src="" alt=""/>
     <span>PROFILO</span>
   </button>
