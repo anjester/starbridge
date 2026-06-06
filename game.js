@@ -6,6 +6,16 @@ const SIL_WOMAN="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAE9CAYAAACx9
   if (!window.ASSETS) window.ASSETS = {};
   if (typeof IMG   !== 'undefined') Object.assign(window.ASSETS, IMG);
   if (typeof EXTRA !== 'undefined') Object.assign(window.ASSETS, EXTRA);
+  // Alias per icone HUD e progressione Mondo Pop Corn
+  var A = window.ASSETS;
+  if (!A.img_popcorn)   A.img_popcorn   = A.popcorn_sm || '';
+  if (!A.img_oscar)     A.img_oscar     = A.oscar_sm   || '';
+  if (!A.img_pellicola) A.img_pellicola = A.oscar_sm   || '';
+  if (!A.img_cinepresa) A.img_cinepresa = A.oscar_sm   || '';
+  if (!A.img_machine)   A.img_machine   = A.popcorn_sm || '';
+  if (!A.img_caramel)   A.img_caramel   = A.popcorn_sm || '';
+  if (!A.img_chair)     A.img_chair     = A.popcorn_sm || '';
+  if (!A.img_cinema)    A.img_cinema    = A.oscar_sm   || '';
 })();
 
 

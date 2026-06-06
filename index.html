@@ -725,7 +725,8 @@ function _navigateTo(tab) {
   const target = document.getElementById(SCREENS[tab]);
   if (target) target.classList.remove('hidden');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const navTab = ['home','rank','play','mondo','profile'].includes(tab) ? tab : 'home';
+  const _navMap = {home:'home',rank:'rank',play:'play',modes:'play',mondo:'mondo',profile:'profile'};
+  const navTab = _navMap[tab] || 'home';
   const btn = document.getElementById('btn-' + navTab);
   if (btn) btn.classList.add('active');
   currentTab = tab;
@@ -798,6 +799,11 @@ function injectImages() {
   // Splash
   const si = document.getElementById('splashImg');
   if(si && typeof SPLASH_B64 !== 'undefined') si.src = SPLASH_B64;
+  // Schermata Modalità di Gioco
+  const imgAr = document.getElementById('imgArrow');      if(imgAr && typeof ARROW_BACK   !== 'undefined') imgAr.src = ARROW_BACK;
+  const imgTM = document.getElementById('imgTxtMod');     if(imgTM && typeof TXT_MODALITA !== 'undefined') imgTM.src = TXT_MODALITA;
+  const imgCL = document.getElementById('imgCardLibera'); if(imgCL && typeof CARD_LIBERA  !== 'undefined') imgCL.src = CARD_LIBERA;
+  const imgCT = document.getElementById('imgCardTempo');  if(imgCT && typeof CARD_TEMPO   !== 'undefined') imgCT.src = CARD_TEMPO;
 }
 
 // ── SPLASH ──
