@@ -116,8 +116,8 @@ html,body{height:100%;overflow:hidden;
   object-fit:contain;
   filter:drop-shadow(0 3px 18px rgba(255,180,0,.42))}
 .grid{display:grid;grid-template-columns:1fr 1fr;
-  grid-template-rows:1fr 1fr;gap:5px;flex:1;min-height:0;overflow:hidden}
-.card-wrap{cursor:pointer;border-radius:14px;overflow:hidden;
+  grid-template-rows:1fr 1fr;gap:5px;flex:1;min-height:0;overflow:hidden;max-height:clamp(300px,55vh,580px);align-self:center;}
+.card-wrap{cursor:pointer;border-radius:14px;overflow:hidden;max-height:clamp(130px,28vh,300px);
   transition:transform .18s cubic-bezier(.34,1.56,.64,1);
   box-shadow:0 3px 14px rgba(0,0,0,.55);
   display:flex;align-items:stretch;min-height:0}
