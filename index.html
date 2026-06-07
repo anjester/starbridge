@@ -32,7 +32,7 @@
 
 /* === ANIMATED MODE CARDS === */
 .amc-wrap{display:flex;flex-direction:column;gap:14px;padding:0 0 14px;}
-.amc{position:relative;width:100%;height:140px;border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .15s cubic-bezier(.34,1.56,.64,1);}
+.amc{position:relative;width:100%;height:105px;border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .15s cubic-bezier(.34,1.56,.64,1);}
 .amc:active{transform:scale(.97);}
 .amc canvas{position:absolute;inset:0;width:100%;height:100%;}
 .amc-border{position:absolute;inset:0;border-radius:18px;border:2px solid;z-index:4;pointer-events:none;}
@@ -40,7 +40,7 @@
 .amc-txt{display:flex;flex-direction:column;flex:1;}
 .amc-title{font-family:'acumin-pro','Syne',sans-serif;font-size:18px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;line-height:1.1;text-shadow:1px 1px 0 rgba(0,0,0,.9);}
 .amc-sub{font-family:'acumin-pro','Syne',sans-serif;font-size:11px;font-weight:400;color:rgba(255,235,200,.8);margin-top:4px;line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.9);}
-.amc-img{width:90px;height:90px;object-fit:contain;flex-shrink:0;position:relative;z-index:2;}
+.amc-img{width:65px;height:65px;object-fit:contain;flex-shrink:0;position:relative;z-index:2;}
 
 @keyframes amcBs0{0%,100%{box-shadow:inset 0 0 6px rgba(0,80,255,.35),0 0 10px rgba(0,80,255,.35)}50%{box-shadow:inset 0 0 14px rgba(30,100,255,.65),0 0 22px rgba(30,100,255,.65)}}
 @keyframes amcBs1{0%,100%{box-shadow:inset 0 0 6px rgba(220,20,20,.35),0 0 10px rgba(220,20,20,.35)}50%{box-shadow:inset 0 0 14px rgba(255,40,40,.65),0 0 22px rgba(255,40,40,.65)}}
@@ -731,7 +731,9 @@ select:focus{border-color:rgba(255,211,77,.5)}
   </button>
 </nav>
 
-<script src="assets.js">function initAnimCards(){
+<script src="assets.js"></script>
+<script>
+function initAnimCards(){
   var cfgs=[{r1:"0,90,255",r2:"10,50,200",p:"80,180,255"},{r1:"220,20,20",r2:"160,8,8",p:"255,100,60"},{r1:"140,0,220",r2:"90,0,170",p:"200,100,255"},{r1:"215,100,0",r2:"130,48,0",p:"255,185,40"}];
   cfgs.forEach(function(cfg,i){
     var cv=document.getElementById("amcBg"+i);
@@ -744,7 +746,7 @@ select:focus{border-color:rgba(255,211,77,.5)}
       cx.fillStyle="#08060e";cx.fillRect(0,0,W,H);
       var p=.75+Math.sin(t*.022)*.25;
       var g=cx.createRadialGradient(W*.72,H*.85,4,W*.72,H*.85,130);
-      g.addColorStop(0,"rgba("+cfg.r1+",.5*"+p+")");
+      g.addColorStop(0,"rgba("+cfg.r1+","+(0.5*p)+")");
       g.addColorStop(.5,"rgba("+cfg.r2+",.18)");
       g.addColorStop(1,"rgba(0,0,0,0)");
       cx.fillStyle=g;cx.fillRect(0,0,W,H);
@@ -761,6 +763,7 @@ select:focus{border-color:rgba(255,211,77,.5)}
     })();
   });
 }
+
 
 </script>
 <script src="game.js"></script>
@@ -796,7 +799,7 @@ function _navigateTo(tab) {
   const target = document.getElementById(SCREENS[tab]);
   if (target) target.classList.remove('hidden');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  if(id==='modes'){setTimeout(initAnimCards,50);}
+  if(tab==='modes'){setTimeout(initAnimCards,50);}
   const _navMap = {home:'home',rank:'rank',play:'play',modes:'play',mondo:'mondo',profile:'profile'};
   const navTab = _navMap[tab] || 'home';
   const btn = document.getElementById('btn-' + navTab);
