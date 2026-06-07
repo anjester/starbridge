@@ -107,8 +107,8 @@ html,body{height:100%;overflow:hidden;
   background:rgba(255,255,255,.16);display:flex;align-items:center;
   justify-content:center;font-size:14px;font-weight:800;
   color:rgba(255,255,255,.82);margin-left:2px;cursor:pointer}
-.home-scroll{flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:0 6px 2px;scrollbar-width:none;display:flex;flex-direction:column;min-height:0;}
+.home-scroll{flex:1;overflow:hidden;
+  padding:0 6px 2px;display:flex;flex-direction:column;min-height:0;}
 .home-scroll::-webkit-scrollbar{display:none}
 .logo-wrap{text-align:center;padding:1px 0 4px;flex-shrink:0}
 .logo-wrap img{
@@ -764,7 +764,7 @@ function _navigateTo(tab) {
     if (el) el.classList.add('hidden');
   });
   const target = document.getElementById(SCREENS[tab]);
-  if (target) target.classList.remove('hidden');
+  if (target) { target.classList.remove('hidden'); const sc=target.querySelector('[style*="overflow-y"]'); if(sc) sc.scrollTop=0; }
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   if(tab==='modes'){setTimeout(initAnimCards,50);}
   const _navMap = {home:'home',rank:'rank',play:'play',modes:'play',mondo:'mondo',profile:'profile'};
