@@ -50,7 +50,7 @@
 :root{
   --gold:#ffd34d;--gold2:#f7a800;--red:#e83030;--text-gold:#ffd34d;
   --navy:#04122d;--txt:#fff;--muted:rgba(226,239,255,.6);
-  --nav-h:88px;--ad-h:100px;
+  --nav-h:88px;--ad-h:56px;
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bot:env(safe-area-inset-bottom,0px);
 }
@@ -106,18 +106,17 @@ html,body{height:100%;overflow:hidden;
   background:rgba(255,255,255,.16);display:flex;align-items:center;
   justify-content:center;font-size:14px;font-weight:800;
   color:rgba(255,255,255,.82);margin-left:2px;cursor:pointer}
-.home-scroll{flex:1;overflow-y:auto;overflow-x:hidden;
+.home-scroll{flex:1;overflow:hidden;
   padding:0 6px 2px;display:flex;flex-direction:column;min-height:0;}
-.home-scroll::-webkit-scrollbar{display:none}
-.logo-wrap{text-align:center;padding:1px 0 4px;flex-shrink:0}
+.logo-wrap{text-align:center;padding:1px 0 2px;flex-shrink:0}
 .logo-wrap img{
-  width:min(240px,65vw);height:auto;max-height:10vh;
+  width:min(220px,60vw);height:auto;max-height:8vh;
   object-fit:contain;
   filter:drop-shadow(0 3px 18px rgba(255,180,0,.42))}
 .grid{display:grid;grid-template-columns:1fr 1fr;
-  gap:8px;flex:0 0 auto;}
+  grid-template-rows:1fr 1fr;gap:6px;flex:1;min-height:0;overflow:hidden;}
 .card-wrap{cursor:pointer;transition:transform .18s cubic-bezier(.34,1.56,.64,1);
-  display:flex;align-items:center;justify-content:center;}
+  display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:0;}
 .card-wrap:active{transform:scale(.96)}
 .home-wrap{height:100%;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 
