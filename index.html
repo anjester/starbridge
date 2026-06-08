@@ -50,7 +50,7 @@
 :root{
   --gold:#ffd34d;--gold2:#f7a800;--red:#e83030;--text-gold:#ffd34d;
   --navy:#04122d;--txt:#fff;--muted:rgba(226,239,255,.6);
-  --nav-h:88px;--ad-h:0px;
+  --nav-h:88px;--ad-h:100px;
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bot:env(safe-area-inset-bottom,0px);
 }
@@ -471,56 +471,56 @@ select:focus{border-color:rgba(255,211,77,.5)}
       <div class="grid">
         <div class="card-wrap" onclick="goTo('play')">
           <div class="rcard">
-            <img class="rcard-bg" src="1_SFIDA_CARD.svg" alt=""/>
+            <img id="bgSfida" class="rcard-bg" src="" alt=""/>
             <div class="rcard-body">
               <div class="rcard-top">
                 <div class="rcard-name">Sfida del Giorno</div>
                 <div class="rcard-desc">Gioca ogni giorno e ottieni premi esclusivi!</div>
               </div>
               <div class="rcard-bottom">
-                <img class="rcard-icon" src="1_Sfida del giorno.png" alt=""/>
+                <img id="icnSfida" class="rcard-icon" src="" alt=""/>
               </div>
             </div>
           </div>
         </div>
         <div class="card-wrap" onclick="goTo('modes')">
           <div class="rcard">
-            <img class="rcard-bg" src="2_MODALITA_CARD.svg" alt=""/>
+            <img id="bgModalita" class="rcard-bg" src="" alt=""/>
             <div class="rcard-body">
               <div class="rcard-top">
                 <div class="rcard-name">Modalità di Gioco</div>
                 <div class="rcard-desc">Scegli la tua modalità preferita e gioca!</div>
               </div>
               <div class="rcard-bottom">
-                <img class="rcard-icon" src="2A_Modalità di gioco.png" alt=""/>
+                <img id="icnModalita" class="rcard-icon" src="" alt=""/>
               </div>
             </div>
           </div>
         </div>
         <div class="card-wrap" onclick="goTo('mondo')">
           <div class="rcard">
-            <img class="rcard-bg" src="3_POPCORN_CARD.svg" alt=""/>
+            <img id="bgPopcorn" class="rcard-bg" src="" alt=""/>
             <div class="rcard-body">
               <div class="rcard-top">
                 <div class="rcard-name">Pop Corn</div>
                 <div class="rcard-desc">Vinci gli Oscar per continuare a giocare!</div>
               </div>
               <div class="rcard-bottom">
-                <img class="rcard-icon" src="4_BTN_POPCORN.png" alt=""/>
+                <img id="icnPopcorn" class="rcard-icon" src="" alt=""/>
               </div>
             </div>
           </div>
         </div>
         <div class="card-wrap" onclick="goTo('rank')">
           <div class="rcard">
-            <img class="rcard-bg" src="4_OSCAR_CARD.svg" alt=""/>
+            <img id="bgOscar" class="rcard-bg" src="" alt=""/>
             <div class="rcard-body">
               <div class="rcard-top">
                 <div class="rcard-name">Oscar Collection</div>
                 <div class="rcard-desc">Raccogli statuette e sblocca ricompense!</div>
               </div>
               <div class="rcard-bottom">
-                <img class="rcard-icon" src="Mondo Oscar.png" alt=""/>
+                <img id="icnOscar" class="rcard-icon" src="" alt=""/>
               </div>
             </div>
           </div>
@@ -678,13 +678,13 @@ select:focus{border-color:rgba(255,211,77,.5)}
     </p>
     <div class="mode-card" onclick="startMode('relaxed')">
       <div class="rcard rcard-h">
-        <img class="rcard-bg" src="Box-Modalità-Free.svg" alt=""/>
+        <img id="bgLibera" class="rcard-bg" src="" alt=""/>
         <div class="rcard-body">
           <div class="rcard-top">
             <div class="rcard-name">Modalità Libera</div>
           </div>
           <div class="rcard-h-row">
-            <img class="rcard-icon" src="2_Modalita non a tempo.png" alt=""/>
+            <img id="icnLibera" class="rcard-icon" src="" alt=""/>
             <div class="rcard-h-text">
               <div class="rcard-desc">Gioca senza limiti e migliora le tue combinazioni!</div>
             </div>
@@ -694,13 +694,13 @@ select:focus{border-color:rgba(255,211,77,.5)}
     </div>
     <div class="mode-card" onclick="startMode('timed')">
       <div class="rcard rcard-h">
-        <img class="rcard-bg" src="Box-Modalità-Tempo.svg" alt=""/>
+        <img id="bgTempo" class="rcard-bg" src="" alt=""/>
         <div class="rcard-body">
           <div class="rcard-top">
             <div class="rcard-name">Contro il Tempo</div>
           </div>
           <div class="rcard-h-row">
-            <img class="rcard-icon" src="2_Gioco a tempo.png" alt=""/>
+            <img id="icnTempo" class="rcard-icon" src="" alt=""/>
             <div class="rcard-h-text">
               <div class="rcard-desc">Metti alla prova la tua velocità e conquista più premi!</div>
             </div>
@@ -902,7 +902,6 @@ function confirmExit() {
 }
 
 function startMode(mode) {
-  // Imposta la modalità e vai al gioco
   window._startMode = mode;
   _navigateTo('play');
   if (typeof initGame === 'function') initGame();
@@ -911,7 +910,6 @@ function startMode(mode) {
 // ── INJECT IMMAGINI ──
 function injectImages() {
   if (typeof IMG === 'undefined' || typeof EXTRA === 'undefined') return;
-  // Top bar
   // Top bar icone reali
   const icO = document.getElementById('icOscar');    if(icO) icO.src = EXTRA.ic_oscar||EXTRA.oscar_sm||'';
   const icP = document.getElementById('icPopcorn');  if(icP) icP.src = EXTRA.ic_popcorn||EXTRA.popcorn_sm||'';
@@ -921,21 +919,29 @@ function injectImages() {
     const el=document.getElementById(id); if(el) el.src=EXTRA.ic_pill||'';
   });
   // Logo
-  const lg = document.getElementById('logoImg');     if(lg) lg.src = EXTRA.logo || '';
-  // Cards: now SVG+PNG files, no base64 injection needed
+  const lg = document.getElementById('logoImg'); if(lg) lg.src = EXTRA.logo || '';
+  // Card backgrounds (SVG) + icons (WebP)
+  const si=(id,val)=>{const e=document.getElementById(id);if(e&&val)e.src=val;};
+  if(typeof SVG_SFIDA!=='undefined'){
+    si('bgSfida',SVG_SFIDA);    si('icnSfida',ICN_SFIDA);
+    si('bgModalita',SVG_MODALITA); si('icnModalita',ICN_MODALITA);
+    si('bgPopcorn',SVG_POPCORN);  si('icnPopcorn',ICN_POPCORN);
+    si('bgOscar',SVG_OSCAR);    si('icnOscar',ICN_OSCAR);
+    si('bgLibera',SVG_FREE);    si('icnLibera',ICN_LIBERA);
+    si('bgTempo',SVG_TEMPO);    si('icnTempo',ICN_TEMPO);
+  }
   // Nav
-  const bh = document.getElementById('btnHome');     if(bh) bh.src = IMG.btn_home || '';
-  const br = document.getElementById('btnRank');     if(br) br.src = IMG.btn_rank || '';
-  const bp = document.getElementById('btnPlay');     if(bp) bp.src = IMG.btn_play || '';
-  const bm = document.getElementById('btnMondo');    if(bm) bm.src = IMG.btn_popcorn || '';
-  const bf = document.getElementById('btnProfile');  if(bf) bf.src = IMG.btn_profilo || '';
+  const bh = document.getElementById('btnHome');    if(bh) bh.src = IMG.btn_home || '';
+  const br = document.getElementById('btnRank');    if(br) br.src = IMG.btn_rank || '';
+  const bp = document.getElementById('btnPlay');    if(bp) bp.src = IMG.btn_play || '';
+  const bm = document.getElementById('btnMondo');   if(bm) bm.src = IMG.btn_popcorn || '';
+  const bf = document.getElementById('btnProfile'); if(bf) bf.src = IMG.btn_profilo || '';
   // Splash
-  const si = document.getElementById('splashImg');
-  if(si && typeof SPLASH_B64 !== 'undefined') si.src = SPLASH_B64;
+  const splashEl = document.getElementById('splashImg');
+  if(splashEl && typeof SPLASH_B64 !== 'undefined') splashEl.src = SPLASH_B64;
   // Schermata Modalità di Gioco
-  const imgAr = document.getElementById('imgArrow');      if(imgAr && typeof ARROW_BACK   !== 'undefined') imgAr.src = ARROW_BACK;
-  const imgTM = document.getElementById('imgTxtMod');     if(imgTM && typeof TXT_MODALITA !== 'undefined') imgTM.src = TXT_MODALITA;
-  // imgCardLibera / imgCardTempo: replaced by SVG+PNG cards, no injection needed
+  const imgAr = document.getElementById('imgArrow');   if(imgAr && typeof ARROW_BACK   !== 'undefined') imgAr.src = ARROW_BACK;
+  const imgTM = document.getElementById('imgTxtMod');  if(imgTM && typeof TXT_MODALITA !== 'undefined') imgTM.src = TXT_MODALITA;
   // Exit alert icon
   const imgEA = document.getElementById('exitAlertIcon'); if(imgEA && typeof IMG !== 'undefined') imgEA.src = IMG.btn_play || '';
 }
@@ -976,10 +982,7 @@ function spawnSparks() {
     const d = (2.2+Math.random()*3.8).toFixed(1)+'s';
     const dl = (Math.random()*4.5).toFixed(1)+'s';
     const sz = (1+Math.random()*2.8).toFixed(1);
-    s.style.cssText = `left:${x}%;top:${y}%;width:${sz}px;height:${sz}px;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      --d:${d};--dl:${dl};--tx:${tx}px;--ty:${ty}px;
-      box-shadow:0 0 4px 1px rgba(255,150,0,.55);`;
+    s.style.cssText = `left:${x}%;top:${y}%;width:${sz}px;height:${sz}px;background:${colors[Math.floor(Math.random()*colors.length)]};--d:${d};--dl:${dl};--tx:${tx}px;--ty:${ty}px;box-shadow:0 0 4px 1px rgba(255,150,0,.55);`;
     bg.appendChild(s);
   }
 }
