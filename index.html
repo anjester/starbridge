@@ -125,22 +125,22 @@ html,body{height:100%;overflow:hidden;
 
 /* === RESPONSIVE CARD COMPONENT (SVG bg + PNG icon + CSS text) === */
 .rcard{position:relative;width:100%;height:100%;border-radius:inherit;overflow:hidden;}
-.rcard-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.rcard-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;}
 /* Portrait: title+desc top, illustration fills bottom */
-.rcard-body{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:7% 6% 3%;box-sizing:border-box;text-align:center;}
-.rcard-top{flex-shrink:0;display:flex;flex-direction:column;gap:2px;align-items:center;}
-.rcard-name{font-family:'acumin-pro',sans-serif;font-size:clamp(10px,4vw,19px);font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#ffd34d;line-height:1.1;text-shadow:0 2px 8px rgba(0,0,0,.85);}
-.rcard-desc{font-family:'acumin-pro',sans-serif;font-size:clamp(8px,2.2vw,10px);font-weight:400;color:rgba(255,255,255,.85);line-height:1.35;margin-top:2px;}
+.rcard-body{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:6% 5% 2%;box-sizing:border-box;text-align:center;z-index:2;}
+.rcard-top{flex-shrink:0;display:flex;flex-direction:column;gap:3px;align-items:center;}
+.rcard-name{font-family:'acumin-pro',sans-serif;font-size:clamp(13px,4.5vw,22px);font-weight:900;text-transform:uppercase;letter-spacing:.03em;color:#ffd34d;line-height:1.15;text-shadow:0 2px 10px rgba(0,0,0,.9);}
+.rcard-desc{font-family:'acumin-pro',sans-serif;font-size:clamp(10px,2.8vw,13px);font-weight:400;color:rgba(255,255,255,.9);line-height:1.4;margin-top:3px;text-shadow:0 1px 5px rgba(0,0,0,.8);}
 .rcard-bottom{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;width:100%;padding:2% 4%;}
 .rcard-icon{width:82%;max-width:100%;height:auto;max-height:100%;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.75));display:block;}
 /* Landscape mode cards */
 .rcard-h .rcard-body{padding:4% 5% 3%;gap:0;}
 .rcard-h .rcard-top{width:100%;text-align:center;padding-bottom:2%;}
-.rcard-h .rcard-name{font-size:clamp(14px,5vw,28px);}
+.rcard-h .rcard-name{font-size:clamp(17px,5.5vw,32px);letter-spacing:.02em;}
 .rcard-h-row{flex:1;display:flex;align-items:center;gap:4%;min-height:0;width:100%;}
 .rcard-h .rcard-icon{width:52%;flex-shrink:0;height:auto;max-height:100%;}
 .rcard-h-text{flex:1;display:flex;align-items:center;}
-.rcard-h .rcard-desc{font-size:clamp(11px,2.5vw,15px);color:rgba(255,255,255,.88);margin:0;line-height:1.5;}
+.rcard-h .rcard-desc{font-size:clamp(12px,2.8vw,16px);font-weight:400;color:rgba(255,255,255,.92);margin:0;line-height:1.5;text-shadow:0 1px 5px rgba(0,0,0,.7);}
 
 /* PLACEHOLDER SCHERMATE */
 .placeholder{display:flex;flex-direction:column;align-items:center;
@@ -987,10 +987,73 @@ function spawnSparks() {
   }
 }
 
+// ── CARD PARTICLES ──
+function initCardParticles() {
+  const COLS = ['#ffd34d','#ffbb00','#ffcc55','#fff0a0','#ffaa00','#ffe066'];
+  document.querySelectorAll('.rcard').forEach(card => {
+    const cv = document.createElement('canvas');
+    cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;';
+    const bg = card.querySelector('.rcard-bg');
+    if (bg) bg.insertAdjacentElement('afterend', cv);
+    else card.prepend(cv);
+    const ctx = cv.getContext('2d');
+    let W = 0, H = 0, raf;
+
+    function resize() {
+      W = cv.width  = cv.offsetWidth  || card.offsetWidth  || 160;
+      H = cv.height = cv.offsetHeight || card.offsetHeight || 220;
+    }
+
+    function mkP(init) {
+      const ml = 90 + Math.random() * 130;
+      return {
+        x:  Math.random(),
+        y:  init ? Math.random() : 0.85 + Math.random() * 0.15,
+        r:  0.7 + Math.random() * 1.6,
+        vx: (Math.random() - 0.5) * 0.0007,
+        vy: -(0.0007 + Math.random() * 0.0013),
+        li: init ? Math.random() * ml : 0,
+        ml: ml,
+        ma: 0.3 + Math.random() * 0.45,
+        c:  COLS[Math.floor(Math.random() * COLS.length)]
+      };
+    }
+
+    const pts = Array.from({length: 22}, () => mkP(true));
+
+    function draw() {
+      if (!W) resize();
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach((p, i) => {
+        p.li++; p.x += p.vx; p.y += p.vy;
+        if (p.li >= p.ml || p.y < -0.06) { pts[i] = mkP(false); return; }
+        const t = p.li / p.ml;
+        const a = t < 0.18 ? (t / 0.18) * p.ma
+                : t > 0.72 ? ((1 - t) / 0.28) * p.ma
+                : p.ma;
+        ctx.globalAlpha = a;
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        ctx.arc(p.x * W, p.y * H, p.r, 0, 6.2832);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(draw);
+    }
+
+    // Pause when off-screen to save CPU
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { resize(); draw(); }
+      else cancelAnimationFrame(raf);
+    }, {threshold: 0.05}).observe(card);
+  });
+}
+
 // ── AVVIO ──
 injectImages();
 spawnSparks();
 runSplash();
+initCardParticles();
 </script>
 </body>
 </html>
