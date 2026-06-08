@@ -26,9 +26,8 @@
 .plus{width:14px!important;height:14px!important;border-radius:999px!important;background:rgba(255,255,255,.22)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:10px!important;font-weight:900!important;color:#fff!important;cursor:pointer!important;position:relative!important;z-index:1!important;flex-shrink:0!important;line-height:1!important}
 .plus:active{background:rgba(255,255,255,.4)!important}
 
-.mode-card{cursor:pointer;border-radius:18px;overflow:hidden;transition:transform .18s cubic-bezier(.34,1.56,.64,1);width:100%;box-sizing:border-box;}
+.mode-card{cursor:pointer;border-radius:18px;overflow:hidden;transition:transform .18s cubic-bezier(.34,1.56,.64,1);width:100%;box-sizing:border-box;aspect-ratio:1088/787;}
 .mode-card:active{transform:scale(.97)}
-.mode-card:hover img{transform:scale(1.02)}
 
 /* === ANIMATED MODE CARDS === */
 .amc-wrap{display:flex;flex-direction:column;gap:clamp(6px,1.2vh,14px);padding:0 0 10px;}
@@ -122,8 +121,26 @@ html,body{height:100%;overflow:hidden;
   box-shadow:0 3px 14px rgba(0,0,0,.55);
   display:flex;align-items:stretch;min-height:0}
 .card-wrap:active{transform:scale(.96)}
-.card-wrap img{width:100%;height:100%;object-fit:cover;display:block;border-radius:14px}
 .home-wrap{height:100%;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+
+/* === RESPONSIVE CARD COMPONENT (SVG bg + PNG icon + CSS text) === */
+.rcard{position:relative;width:100%;height:100%;border-radius:inherit;overflow:hidden;}
+.rcard-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+/* Portrait: title+desc top, illustration fills bottom */
+.rcard-body{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:7% 6% 3%;box-sizing:border-box;text-align:center;}
+.rcard-top{flex-shrink:0;display:flex;flex-direction:column;gap:2px;align-items:center;}
+.rcard-name{font-family:'acumin-pro',sans-serif;font-size:clamp(10px,4vw,19px);font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#ffd34d;line-height:1.1;text-shadow:0 2px 8px rgba(0,0,0,.85);}
+.rcard-desc{font-family:'acumin-pro',sans-serif;font-size:clamp(8px,2.2vw,10px);font-weight:400;color:rgba(255,255,255,.85);line-height:1.35;margin-top:2px;}
+.rcard-bottom{flex:1;display:flex;align-items:flex-end;justify-content:center;min-height:0;width:100%;}
+.rcard-icon{max-height:100%;max-width:90%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.75));display:block;}
+/* Landscape mode cards */
+.rcard-h .rcard-body{padding:5% 6% 4%;gap:0;}
+.rcard-h .rcard-top{width:100%;text-align:center;padding-bottom:3%;}
+.rcard-h .rcard-name{font-size:clamp(14px,5vw,28px);}
+.rcard-h-row{flex:1;display:flex;align-items:center;gap:5%;min-height:0;width:100%;}
+.rcard-h .rcard-icon{width:42%;flex-shrink:0;height:auto;max-height:100%;}
+.rcard-h-text{flex:1;display:flex;align-items:center;}
+.rcard-h .rcard-desc{font-size:clamp(11px,2.5vw,15px);color:rgba(255,255,255,.88);margin:0;line-height:1.5;}
 
 /* PLACEHOLDER SCHERMATE */
 .placeholder{display:flex;flex-direction:column;align-items:center;
@@ -452,10 +469,62 @@ select:focus{border-color:rgba(255,211,77,.5)}
     <div class="home-scroll">
       <div class="logo-wrap"><img id="logoImg" src="" alt="StarBridge"/></div>
       <div class="grid">
-        <div class="card-wrap" onclick="goTo('play')"><img id="cardSfida" src="" alt="Sfida del Giorno"/></div>
-        <div class="card-wrap" onclick="goTo('modes')"><img id="cardModes" src="" alt="Modalità di Gioco"/></div>
-        <div class="card-wrap" onclick="goTo('mondo')"><img id="cardPopcorn" src="" alt="Pop Corn"/></div>
-        <div class="card-wrap" onclick="goTo('rank')"><img id="cardOscar" src="" alt="Oscar Collection"/></div>
+        <div class="card-wrap" onclick="goTo('play')">
+          <div class="rcard">
+            <img class="rcard-bg" src="1_SFIDA_CARD.svg" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Sfida del Giorno</div>
+                <div class="rcard-desc">Gioca ogni giorno e ottieni premi esclusivi!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img class="rcard-icon" src="1_Sfida del giorno.png" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-wrap" onclick="goTo('modes')">
+          <div class="rcard">
+            <img class="rcard-bg" src="2_MODALITA_CARD.svg" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Modalità di Gioco</div>
+                <div class="rcard-desc">Scegli la tua modalità preferita e gioca!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img class="rcard-icon" src="2A_Modalità di gioco.png" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-wrap" onclick="goTo('mondo')">
+          <div class="rcard">
+            <img class="rcard-bg" src="3_POPCORN_CARD.svg" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Pop Corn</div>
+                <div class="rcard-desc">Vinci gli Oscar per continuare a giocare!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img class="rcard-icon" src="4_BTN_POPCORN.png" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-wrap" onclick="goTo('rank')">
+          <div class="rcard">
+            <img class="rcard-bg" src="4_OSCAR_CARD.svg" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Oscar Collection</div>
+                <div class="rcard-desc">Raccogli statuette e sblocca ricompense!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img class="rcard-icon" src="Mondo Oscar.png" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -608,10 +677,36 @@ select:focus{border-color:rgba(255,211,77,.5)}
       Se il collegamento è sbagliato, perdi un Oscar.
     </p>
     <div class="mode-card" onclick="startMode('relaxed')">
-      <img id="imgCardLibera" src="" alt="Modalità Libera" style="width:100%;display:block;border-radius:18px;"/>
+      <div class="rcard rcard-h">
+        <img class="rcard-bg" src="Box-Modalità-Free.svg" alt=""/>
+        <div class="rcard-body">
+          <div class="rcard-top">
+            <div class="rcard-name">Modalità Libera</div>
+          </div>
+          <div class="rcard-h-row">
+            <img class="rcard-icon" src="2_Modalita non a tempo.png" alt=""/>
+            <div class="rcard-h-text">
+              <div class="rcard-desc">Gioca senza limiti e migliora le tue combinazioni!</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="mode-card" onclick="startMode('timed')">
-      <img id="imgCardTempo" src="" alt="Contro il Tempo" style="width:100%;display:block;border-radius:18px;"/>
+      <div class="rcard rcard-h">
+        <img class="rcard-bg" src="Box-Modalità-Tempo.svg" alt=""/>
+        <div class="rcard-body">
+          <div class="rcard-top">
+            <div class="rcard-name">Contro il Tempo</div>
+          </div>
+          <div class="rcard-h-row">
+            <img class="rcard-icon" src="2_Gioco a tempo.png" alt=""/>
+            <div class="rcard-h-text">
+              <div class="rcard-desc">Metti alla prova la tua velocità e conquista più premi!</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -827,11 +922,7 @@ function injectImages() {
   });
   // Logo
   const lg = document.getElementById('logoImg');     if(lg) lg.src = EXTRA.logo || '';
-  // Cards
-  const cs = document.getElementById('cardSfida');   if(cs) cs.src = IMG.card_sfida || '';
-  const cm = document.getElementById('cardModes');   if(cm) cm.src = IMG.card_modes || '';
-  const cp = document.getElementById('cardPopcorn'); if(cp) cp.src = IMG.card_popcorn || '';
-  const co = document.getElementById('cardOscar');   if(co) co.src = IMG.card_oscar || '';
+  // Cards: now SVG+PNG files, no base64 injection needed
   // Nav
   const bh = document.getElementById('btnHome');     if(bh) bh.src = IMG.btn_home || '';
   const br = document.getElementById('btnRank');     if(br) br.src = IMG.btn_rank || '';
@@ -844,8 +935,7 @@ function injectImages() {
   // Schermata Modalità di Gioco
   const imgAr = document.getElementById('imgArrow');      if(imgAr && typeof ARROW_BACK   !== 'undefined') imgAr.src = ARROW_BACK;
   const imgTM = document.getElementById('imgTxtMod');     if(imgTM && typeof TXT_MODALITA !== 'undefined') imgTM.src = TXT_MODALITA;
-  const imgCL = document.getElementById('imgCardLibera'); if(imgCL && typeof CARD_LIBERA  !== 'undefined') imgCL.src = CARD_LIBERA;
-  const imgCT = document.getElementById('imgCardTempo');  if(imgCT && typeof CARD_TEMPO   !== 'undefined') imgCT.src = CARD_TEMPO;
+  // imgCardLibera / imgCardTempo: replaced by SVG+PNG cards, no injection needed
   // Exit alert icon
   const imgEA = document.getElementById('exitAlertIcon'); if(imgEA && typeof IMG !== 'undefined') imgEA.src = IMG.btn_play || '';
 }
