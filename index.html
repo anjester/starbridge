@@ -795,7 +795,7 @@ select:focus{border-color:rgba(255,211,77,.5)}
   </button>
 </nav>
 
-<script src="assets.js"></script>
+<script src="assets_ottimizzato.js"></script>
 <script>
 function initAnimCards(){
   var cfgs=[{r1:"0,90,255",r2:"10,50,200",p:"80,180,255"},{r1:"220,20,20",r2:"160,8,8",p:"255,100,60"},{r1:"140,0,220",r2:"90,0,170",p:"200,100,255"},{r1:"215,100,0",r2:"130,48,0",p:"255,185,40"}];
@@ -830,7 +830,7 @@ function initAnimCards(){
 
 
 </script>
-<script src="game.js"></script>
+<script src="game_ottimizzato.js"></script>
 <script>
 // ── NAVIGAZIONE ──
 const SCREENS = {
@@ -906,7 +906,6 @@ function confirmExit() {
 function startMode(mode) {
   window._startMode = mode;
   _navigateTo('play');
-  if (typeof initGame === 'function') initGame();
 }
 
 // ── INJECT IMMAGINI ──
