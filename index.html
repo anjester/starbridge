@@ -136,6 +136,7 @@ html,body{height:100%;overflow:hidden;
 .rcard-bottom{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;width:100%;padding:1% 2%;}
 .rcard-icon{width:100%;max-width:100%;height:auto;max-height:100%;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.75));display:block;}
 /* Landscape mode cards – full viewport width so vw is accurate */
+.rcard-h{aspect-ratio:1088/787;}
 .rcard-h .rcard-body{padding:4% 5% 3%;gap:0;}
 .rcard-h .rcard-top{width:100%;text-align:center;padding-bottom:2%;max-height:none;overflow:hidden;}
 .rcard-h .rcard-name{font-size:clamp(13px,4.2vw,26px);letter-spacing:.02em;}
@@ -493,7 +494,8 @@ select:focus{border-color:rgba(255,211,77,.5)}
   transform:translateY(3%);transform-origin:center bottom;}
 
 /* LANDSCAPE MODE CARDS */
-#screenModes .mode-card{width:min(100%,640px)!important;margin:0 auto!important;}
+#screenModes .modes-scroll{padding-left:4%;padding-right:4%;box-sizing:border-box;}
+#screenModes .mode-card{width:min(100%,640px)!important;margin:0 auto 16px auto!important;}
 #screenModes .rcard-h .rcard-body{padding:5% 5% 4%!important;}
 #screenModes .rcard-h .rcard-top{max-height:34%!important;overflow:hidden!important;}
 #screenModes .rcard-h .rcard-name{font-size:clamp(16px,4.8vw,30px)!important;line-height:.95!important;}
