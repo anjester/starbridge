@@ -424,92 +424,323 @@ select:focus{border-color:rgba(255,211,77,.5)}
 .plus:active{background:rgba(255,255,255,.4)!important}
 </style>
 
-/* === STARBRIDGE MOBILE FIX v2 - Motorola / schermi stretti === */
-<style>
-.grid{
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-}
-.card-wrap,
-.rcard{
-  min-width:0!important;
-}
-.rcard-body{
-  overflow:hidden!important;
-}
-.rcard-top{
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  max-height:35%!important;
-  align-items:stretch!important;
-  text-align:center!important;
-  padding-inline:3px!important;
-  box-sizing:border-box!important;
-}
-.rcard-name,
-.rcard-desc{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  white-space:normal!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
-  hyphens:none!important;
-  text-align:center!important;
-  box-sizing:border-box!important;
-}
-.rcard-name{
-  font-size:clamp(10px,2.75vw,17px)!important;
-  line-height:.98!important;
-  letter-spacing:.005em!important;
-}
-.rcard-desc{
-  font-size:clamp(7px,1.75vw,9.5px)!important;
-  line-height:1.13!important;
-  margin-top:1px!important;
-  padding-inline:1px!important;
-}
-@media(max-width:420px){
+
+<!-- STARBRIDGE RESPONSIVE PATCH V3 -->
+<style id="starbridge-responsive-v3">
+  /* Base: evita tagli e consente ai testi di andare su 2 righe quando serve */
+  :root{
+    --nav-h:clamp(74px,12vh,92px);
+    --ad-h:0px;
+  }
+
+  .screen{
+    padding-bottom:calc(var(--nav-h) + var(--safe-bot) + 8px)!important;
+  }
+
+  .home-wrap{
+    height:100%;
+    min-height:0;
+  }
+
   .home-scroll{
-    padding-left:8px!important;
-    padding-right:8px!important;
+    padding:0 clamp(8px,2.6vw,16px) 6px!important;
+    min-height:0!important;
   }
-  .grid{
-    column-gap:8px!important;
-    row-gap:10px!important;
+
+  .logo-wrap{
+    padding:2px 0 clamp(6px,1.2vh,12px)!important;
   }
-  .rcard-body{
-    padding:5% 5% 2%!important;
-  }
-  .rcard-name{
-    font-size:clamp(10px,2.65vw,12px)!important;
-    line-height:.96!important;
-    letter-spacing:0!important;
-  }
-  .rcard-desc{
-    font-size:clamp(7px,1.7vw,8.5px)!important;
-    line-height:1.08!important;
-  }
+
   .logo-wrap img{
-    max-height:7vh!important;
+    width:clamp(160px,54vw,245px)!important;
+    max-height:clamp(42px,7.2vh,74px)!important;
   }
-}
-@media(max-width:360px){
+
   .grid{
-    column-gap:6px!important;
+    width:100%!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
+    gap:clamp(10px,2.5vw,18px)!important;
+    overflow:visible!important;
+    align-items:stretch!important;
   }
+
+  .card-wrap{
+    overflow:visible!important;
+    align-items:stretch!important;
+  }
+
+  .rcard{
+    width:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+
+  .rcard-body{
+    padding:7.5% 6% 4%!important;
+    justify-content:flex-start!important;
+    overflow:hidden!important;
+  }
+
+  .rcard-top{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    max-height:42%!important;
+    overflow:visible!important;
+    gap:clamp(2px,.45vh,5px)!important;
+    z-index:4!important;
+  }
+
   .rcard-name{
-    font-size:10px!important;
+    width:100%!important;
+    max-width:100%!important;
+    display:block!important;
+    text-align:center!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:keep-all!important;
+    text-wrap:balance;
+    hyphens:none!important;
+    font-size:clamp(15px,4.15vw,23px)!important;
+    line-height:.92!important;
+    letter-spacing:.005em!important;
+    padding:0 1px!important;
+    margin:0 auto!important;
   }
+
   .rcard-desc{
-    font-size:7px!important;
+    width:100%!important;
+    max-width:100%!important;
+    display:block!important;
+    text-align:center!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    text-wrap:balance;
+    font-size:clamp(8.5px,2.08vw,12px)!important;
+    line-height:1.12!important;
+    margin-top:2px!important;
+  }
+
+  .rcard-bottom{
+    flex:1 1 auto!important;
+    width:100%!important;
+    min-height:0!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    padding:0 4% 5%!important;
+  }
+
+  .rcard-icon{
+    width:96%!important;
+    max-width:96%!important;
+    max-height:82%!important;
+    object-fit:contain!important;
+    transform:translateY(3%)!important;
+    transform-origin:center bottom!important;
+  }
+
+  /* Pagina modalità: titolo testuale responsive, non immagine larga che può uscire */
+  #screenModes .modes-scroll{
+    height:100%;
+    width:100%;
+    box-sizing:border-box;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-width:none;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(12px,2.2vh,20px);
+    padding:clamp(8px,2vw,18px) clamp(15px,4vw,28px) clamp(16px,3vh,24px);
+  }
+  #screenModes .modes-scroll::-webkit-scrollbar{display:none;}
+
+  #screenModes .modes-head{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr);
+    align-items:center;
+    gap:clamp(10px,2.6vw,16px);
+    flex-shrink:0;
+    width:100%;
+  }
+
+  #screenModes .modes-back{
+    width:clamp(42px,10.5vw,58px);
+    height:clamp(42px,10.5vw,58px);
+    border:0;
+    background:transparent;
+    padding:0;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  #screenModes .modes-back img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    display:block!important;
+  }
+
+  #screenModes .modes-title{
+    min-width:0;
+    margin:0;
+    font-family:'acumin-pro','Syne',system-ui,sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:-.04em;
+    line-height:.9;
+    color:#ffd34d;
+    font-size:clamp(34px,8.8vw,68px);
+    text-shadow:0 4px 0 rgba(0,0,0,.5),0 0 28px rgba(255,170,0,.35);
+    background:linear-gradient(180deg,#ffe66b 0%,#ffb12b 52%,#f07028 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    overflow-wrap:normal;
+    word-break:normal;
+    text-wrap:balance;
+  }
+
+  #screenModes .modes-intro{
+    color:rgba(255,255,255,.78);
+    font-size:clamp(16px,4vw,24px)!important;
+    line-height:1.45!important;
+    margin:0!important;
+    flex-shrink:0;
+  }
+
+  /* Card orizzontali modalità: testi più grandi, icone più basse, leggibili su telefoni stretti */
+  #screenModes .mode-card{
+    width:min(100%,640px)!important;
+    margin:0 auto!important;
+    aspect-ratio:1088/787!important;
+    min-height:clamp(172px,38vw,330px)!important;
+    max-height:none!important;
+    border-radius:clamp(16px,4vw,24px)!important;
+  }
+
+  #screenModes .rcard-h .rcard-body{
+    padding:6.5% 6% 5.5%!important;
+    justify-content:flex-start!important;
+  }
+
+  #screenModes .rcard-h .rcard-top{
+    max-height:32%!important;
+    padding-bottom:1.8%!important;
+  }
+
+  #screenModes .rcard-h .rcard-name{
+    font-size:clamp(20px,5.2vw,34px)!important;
+    line-height:.92!important;
+    letter-spacing:.005em!important;
+  }
+
+  #screenModes .rcard-h-row{
+    flex:1 1 auto!important;
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:49% minmax(0,1fr)!important;
+    gap:3%!important;
+    align-items:end!important;
+    min-height:0!important;
+  }
+
+  #screenModes .rcard-h .rcard-icon{
+    width:100%!important;
+    max-width:100%!important;
+    max-height:94%!important;
+    align-self:end!important;
+    justify-self:start!important;
+    transform:translate(-2%,5%)!important;
+  }
+
+  #screenModes .rcard-h-text{
+    min-width:0!important;
+    width:100%!important;
+    height:100%!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:visible!important;
+    padding:0 1% 3% 0!important;
+  }
+
+  #screenModes .rcard-h .rcard-desc{
+    font-size:clamp(12px,3.2vw,18px)!important;
+    line-height:1.08!important;
+    font-weight:700!important;
+    max-width:100%!important;
+    color:rgba(255,255,255,.92)!important;
+  }
+
+  /* Nav più flessibile: non mangia spazio su schermi bassi */
+  .nav{
+    height:calc(var(--nav-h) + var(--safe-bot))!important;
+    padding:0 clamp(6px,1.8vw,12px) calc(var(--safe-bot))!important;
+  }
+  .nav-btn{
+    max-width:none!important;
+    min-width:0!important;
+    padding:clamp(5px,.9vh,8px) 2px clamp(3px,.7vh,6px)!important;
+    gap:clamp(2px,.55vh,5px)!important;
+  }
+  .nav-btn img.nav-icon{
+    width:clamp(34px,10.5vw,54px)!important;
+    height:clamp(34px,10.5vw,54px)!important;
   }
   .nav-btn span{
-    font-size:9px!important;
-    letter-spacing:.08em!important;
+    font-size:clamp(7.2px,2.05vw,10px)!important;
+    letter-spacing:.1em!important;
   }
-}
+  .nav-sep{height:clamp(34px,6.6vh,46px)!important;}
+
+  /* Telefoni stretti: mantieni titoli grandi ma su 2 righe, senza uscire */
+  @media (max-width:380px){
+    .home-scroll{padding-left:9px!important;padding-right:9px!important;}
+    .grid{gap:9px!important;}
+    .rcard-body{padding:8% 6% 4%!important;}
+    .rcard-top{max-height:45%!important;}
+    .rcard-name{font-size:clamp(14px,4.25vw,18px)!important;line-height:.9!important;letter-spacing:0!important;}
+    .rcard-desc{font-size:clamp(7.5px,2.15vw,9.5px)!important;line-height:1.08!important;}
+    .rcard-icon{max-height:80%!important;transform:translateY(4%)!important;}
+    #screenModes .modes-title{font-size:clamp(30px,8.3vw,48px);letter-spacing:-.05em;}
+    #screenModes .modes-intro{font-size:clamp(14px,3.8vw,18px)!important;line-height:1.42!important;}
+    #screenModes .rcard-h .rcard-name{font-size:clamp(18px,5vw,25px)!important;}
+    #screenModes .rcard-h .rcard-desc{font-size:clamp(11px,3.05vw,14px)!important;}
+    #screenModes .mode-card{min-height:168px!important;}
+  }
+
+  /* Telefoni molto bassi: compatta logo/nav e aumenta aria utile */
+  @media (max-height:720px){
+    :root{--nav-h:76px;}
+    .topbar{padding-top:5px!important;padding-bottom:2px!important;}
+    .logo-wrap img{max-height:44px!important;}
+    .grid{gap:8px!important;}
+    .rcard-body{padding-top:6.5%!important;}
+    .rcard-name{font-size:clamp(13px,3.8vw,20px)!important;}
+    .rcard-desc{font-size:clamp(7.5px,1.95vw,10px)!important;}
+    #screenModes .modes-scroll{gap:10px;padding-top:8px;}
+    #screenModes .modes-intro{font-size:15px!important;line-height:1.33!important;}
+    #screenModes .mode-card{min-height:158px!important;}
+  }
+
+  /* Telefoni grandi / tablet: card più eleganti e titoli corposi */
+  @media (min-width:520px){
+    .home-scroll{max-width:620px;margin:0 auto;width:100%;}
+    .rcard-name{font-size:clamp(19px,3.8vw,28px)!important;}
+    .rcard-desc{font-size:clamp(11px,2vw,14px)!important;}
+    #screenModes .modes-scroll{max-width:720px;margin:0 auto;}
+  }
+
+  @media (min-width:768px){
+    .home-scroll{max-width:760px;}
+    .grid{gap:18px!important;}
+    .rcard-name{font-size:clamp(22px,3vw,32px)!important;}
+    #screenModes .modes-scroll{max-width:820px;}
+    #screenModes .mode-card{max-width:760px!important;}
+  }
 </style>
 
 </head>
@@ -755,14 +986,15 @@ select:focus{border-color:rgba(255,211,77,.5)}
 
 <!-- MODALITÀ DI GIOCO -->
 <div class="screen hidden" id="screenModes">
-  <div style="height:100%;overflow-y:auto;overflow-x:hidden;padding:0 14px 14px;scrollbar-width:none;display:flex;flex-direction:column;gap:14px;width:100%;box-sizing:border-box;">
-    <div style="display:flex;align-items:center;gap:10px;padding:8px 0 4px;flex-shrink:0">
-      <button onclick="goTo('home')" style="background:none;border:none;padding:0;cursor:pointer;flex-shrink:0">
-        <img id="imgArrow" src="" alt="←" style="width:44px;height:44px;object-fit:contain"/>
+  <div class="modes-scroll">
+    <div class="modes-head">
+      <button class="modes-back" onclick="goTo('home')">
+        <img id="imgArrow" src="" alt="←"/>
       </button>
-      <img id="imgTxtMod" src="" alt="Modalità di Gioco" style="height:36px;object-fit:contain;mix-blend-mode:screen;flex:1;min-width:0;max-width:100%;"/>
+      <h2 class="modes-title">Modalità di Gioco</h2>
+      <img id="imgTxtMod" src="" alt="" aria-hidden="true" style="display:none!important"/>
     </div>
-    <p style="color:rgba(255,255,255,.75);font-size:14px;line-height:1.6;margin:0;flex-shrink:0">
+    <p class="modes-intro">
       Collega due attori passando da film in comune.<br>
       Scegli tra tutti i film e tutti gli attori.<br>
       Se il collegamento è sbagliato, perdi un Oscar.
