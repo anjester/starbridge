@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
+<style>
+body{background:#04122d;margin:0;padding:20px;font-family:sans-serif;}
+h3{color:#ffd34d;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:16px 0 6px;}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:340px;height:460px;}
+.card-wrap{cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.55);display:flex;align-items:stretch;min-height:0;}
+
+.mode-wrap{display:flex;flex-direction:column;gap:12px;width:340px;}
+.mode-card{cursor:pointer;border-radius:18px;overflow:hidden;width:100%;box-sizing:border-box;aspect-ratio:1088/787;}
+
+.rcard{position:relative;width:100%;height:100%;border-radius:inherit;overflow:hidden;}
+.rcard-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.rcard-body{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:7% 6% 3%;box-sizing:border-box;text-align:center;}
+.rcard-top{flex-shrink:0;display:flex;flex-direction:column;gap:2px;align-items:center;}
+.rcard-name{font-family:'acumin-pro',sans-serif;font-size:clamp(10px,4vw,19px);font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#ffd34d;line-height:1.1;text-shadow:0 2px 8px rgba(0,0,0,.85);}
+.rcard-desc{font-family:'acumin-pro',sans-serif;font-size:clamp(8px,2.2vw,10px);font-weight:400;color:rgba(255,255,255,.85);line-height:1.35;margin-top:2px;}
+.rcard-bottom{flex:1;display:flex;align-items:flex-end;justify-content:center;min-height:0;width:100%;}
+.rcard-icon{max-height:100%;max-width:90%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.75));display:block;}
+.rcard-h .rcard-body{padding:5% 6% 4%;gap:0;}
+.rcard-h .rcard-top{width:100%;text-align:center;padding-bottom:3%;}
+.rcard-h .rcard-name{font-size:clamp(14px,5vw,28px);}
+.rcard-h-row{flex:1;display:flex;align-items:center;gap:5%;min-height:0;width:100%;}
+.rcard-h .rcard-icon{width:42%;flex-shrink:0;height:auto;max-height:100%;}
+.rcard-h-text{flex:1;display:flex;align-items:center;}
+.rcard-h .rcard-desc{font-size:clamp(11px,2.5vw,15px);color:rgba(255,255,255,.88);margin:0;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<h3>Home Grid (~375px)</h3>
+<div class="grid">
+  <div class="card-wrap">
+    <div class="rcard">
+      <img class="rcard-bg" src="1_SFIDA_CARD.svg" alt=""/>
+      <div class="rcard-body">
+        <div class="rcard-top">
+          <div class="rcard-name">Sfida del Giorno</div>
+          <div class="rcard-desc">Gioca ogni giorno e ottieni premi esclusivi!</div>
+        </div>
+        <div class="rcard-bottom"><img class="rcard-icon" src="1_Sfida del giorno.png" alt=""/></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap">
+    <div class="rcard">
+      <img class="rcard-bg" src="2_MODALITA_CARD.svg" alt=""/>
+      <div class="rcard-body">
+        <div class="rcard-top">
+          <div class="rcard-name">Modalità di Gioco</div>
+          <div class="rcard-desc">Scegli la tua modalità preferita e gioca!</div>
+        </div>
+        <div class="rcard-bottom"><img class="rcard-icon" src="2A_Modalità di gioco.png" alt=""/></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap">
+    <div class="rcard">
+      <img class="rcard-bg" src="3_POPCORN_CARD.svg" alt=""/>
+      <div class="rcard-body">
+        <div class="rcard-top">
+          <div class="rcard-name">Pop Corn</div>
+          <div class="rcard-desc">Vinci gli Oscar per continuare a giocare!</div>
+        </div>
+        <div class="rcard-bottom"><img class="rcard-icon" src="4_BTN_POPCORN.png" alt=""/></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap">
+    <div class="rcard">
+      <img class="rcard-bg" src="4_OSCAR_CARD.svg" alt=""/>
+      <div class="rcard-body">
+        <div class="rcard-top">
+          <div class="rcard-name">Oscar Collection</div>
+          <div class="rcard-desc">Raccogli statuette e sblocca ricompense!</div>
+        </div>
+        <div class="rcard-bottom"><img class="rcard-icon" src="Mondo Oscar.png" alt=""/></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Mode Cards</h3>
+<div class="mode-wrap">
+  <div class="mode-card">
+    <div class="rcard rcard-h">
+      <img class="rcard-bg" src="Box-Modalità-Free.svg" alt=""/>
+      <div class="rcard-body">
+        <div class="rcard-top"><div class="rcard-name">Modalità Libera</div></div>
+        <div class="rcard-h-row">
+          <img class="rcard-icon" src="2_Modalita non a tempo.png" alt=""/>
+          <div class="rcard-h-text"><div class="rcard-desc">Gioca senza limiti e migliora le tue combinazioni!</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mode-card">
+    <div class="rcard rcard-h">
+      <img class="rcard-bg" src="Box-Modalità-Tempo.svg" alt=""/>
+      <div class="rcard-body">
+        <div class="rcard-top"><div class="rcard-name">Contro il Tempo</div></div>
+        <div class="rcard-h-row">
+          <img class="rcard-icon" src="2_Gioco a tempo.png" alt=""/>
+          <div class="rcard-h-text"><div class="rcard-desc">Metti alla prova la tua velocità e conquista più premi!</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
