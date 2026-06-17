@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>StarBridge</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css?v=conform-1"/>
+  <link rel="stylesheet" href="css/game.css?v=conform-1"/>
+</head>
+<body>
+<!-- SFONDO -->
+<div class="bg" id="bg"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <img id="splashImg" src="" alt="StarBridge"/>
+  <div class="sp-loader">
+    <div class="sp-msg" id="spMsg">Caricamento in corso...</div>
+    <div class="sp-track"><div class="sp-fill" id="spFill"></div></div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen" id="screenHome">
+  <div class="home-wrap">
+    <div class="topbar">
+      <!-- Impostazioni sx -->
+      <button class="settings-btn" onclick="goTo('profile')" aria-label="Impostazioni">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="3" stroke="#ffd34d" stroke-width="2"/>
+          <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#ffd34d" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <!-- Contatori dx -->
+      <div class="counters-group">
+        <div class="counter">
+          <img class="counter-bg" id="pillOscar" src="" alt=""/>
+          <img class="ic" id="icOscar" src="" alt=""/>
+          <span id="oscarCount">1.618</span>
+        </div>
+        <div class="counter">
+          <img class="counter-bg" id="pillPopcorn" src="" alt=""/>
+          <img class="ic" id="icPopcorn" src="" alt=""/>
+          <span>25</span><div class="plus">+</div>
+        </div>
+        <div class="counter">
+          <img class="counter-bg" id="pillHeart" src="" alt=""/>
+          <img class="ic" id="icHeart" src="" alt=""/>
+          <span>5</span><div class="plus">+</div>
+        </div>
+      </div>
+    </div>
+    <div class="home-scroll">
+      <div class="logo-wrap"><img id="logoImg" src="" alt="StarBridge"/></div>
+      <div class="grid">
+        <div class="card-wrap" onclick="goTo('play')">
+          <div class="rcard">
+            <img id="bgSfida" class="rcard-bg" src="" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Sfida del<br>Giorno</div>
+                <div class="rcard-desc">Gioca ogni giorno e ottieni premi esclusivi!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img id="icnSfida" class="rcard-icon" src="" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-wrap" onclick="goTo('modes')">
+          <div class="rcard">
+            <img id="bgModalita" class="rcard-bg" src="" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Modalità<br>di Gioco</div>
+                <div class="rcard-desc">Scegli la tua modalità preferita e gioca!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img id="icnModalita" class="rcard-icon" src="" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-wrap" onclick="goTo('mondo')">
+          <div class="rcard">
+            <img id="bgPopcorn" class="rcard-bg" src="" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Pop Corn</div>
+                <div class="rcard-desc">Vinci gli Oscar per continuare a giocare!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img id="icnPopcorn" class="rcard-icon" src="" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-wrap" onclick="goTo('rank')">
+          <div class="rcard">
+            <img id="bgOscar" class="rcard-bg" src="" alt=""/>
+            <div class="rcard-body">
+              <div class="rcard-top">
+                <div class="rcard-name">Oscar<br>Collection</div>
+                <div class="rcard-desc">Raccogli statuette e sblocca ricompense!</div>
+              </div>
+              <div class="rcard-bottom">
+                <img id="icnOscar" class="rcard-icon" src="" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen hidden" id="screenPlay">
+  <!-- NEW STEP-BASED LAYOUT -->
+  <!-- top fixed area: logo + actors + path -->
+  <div class="sp-top">
+    <div class="sp-logo-wrap">
+      <img id="spLogo" src="" alt="StarBridge"/>
+    </div>
+    <div class="sp-start-lbl" id="spModeLabel">★ Start! ★</div>
+    <div class="sp-actors">
+      <div class="sp-abox sp-start">
+        <img class="sp-aphoto" id="spStartImg" src="" alt=""/>
+        <div>
+          <div class="sp-albl">Attore Iniziale</div>
+          <div class="sp-aname" id="spStartName"></div>
+        </div>
+      </div>
+      <div class="sp-abox sp-target">
+        <img class="sp-aphoto" id="spTargetImg" src="" alt=""/>
+        <div>
+          <div class="sp-albl">Target</div>
+          <div class="sp-aname" id="spTargetName"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sp-path" id="spPath"></div>
+  </div>
+  <!-- scrollable steps -->
+  <div class="sp-steps" id="spSteps"></div>
+  <!-- hidden legacy elements (kept for JS compatibility) -->
+  <div style="display:none">
+    <main class="app" id="mainApp">
+
+<header class="topbar">
+  <section class="hud">
+    <div class="hud-card"><div class="hud-label">⏱ Tempo</div><div class="hud-value" id="tv">3:00</div></div>
+    <div class="hud-card"><div class="hud-label"><img id="icPc" src="" style="width:18px;height:18px;object-fit:contain;vertical-align:middle"/> Pop Corn</div><div class="hud-value gold" id="sv">0</div></div>
+    <div class="hud-card"><div class="hud-label"><img id="icPl" src="" style="width:18px;height:18px;object-fit:contain;vertical-align:middle"/> Gradi</div><div class="hud-value" id="dv">0/6</div></div>
+    <div class="hud-card"><div class="hud-label"><img id="icOs" src="" style="width:18px;height:18px;object-fit:contain;vertical-align:middle"/> Oscar</div><div class="hud-value" id="ov">4</div></div>
+  </section>
+</header>
+
+<section class="layout">
+<div class="panel">
+
+  
+
+  <section class="versus">
+    <article class="actor-card active" id="startCard">
+      <img id="startImg" src="" alt=""/>
+      <div class="actor-info">
+        <div class="actor-kicker">Partenza</div>
+        <div class="actor-name" id="startName"></div>
+        <div class="actor-role">Attore iniziale</div>
+      </div>
+    </article>
+    <div class="bridge-icon"><div class="pulse">↔</div></div>
+    <article class="actor-card" id="targetCard">
+      <img id="targetImg" src="" alt=""/>
+      <div class="actor-info">
+        <div class="actor-kicker">Obiettivo</div>
+        <div class="actor-name" id="targetName"></div>
+        <div class="actor-role">Da raggiungere</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="game-box">
+    <div class="game-head">
+      <div>
+        <div class="slabel">Posizione attuale</div>
+        <div class="current-actor" id="curActor"></div>
+      </div>
+      <div class="actions">
+        <button class="btn gold" id="hintBtn">💡 Aiuto (–1 Oscar)</button>
+        <button class="btn" id="resetBtn">↻ Ricomincia</button>
+      </div>
+    </div>
+
+    <div class="msg" id="msgBox"></div>
+
+    <div class="sel-box" id="selBox">
+      <div class="choice-grid">
+        <div class="field">
+          <label for="movieSel">1. Scegli un film</label>
+          <div class="sw"><select id="movieSel"><option value="">Seleziona un film...</option></select></div>
+        </div>
+        <div class="field">
+          <label for="actorSel">2. Scegli l'attore successivo</label>
+          <div class="sw"><select id="actorSel"><option value="">Seleziona un attore...</option></select></div>
+        </div>
+      </div>
+
+      <div class="preview" id="prev">
+        <div class="poster"><img id="prevPoster" src="" alt=""/></div>
+        <div>
+          <div class="slabel">Tentativo</div>
+          <div class="movie-title-p" id="prevTitle"></div>
+          <div class="movie-year-p" id="prevYear"></div>
+          <div class="guess-line" id="prevGuess"></div>
+          <span class="pill" id="prevRarity"></span>
+        </div>
+      </div>
+
+      <div class="conf-row">
+        <div class="conf-txt" id="confTxt">Scegli un film e un attore per verificare il collegamento.</div>
+        <button class="btn primary" id="confBtn" disabled>Verifica collegamento →</button>
+      </div>
+    </div>
+
+    <div class="result" id="resultBox">
+      <div class="trophy" id="resIcon">🏆</div>
+      <h2 id="resTitle">Ponte completato!</h2>
+      <p id="resTxt"></p>
+      <div class="result-scores">
+        <div class="rscore"><div class="val" id="finalSc">0</div><div class="lbl">Punteggio</div></div>
+        <div class="rscore"><div class="val" id="finalDeg">0</div><div class="lbl">Gradi usati</div></div>
+      </div>
+      <div class="popcorn-reward" id="popcornReward">
+        <img id="rewardIcon" src="" style="width:44px;height:44px;object-fit:contain;flex-shrink:0"/>
+        <div>+<strong id="popcornEarned">0</strong> <strong id="rewardName">Pop Corn</strong>!<br><small style="opacity:.7">Spendili nel Mondo Pop Corn</small></div>
+      </div>
+      <div style="margin-top:14px;border:1px solid var(--border-b);background:rgba(0,0,0,.22);border-radius:16px;padding:12px" id="progBox">
+        <div style="color:rgba(255,232,163,.65);font-size:9px;font-weight:700;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:.16em;margin-bottom:10px;text-align:center">Mondo Pop Corn — La tua progressione</div>
+        <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px" id="progChain"></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <button class="btn primary" id="playAgainBtn">Stessa sfida</button>
+        <button class="btn gold" id="newChallengeBtn">🎲 Nuova sfida</button>
+        <button class="btn-home-back" onclick="goTo('home')">🏠 Torna alla Home</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<aside class="panel">
+  <div class="path-head">
+    <div><div class="slabel">Percorso</div><h2>Il tuo ponte</h2></div>
+    <div class="step-ctr" id="stepCtr">0 / 6 gradi</div>
+  </div>
+  <div class="empty" id="emptyPath">Il ponte è vuoto. Inizia scegliendo un film e poi un attore.</div>
+  <div class="path-list" id="pathList"></div>
+  <div style="margin-top:14px;border:1px solid var(--border-b);background:rgba(0,0,0,.2);border-radius:18px;padding:13px;color:var(--muted);line-height:1.55;font-size:12px">
+    <strong style="color:var(--txt)">Come funziona:</strong> un collegamento è valido solo se il film scelto contiene sia l'attore attuale che quello successivo. Errore = –1 Oscar. Zero Oscar o superati 6 gradi = partita persa.
+  </div>
+</aside>
+</section>
+
+<div id="tmdbStatus" style="display:none;text-align:center;color:rgba(255,211,77,0.6);font-size:11px;padding:8px;letter-spacing:.06em;animation:fadeUp .3s ease both">⏳ Caricamento immagini reali TMDB...</div>
+<div class="tmdb-note">
+  This product uses the TMDB API but is not endorsed or certified by TMDB. &nbsp;·&nbsp;
+  <a href="https://www.themoviedb.org" target="_blank" rel="noopener">themoviedb.org</a>
+  &nbsp;·&nbsp; Images: poster &amp; photos © respective rights holders.
+</div>
+
+
+  </div>
+</div>
+
+
+<!-- MODALITÀ DI GIOCO -->
+<div class="screen hidden" id="screenModes">
+  <div class="modes-scroll">
+    <div class="modes-head">
+      <button class="modes-back" onclick="goTo('home')">
+        <img id="imgArrow" src="" alt="←"/>
+      </button>
+      <h2 class="modes-title">Modalità di Gioco</h2>
+      <img id="imgTxtMod" src="" alt="" aria-hidden="true" style="display:none!important"/>
+    </div>
+    <p class="modes-intro">
+      Collega due attori passando da film in comune.<br>
+      Scegli tra tutti i film e tutti gli attori.<br>
+      Se il collegamento è sbagliato, perdi un Oscar.
+    </p>
+    <div class="mode-card" onclick="startMode('relaxed')">
+      <div class="rcard rcard-h">
+        <img id="bgLibera" class="rcard-bg" src="" alt=""/>
+        <div class="rcard-body">
+          <div class="rcard-top">
+            <div class="rcard-name">Modalità Libera</div>
+          </div>
+          <div class="rcard-h-row">
+            <img id="icnLibera" class="rcard-icon" src="" alt=""/>
+            <div class="rcard-h-text">
+              <div class="rcard-desc">Gioca senza limiti e migliora le tue combinazioni!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card" onclick="startMode('timed')">
+      <div class="rcard rcard-h">
+        <img id="bgTempo" class="rcard-bg" src="" alt=""/>
+        <div class="rcard-body">
+          <div class="rcard-top">
+            <div class="rcard-name">Contro il Tempo</div>
+          </div>
+          <div class="rcard-h-row">
+            <img id="icnTempo" class="rcard-icon" src="" alt=""/>
+            <div class="rcard-h-text">
+              <div class="rcard-desc">Metti alla prova la tua velocità e conquista più premi!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- CLASSIFICA -->
+<div class="screen hidden" id="screenRank">
+  <div class="placeholder">
+    <div class="ph-icon">🏆</div>
+    <div class="ph-title">Classifica</div>
+    <div class="ph-sub">In arrivo — chi ha collezionato più Oscar?</div>
+  </div>
+</div>
+
+<!-- MONDO -->
+<div class="screen hidden" id="screenMondo">
+  <div class="placeholder">
+    <div class="ph-icon">🍿</div>
+    <div class="ph-title">Mondo Pop Corn</div>
+    <div class="ph-sub">In arrivo — scala la progressione fino all'Oscar.</div>
+  </div>
+</div>
+
+<!-- PROFILO -->
+<div class="screen hidden" id="screenProfile">
+  <div class="placeholder">
+    <div class="ph-icon">👤</div>
+    <div class="ph-title">Profilo</div>
+    <div class="ph-sub">In arrivo — statistiche e impostazioni.</div>
+  </div>
+</div>
+
+
+<!-- ALERT USCITA -->
+<div id="exitAlert" style="display:none;position:fixed;inset:0;z-index:8000;align-items:center;justify-content:center;">
+  <div style="position:absolute;inset:0;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(2,8,20,.7)" onclick="closeExitAlert()"></div>
+  <div style="position:relative;z-index:1;background:linear-gradient(150deg,#0b2068 0%,#060f38 100%);border:2.5px solid rgba(50,110,230,.6);border-radius:26px;padding:30px 26px 26px;max-width:340px;width:92%;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.75),inset 0 0 60px rgba(15,50,180,.12)">
+    <img id="exitAlertIcon" src="" style="width:76px;height:76px;object-fit:contain;margin-bottom:10px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))">
+    <h3 style="font-family:'acumin-pro','Syne',sans-serif;font-size:27px;font-weight:900;color:#ffaa00;margin-bottom:10px;text-transform:uppercase;letter-spacing:.01em;line-height:1.15;text-shadow:0 3px 10px rgba(0,0,0,.8),0 0 24px rgba(255,150,0,.35)">VUOI USCIRE<br>DALLA PARTITA?</h3>
+    <p style="color:rgba(220,235,255,.78);font-size:14px;line-height:1.55;margin-bottom:26px">Il tuo progresso andrà perso.<br>Vuoi uscire?</p>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <button onclick="confirmExit()" style="flex:1;background:linear-gradient(135deg,#e83030,#b81818);border:none;color:#fff;border-radius:999px;padding:15px 10px;font-family:'acumin-pro','Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:.03em;box-shadow:0 5px 18px rgba(220,30,30,.45)">✕ ESCI</button>
+      <button onclick="closeExitAlert()" style="flex:1;background:linear-gradient(135deg,#38c428,#1e9a10);border:none;color:#fff;border-radius:999px;padding:15px 10px;font-family:'acumin-pro','Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:.03em;box-shadow:0 5px 18px rgba(40,180,30,.45)">RIMANI &gt;</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-bg"></div>
+
+  <button class="nav-btn active" id="btn-home" onclick="goTo('home')">
+    <img class="nav-icon" id="btnHome" src="" alt=""/>
+    <span>HOME</span>
+  </button>
+
+  <div class="nav-sep"></div>
+
+  <button class="nav-btn" id="btn-rank" onclick="goTo('rank')">
+    <img class="nav-icon" id="btnRank" src="" alt=""/>
+    <span>CLASSIFICA</span>
+  </button>
+
+  <div class="nav-sep"></div>
+
+  <button class="nav-btn" id="btn-play" onclick="goTo('modes')">
+    <img class="nav-icon" id="btnPlay" src="" alt=""/>
+    <span>GIOCA</span>
+  </button>
+
+  <div class="nav-sep"></div>
+
+  <button class="nav-btn" id="btn-mondo" onclick="goTo('mondo')">
+    <img class="nav-icon" id="btnMondo" src="" alt=""/>
+    <span>POPCORN</span>
+  </button>
+
+  <div class="nav-sep"></div>
+
+  <button class="nav-btn" id="btn-profile" onclick="goTo('profile')">
+    <img class="nav-icon" id="btnProfile" src="" alt=""/>
+    <span>PROFILO</span>
+  </button>
+</nav>
+
+  <!-- Core scripts -->
+
+  <script src="js/assets-loader.js?v=conform-1"></script>
+  <script src="js/ui-effects.js?v=conform-1"></script>
+  <script src="js/game.js?v=conform-1"></script>
+  <script src="js/navigation.js?v=conform-1"></script>
+</body>
+</html>
