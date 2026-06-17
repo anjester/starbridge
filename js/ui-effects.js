@@ -3,7 +3,8 @@
 
 // ── INJECT IMMAGINI ──
 function injectImages() {
-  if (typeof IMG === 'undefined' || typeof EXTRA === 'undefined') return;
+  if (typeof IMG   === 'undefined') window.IMG   = {};
+  if (typeof EXTRA === 'undefined') window.EXTRA = {};
   const si = (id, val) => { const e = document.getElementById(id); if (e && val) e.src = val; };
 
   // Top bar counters
@@ -190,6 +191,6 @@ function initAnimCards() {
 document.addEventListener('DOMContentLoaded', function() {
   injectImages();
   spawnSparks();
-  runSplash();
   initCardParticles();
+  runSplash();
 });
