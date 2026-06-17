@@ -541,293 +541,62 @@ select:focus{border-color:rgba(255,211,77,.5)}
   .rcard-name{font-size:clamp(22px,3vw,32px)!important;}
   #screenModes .mode-card{max-width:760px!important;}
 }
-</style>
 
-
-
-<!-- STARBRIDGE FIX V2: responsive senza perdere animazioni -->
-<style id="starbridge-fix-v2">
-/*
-  V2: torna alle card costruite con SVG + testo + icone, quindi i canvas delle particelle restano vivi.
-  Il bug del V1 era height:100% su .home-scroll + PNG complete delle card.
-*/
-html,body{
-  width:100%;
-  min-height:100%;
-  overflow:hidden!important;
-}
-.screen{
-  height:100vh;
-  height:100dvh;
-  max-height:100dvh;
-  overflow:hidden!important;
-}
-
-/* HOME: layout bloccato dentro lo spazio reale sopra la nav */
-#screenHome .home-wrap{
-  height:100%;
-  min-height:0;
-  display:flex!important;
-  flex-direction:column!important;
-  overflow:hidden!important;
-}
-#screenHome .topbar{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  flex:0 0 auto!important;
-  width:100%!important;
-  padding:clamp(7px,1.35dvh,13px) clamp(8px,2.5vw,16px) clamp(3px,.65dvh,7px)!important;
-  gap:0!important;
-}
-#screenHome .settings-btn{display:none!important;}
-#screenHome .counters-group{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:100%!important;
-  max-width:520px!important;
-  gap:clamp(8px,2.8vw,16px)!important;
-}
-#screenHome .counter{
-  width:clamp(86px,25.2vw,118px)!important;
-  min-width:0!important;
-  max-width:none!important;
-  height:clamp(32px,5.35dvh,44px)!important;
-  padding:0 clamp(7px,1.8vw,12px)!important;
-  gap:clamp(3px,.9vw,7px)!important;
-  font-size:clamp(14px,4vw,21px)!important;
-  line-height:1!important;
-}
-#screenHome .counter img.ic{
-  width:clamp(21px,5.9vw,31px)!important;
-  height:clamp(21px,5.9vw,31px)!important;
-}
-#screenHome .plus{
-  width:clamp(17px,4.9vw,25px)!important;
-  height:clamp(17px,4.9vw,25px)!important;
-  font-size:clamp(12px,3.5vw,17px)!important;
-}
-
-#screenHome .home-scroll{
-  flex:1 1 auto!important;
-  height:auto!important;
-  min-height:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  overflow:hidden!important;
-  width:100%!important;
-  max-width:640px!important;
-  margin:0 auto!important;
-  padding:0 clamp(10px,3vw,22px) clamp(7px,1.2dvh,12px)!important;
-}
-#screenHome .logo-wrap{
-  flex:0 0 auto!important;
-  text-align:center!important;
-  padding:clamp(4px,.85dvh,12px) 0 clamp(7px,1.5dvh,16px)!important;
-}
-#screenHome .logo-wrap img{
-  width:clamp(215px,66vw,360px)!important;
-  max-width:94%!important;
-  max-height:clamp(56px,10.5dvh,92px)!important;
-  height:auto!important;
-  object-fit:contain!important;
-}
-#screenHome .grid{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  width:100%!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-  grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
-  gap:clamp(8px,2.4vw,18px)!important;
-  align-items:stretch!important;
-  justify-items:stretch!important;
-  overflow:hidden!important;
-}
-#screenHome .card-wrap{
-  min-width:0!important;
-  min-height:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  overflow:visible!important;
-}
-
-/* Card home: dimensionate sull'altezza della cella, non sulla larghezza.
-   Così entrano sempre 2 righe anche su Android bassi. */
-#screenHome .rcard{
-  height:100%!important;
-  width:auto!important;
-  max-width:100%!important;
-  max-height:100%!important;
-  aspect-ratio:527/736!important;
-  border-radius:clamp(12px,3vw,18px)!important;
-  overflow:hidden!important;
-  box-shadow:0 4px 16px rgba(0,0,0,.56)!important;
-  transform:translateZ(0)!important;
-  -webkit-mask-image:-webkit-radial-gradient(white,black)!important;
-}
-#screenHome .rcard-bg{
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  object-fit:fill!important;
-  z-index:0!important;
-  display:block!important;
-}
-#screenHome .rcard canvas,
-#screenModes .rcard canvas{
-  display:block!important;
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  pointer-events:none!important;
-  z-index:1!important;
-}
-#screenHome .rcard-body{
-  position:absolute!important;
-  inset:0!important;
-  z-index:2!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  overflow:hidden!important;
-  padding:clamp(10px,2.35dvh,22px) 5% clamp(4px,.8dvh,8px)!important;
-}
-#screenHome .rcard-top{
-  width:100%!important;
-  flex:0 0 auto!important;
-  max-height:37%!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  gap:clamp(2px,.45dvh,5px)!important;
-}
-#screenHome .rcard-name{
-  width:100%!important;
-  font-size:clamp(16px,4.75vw,25px)!important;
-  line-height:.96!important;
-  letter-spacing:.015em!important;
-  font-weight:900!important;
-  text-align:center!important;
-  overflow:hidden!important;
-  color:#ffd34d!important;
-  text-shadow:0 2px 8px rgba(0,0,0,.92),0 1px 0 rgba(120,48,0,.9)!important;
-}
-#screenHome .rcard-desc{
-  width:100%!important;
-  font-size:clamp(8.5px,2.35vw,12px)!important;
-  line-height:1.16!important;
-  text-align:center!important;
-  color:rgba(255,255,255,.92)!important;
-  overflow:hidden!important;
-  display:-webkit-box!important;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-}
-#screenHome .rcard-bottom{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  width:100%!important;
-  display:flex!important;
-  align-items:flex-end!important;
-  justify-content:center!important;
-  padding:clamp(2px,.45dvh,6px) 2% clamp(4px,.8dvh,8px)!important;
-}
-#screenHome .rcard-icon{
-  width:100%!important;
-  max-width:100%!important;
-  height:auto!important;
-  max-height:90%!important;
-  object-fit:contain!important;
-  transform:translateY(2%)!important;
-  transform-origin:center bottom!important;
-}
-
-/* Schermi molto bassi: riduco solo margini, non ammazzo i testi */
-@media(max-height:740px){
-  :root{--nav-h:clamp(70px,10.2dvh,78px)!important;}
-  #screenHome .topbar{padding-top:6px!important;padding-bottom:2px!important;}
-  #screenHome .counter{height:clamp(30px,5dvh,38px)!important;font-size:clamp(13px,3.8vw,18px)!important;}
-  #screenHome .logo-wrap{padding-top:3px!important;padding-bottom:6px!important;}
-  #screenHome .logo-wrap img{max-height:clamp(46px,8.3dvh,64px)!important;width:clamp(190px,58vw,300px)!important;}
-  #screenHome .home-scroll{padding-bottom:6px!important;}
-  #screenHome .grid{gap:clamp(7px,2.1vw,12px)!important;}
-  #screenHome .rcard-body{padding-top:clamp(8px,1.9dvh,15px)!important;}
-  #screenHome .rcard-name{font-size:clamp(14.5px,4.35vw,20px)!important;line-height:.98!important;}
-  #screenHome .rcard-desc{font-size:clamp(7.8px,2.15vw,10.5px)!important;line-height:1.12!important;}
-}
-@media(max-width:370px){
-  #screenHome .home-scroll{padding-left:8px!important;padding-right:8px!important;}
-  #screenHome .counters-group{gap:6px!important;}
-  #screenHome .counter{width:clamp(78px,26.2vw,92px)!important;padding:0 6px!important;}
-  #screenHome .grid{gap:7px!important;}
-  #screenHome .rcard-name{font-size:clamp(13.8px,4.25vw,18px)!important;}
-  #screenHome .rcard-desc{font-size:clamp(7.4px,2vw,9.3px)!important;}
-}
-@media(min-width:520px){
-  #screenHome .home-scroll{max-width:720px!important;}
-}
-@media(min-width:768px){
-  #screenHome .home-scroll{max-width:850px!important;}
-  #screenHome .grid{gap:20px!important;}
-  #screenHome .rcard-name{font-size:clamp(24px,3.2vw,34px)!important;}
-  #screenHome .rcard-desc{font-size:clamp(12px,1.7vw,16px)!important;}
-}
-
-/* Modalità: mantiene le animazioni e sistema la lettura su mobile */
-#screenModes .modes-scroll{
-  height:100%!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  -webkit-overflow-scrolling:touch!important;
-  scrollbar-width:none!important;
-  padding:clamp(16px,3dvh,36px) clamp(16px,5vw,52px) clamp(18px,3dvh,40px)!important;
-}
-#screenModes .modes-scroll::-webkit-scrollbar{display:none;}
-#screenModes .modes-head{
-  display:grid!important;
-  grid-template-columns:clamp(42px,11vw,76px) minmax(0,1fr)!important;
-  align-items:center!important;
-  gap:clamp(10px,3vw,24px)!important;
-  margin-bottom:clamp(14px,2.4dvh,28px)!important;
-}
-#screenModes .modes-title{
-  font-size:clamp(34px,8.8vw,86px)!important;
-  line-height:.9!important;
-}
-#screenModes .modes-intro{
-  font-size:clamp(16px,4vw,34px)!important;
-  line-height:1.28!important;
-  margin-bottom:clamp(18px,3.3dvh,40px)!important;
-}
-#screenModes .mode-card{
-  width:min(100%,760px)!important;
-  margin:0 auto clamp(14px,2.8dvh,28px)!important;
-}
-
-/* Schermata gioco: protegge HUD e layout dalle regole della home */
-#screenPlay .topbar{
-  display:block!important;
-  width:100%!important;
-  padding:0!important;
-  margin:0 0 14px!important;
-}
-#screenPlay .hud{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:8px!important;
-  min-width:0!important;
-}
-@media(max-width:680px){
-  #screenPlay .hud{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
-}
+/* ===== PLAY SCREEN — NEW STEP LAYOUT ===== */
+#screenPlay{background:#050d1f;display:flex;flex-direction:column;overflow:hidden;}
+.sp-top{flex-shrink:0;padding:0 12px;padding-top:env(safe-area-inset-top,0px);}
+.sp-logo-wrap{text-align:center;padding:8px 0 2px;}
+.sp-logo-wrap img{width:min(200px,55vw);height:auto;max-height:50px;object-fit:contain;}
+.sp-start-lbl{text-align:center;font-family:'acumin-pro',sans-serif;font-size:clamp(13px,4.5vw,19px);font-weight:900;color:#ffd34d;letter-spacing:.1em;margin:2px 0 8px;}
+.sp-actors{display:flex;gap:8px;margin-bottom:8px;}
+.sp-abox{flex:1;display:flex;align-items:center;gap:8px;border-radius:10px;padding:7px 9px;border:2px solid;min-width:0;}
+.sp-abox.sp-start{background:rgba(4,18,45,.92);border-color:#3a7cd5;}
+.sp-abox.sp-target{background:rgba(60,8,8,.92);border-color:#c03030;flex-direction:row-reverse;text-align:right;}
+.sp-aphoto{width:40px;height:40px;border-radius:6px;object-fit:cover;flex-shrink:0;background:#1a2840;}
+.sp-albl{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#ffd34d;font-family:'acumin-pro',sans-serif;}
+.sp-aname{font-size:clamp(10px,3.2vw,14px);font-weight:800;color:#fff;font-family:'acumin-pro',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* path dots */
+.sp-path{display:flex;align-items:center;justify-content:center;padding:2px 0 10px;}
+.sp-pnode{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;font-family:'acumin-pro',sans-serif;flex-shrink:0;transition:background .3s,transform .2s;}
+.sp-pnode.pa{background:#2a5caa;color:#fff;}
+.sp-pnode.pb{background:#b02020;color:#fff;}
+.sp-pnode.pdot{background:#c8c8c8;width:12px;height:12px;}
+.sp-pnode.pok{background:#22c55e;color:#fff;width:22px;height:22px;font-size:11px;transform:scale(1.15);}
+.sp-pnode.pno{background:#e03030;color:#fff;width:22px;height:22px;font-size:11px;}
+.sp-pline{flex:1;height:2px;background:repeating-linear-gradient(90deg,#666 0,#666 4px,transparent 4px,transparent 8px);max-width:22px;min-width:3px;}
+/* steps scroll */
+.sp-steps{flex:1;overflow-y:auto;padding:6px 12px;padding-bottom:calc(env(safe-area-inset-bottom,0px) + var(--nav-h,80px) + 16px);scrollbar-width:none;}
+.sp-steps::-webkit-scrollbar{display:none;}
+/* step cards */
+.sp-card{background:linear-gradient(160deg,rgba(12,35,80,.97),rgba(6,20,50,.99));border:1.5px solid rgba(200,160,20,.55);border-radius:14px;padding:13px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;animation:spIn .25s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes spIn{from{opacity:0;transform:translateY(14px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+.sp-card.locked{opacity:.5;pointer-events:none;}
+.sp-card-icon{font-size:30px;flex-shrink:0;line-height:1;padding-top:2px;}
+.sp-card-body{flex:1;min-width:0;}
+.sp-card-title{font-family:'acumin-pro',sans-serif;font-size:clamp(10px,3.2vw,13px);font-weight:800;color:#ffd34d;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+.sp-card-title b{color:#fff;}
+.sp-card-sub{font-family:'acumin-pro',sans-serif;font-size:clamp(13px,4.2vw,17px);font-weight:700;color:#fff;margin-bottom:8px;}
+.sp-sel{width:100%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);border-radius:8px;color:#fff;font-size:clamp(13px,4vw,15px);padding:10px 32px 10px 12px;font-family:'acumin-pro',sans-serif;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:16px;margin-bottom:9px;cursor:pointer;box-sizing:border-box;}
+.sp-sel:disabled{opacity:.4;cursor:default;}
+.sp-sel option{background:#0a1e50;color:#fff;}
+.sp-btn{width:100%;border:none;border-radius:8px;padding:12px 16px;font-family:'acumin-pro',sans-serif;font-size:clamp(14px,4.5vw,16px);font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s,transform .1s;box-sizing:border-box;}
+.sp-btn:active:not(:disabled){transform:scale(.97);}
+.sp-btn:disabled,.sp-btn.off{background:rgba(255,255,255,.08);color:rgba(255,255,255,.25);cursor:default;}
+.sp-btn.grn{background:linear-gradient(135deg,#2ec55e,#1a9a45);color:#fff;box-shadow:0 2px 10px rgba(34,197,94,.3);}
+.sp-btn.red{background:linear-gradient(135deg,#e03030,#b01818);color:#fff;box-shadow:0 2px 10px rgba(220,38,38,.3);}
+/* feedback */
+.sp-fb{background:linear-gradient(160deg,rgba(12,35,80,.97),rgba(6,20,50,.99));border:1.5px solid rgba(200,160,20,.55);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;animation:spIn .25s cubic-bezier(.34,1.56,.64,1) both;}
+.sp-fb.locked{opacity:.5;pointer-events:none;}
+.sp-fb-photo{width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#1a2840;}
+.sp-fb-body{flex:1;min-width:0;}
+.sp-fb-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;}
+.sp-fb-ttl{font-family:'acumin-pro',sans-serif;font-size:clamp(15px,5vw,20px);font-weight:900;text-transform:uppercase;letter-spacing:.03em;flex:1;}
+.sp-fb-ttl.ok{color:#22c55e;}
+.sp-fb-ttl.err{color:#e03030;}
+.sp-fb-msg{font-size:clamp(11px,3.2vw,13px);color:rgba(255,255,255,.75);line-height:1.4;}
+.sp-fb-btn{border:none;border-radius:8px;padding:9px 16px;font-family:'acumin-pro',sans-serif;font-size:clamp(12px,3.5vw,14px);font-weight:900;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
+.sp-fb-btn.grn{background:linear-gradient(135deg,#2ec55e,#1a9a45);color:#fff;}
+.sp-fb-btn.red{background:linear-gradient(135deg,#e03030,#b01818);color:#fff;}
 </style>
 
 </head>
@@ -940,7 +709,35 @@ html,body{
 </div>
 
 <div class="screen hidden" id="screenPlay">
-  <div style="height:100%;overflow-y:auto;overflow-x:hidden;padding:12px 8px;scrollbar-width:none;">
+  <!-- NEW STEP-BASED LAYOUT -->
+  <!-- top fixed area: logo + actors + path -->
+  <div class="sp-top">
+    <div class="sp-logo-wrap">
+      <img id="spLogo" src="" alt="StarBridge"/>
+    </div>
+    <div class="sp-start-lbl" id="spModeLabel">★ Start! ★</div>
+    <div class="sp-actors">
+      <div class="sp-abox sp-start">
+        <img class="sp-aphoto" id="spStartImg" src="" alt=""/>
+        <div>
+          <div class="sp-albl">Attore Iniziale</div>
+          <div class="sp-aname" id="spStartName"></div>
+        </div>
+      </div>
+      <div class="sp-abox sp-target">
+        <img class="sp-aphoto" id="spTargetImg" src="" alt=""/>
+        <div>
+          <div class="sp-albl">Target</div>
+          <div class="sp-aname" id="spTargetName"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sp-path" id="spPath"></div>
+  </div>
+  <!-- scrollable steps -->
+  <div class="sp-steps" id="spSteps"></div>
+  <!-- hidden legacy elements (kept for JS compatibility) -->
+  <div style="display:none">
     <main class="app" id="mainApp">
 
 <header class="topbar">

@@ -274,203 +274,353 @@ function hideTMDBStatus() {
   if (el) el.style.display = "none";
 }
 
+
 // ===== STATO GIOCO =====
 let mode = "timed";
 let curChallenge = 0;
 let START = "", TARGET = "", cur = "";
-let path = [], secsLeft = 0, oscars = 0, state = "playing", tid = null, selMov = "", selAct = "";
+let path = [], secsLeft = 0, oscars = 0, state = "playing", tid = null;
+
+// Step-based state
+let _spStep = 0;
+let _spCurrentFilm = null;
+let _spConfirmed = 0;
+const _spDots = 5; // intermediate path dots
 
 const $ = id => document.getElementById(id);
 
-function init() {
-  // mode buttons
-  $("modeTimed").addEventListener("click", () => setMode("timed"));
-  $("modeRelax").addEventListener("click", () => setMode("relaxed"));
-  $("modeLearn").addEventListener("click", () => setMode("training"));
-  // game buttons
-  $("movieSel").addEventListener("change", () => { selMov=$("movieSel").value; hideMsg(); updateSel(); });
-  $("actorSel").addEventListener("change", () => {
-    selAct=$("actorSel").value; hideMsg();
-    if(GAME_MODES[mode].training){ if(selAct) filterMoviesForTraining(selAct); else fillMovies(); }
-    updateSel();
-  });
-  $("confBtn").addEventListener("click", verify);
-  $("hintBtn").addEventListener("click", useHint);
-  $("resetBtn").addEventListener("click", () => startGame(START, TARGET));
-  $("playAgainBtn").addEventListener("click", () => startGame(START, TARGET));
-  $("newChallengeBtn").addEventListener("click", nextChallenge);
-  buildChallengeButtons();
-  fillMovies();
-  fillActors();
-  injectAssets();
-  loadTMDBImages();
-  startChallenge(0);
+// ===== PATH DOTS =====
+function spInitPath() {
+  const c = $('spPath');
+  if (!c) return;
+  c.innerHTML = '';
+  const mkNode = (cls, txt) => {
+    const d = document.createElement('div');
+    d.className = 'sp-pnode ' + cls;
+    if (txt) d.textContent = txt;
+    return d;
+  };
+  const mkLine = () => { const l = document.createElement('div'); l.className = 'sp-pline'; return l; };
+  c.appendChild(mkNode('pa', 'A'));
+  for (let i = 0; i < _spDots; i++) {
+    c.appendChild(mkLine());
+    const dot = mkNode('pdot', '');
+    dot.id = 'spDot' + i;
+    c.appendChild(dot);
+  }
+  c.appendChild(mkLine());
+  c.appendChild(mkNode('pb', 'B'));
 }
 
-function buildChallengeButtons() { return; // rimosso UI tabs
-
-  const list = $("challengeList");
-  list.innerHTML = "";
-  challenges.forEach((ch, i) => {
-    const btn = document.createElement("button");
-    btn.className = "ch-btn" + (i === curChallenge ? " active" : "");
-    btn.textContent = ch.label;
-    btn.addEventListener("click", () => startChallenge(i));
-    btn.id = `ch-${i}`;
-    list.appendChild(btn);
-  });
-  // bottone random
-  const rnd = document.createElement("button");
-  rnd.className = "ch-btn";
-  rnd.textContent = "🎲 Random";
-  rnd.addEventListener("click", randomChallenge);
-  list.appendChild(rnd);
+function spMarkDot(index, ok) {
+  const d = $('spDot' + index);
+  if (!d) return;
+  d.className = 'sp-pnode ' + (ok ? 'pok' : 'pno');
+  d.textContent = ok ? '✓' : '✗';
 }
 
-function setMode(m) {
-  mode = m;
-  $("modeTimed").classList.toggle("active", m === "timed");
-  $("modeRelax").classList.toggle("active", m === "relaxed");
-  $("modeLearn").classList.toggle("active", m === "training");
-  startGame(START, TARGET);
+// ===== ACTOR PHOTOS / HEADER =====
+function spSetHeader() {
+  const A = window.ASSETS || {};
+  const lg = $('spLogo');
+  if (lg) lg.src = A.logo || (typeof EXTRA !== 'undefined' ? EXTRA.logo : '') || '';
+
+  const ml = $('spModeLabel');
+  if (ml) {
+    const labels = { timed:'⏱ Contro il Tempo', relaxed:'★ Start! ★', training:'🎓 Allenamento' };
+    ml.textContent = labels[mode] || '★ Start! ★';
+  }
+  const si = $('spStartImg'), ti = $('spTargetImg');
+  const sn = $('spStartName'), tn = $('spTargetName');
+  if (si) si.src = actorImg(START);
+  if (ti) ti.src = actorImg(TARGET);
+  if (sn) sn.textContent = START;
+  if (tn) tn.textContent = TARGET;
+
+  // Load TMDB photos for start/target
+  if (TMDB_KEY) {
+    loadActorImg(START).then(url => { if ($('spStartImg') && url) $('spStartImg').src = url; });
+    loadActorImg(TARGET).then(url => { if ($('spTargetImg') && url) $('spTargetImg').src = url; });
+  }
 }
 
-function startChallenge(i) {
-  curChallenge = i;
-  document.querySelectorAll(".ch-btn").forEach((b,j) => b.classList.toggle("active", j === i));
-  const ch = challenges[i];
-  startGame(ch.start, ch.target);
+// ===== INIT =====
+function initGame() {
+  if (window._gameReady && !window._startMode) return;
+  if (window._startMode) { mode = window._startMode; window._startMode = null; }
+  const ch = challenges[curChallenge % challenges.length];
+  spStartGame(ch.start, ch.target);
+  if (TMDB_KEY) loadTMDBImages();
+  window._gameReady = true;
 }
 
-function randomChallenge() {
-  const connected = getConnectedActors();
-  let a1, a2;
-  do { a1 = connected[Math.floor(Math.random()*connected.length)]; } while(!a1);
-  do { a2 = connected[Math.floor(Math.random()*connected.length)]; } while(a2 === a1);
-  document.querySelectorAll(".ch-btn").forEach(b => b.classList.remove("active"));
-  startGame(a1, a2);
-}
-
-function nextChallenge() {
-  curChallenge = (curChallenge + 1) % challenges.length;
-  startChallenge(curChallenge);
-}
-
-function startGame(start, target) {
+function spStartGame(start, target) {
   START = start; TARGET = target; cur = start;
-  path = []; selMov = ""; selAct = "";
+  path = [];
   const m = GAME_MODES[mode];
-  secsLeft = m.timed ? m.seconds : 9999;
   oscars = m.startOscars;
-  state = "playing";
-  $("movieSel").value = ""; $("actorSel").value = "";
-  $("msgBox").className = "msg"; $("msgBox").innerHTML = "";
-  $("resultBox").classList.remove("vis");
-  $("selBox").style.display = "grid";
-  $("hintBtn").disabled = false;
+  secsLeft = m.timed ? m.seconds : 9999;
+  state = 'playing';
+  _spStep = 0;
+  _spCurrentFilm = null;
+  _spConfirmed = 0;
+
   clearInterval(tid);
-  if (m.timed) tid = setInterval(tick, 1000);
-  render();
+  if (m.timed) tid = setInterval(spTick, 1000);
+
+  const steps = $('spSteps');
+  if (steps) steps.innerHTML = '';
+
+  spSetHeader();
+  spInitPath();
+  spAddFilmStep();
 }
 
-function tick() {
-  if (state !== "playing") return;
+function spTick() {
+  if (state !== 'playing') return;
   secsLeft--;
   if (secsLeft <= 0) {
     secsLeft = 0;
-    oscars += 1; // Oscar consolazione
-    endGame(false, "Tempo scaduto", "Non hai completato il ponte in tempo. Hai guadagnato 1 Oscar di consolazione.", "⏱");
+    clearInterval(tid);
+    spEndGame(false, 'timeout');
   }
-  renderHud();
 }
 
-function fillMovies() {
-  $("movieSel").innerHTML = `<option value="">Seleziona un film...</option>`;
-  [...movies].sort((a,b) => a.title.localeCompare(b.title,"it")).forEach(m => {
-    const o = document.createElement("option");
-    o.value = m.id; o.textContent = `${m.title} (${m.year})`;
-    $("movieSel").appendChild(o);
-  });
+// ===== FILM STEP =====
+function spAddFilmStep() {
+  _spStep++;
+  const n = _spStep;
+  const movs = movies
+    .filter(m => m.cast.includes(cur))
+    .sort((a, b) => a.title.localeCompare(b.title, 'it'));
+
+  const opts = movs.map(m =>
+    `<option value="${esc(m.id)}">${esc(m.title)} (${m.year})</option>`
+  ).join('');
+
+  const card = document.createElement('div');
+  card.className = 'sp-card';
+  card.id = 'spCard' + n;
+  card.innerHTML =
+    '<div class="sp-card-icon">🎬</div>' +
+    '<div class="sp-card-body">' +
+      '<div class="sp-card-title">' + n + ' — Scegli un film con <b>' + esc(cur) + '</b></div>' +
+      '<select class="sp-sel" id="spFSel' + n + '" onchange="spOnFilmCh(' + n + ')">' +
+        '<option value="">Seleziona un film...</option>' + opts +
+      '</select>' +
+      '<button class="sp-btn off" id="spFBtn' + n + '" disabled onclick="spOnContinua(' + n + ')">' +
+        'CONTINUA &#8594;' +
+      '</button>' +
+    '</div>';
+
+  $('spSteps').appendChild(card);
+  spScrollBot();
 }
 
-function fillActors() {
-  const all = getConnectedActors().sort((a,b) => a.localeCompare(b,"it"));
-  $("actorSel").innerHTML = `<option value="">Seleziona un attore...</option>`;
-  all.forEach(a => {
-    const o = document.createElement("option");
-    o.value = a; o.textContent = a;
-    $("actorSel").appendChild(o);
-  });
+function spOnFilmCh(n) {
+  const sel = $('spFSel' + n), btn = $('spFBtn' + n);
+  if (!sel || !btn) return;
+  btn.disabled = !sel.value;
+  btn.className = sel.value ? 'sp-btn grn' : 'sp-btn off';
 }
 
-function getConnectedActors() {
-  const s = new Set();
-  movies.forEach(m => m.cast.forEach(a => s.add(a)));
-  return [...s];
+function spOnContinua(n) {
+  const sel = $('spFSel' + n);
+  if (!sel || !sel.value) return;
+  _spCurrentFilm = movies.find(m => m.id === sel.value);
+  if (!_spCurrentFilm) return;
+  sel.disabled = true;
+  const btn = $('spFBtn' + n);
+  if (btn) { btn.disabled = true; btn.className = 'sp-btn off'; }
+  $('spCard' + n).classList.add('locked');
+  spAddActorStep();
 }
 
-function getMovie() { return selMov ? movies.find(m => m.id === selMov) : null; }
+// ===== ACTOR STEP =====
+function spAddActorStep() {
+  _spStep++;
+  const n = _spStep;
+  const film = _spCurrentFilm;
 
-function verify() {
-  if (state !== "playing") return;
-  const m = getMovie(); if (!m || !selAct) return;
-  const hasC = m.cast.includes(cur), hasN = m.cast.includes(selAct);
-  const valid = hasC && hasN && cur !== selAct;
-  if (!valid) {
+  const opts = allActors
+    .filter(a => a !== cur)
+    .sort((a, b) => a.localeCompare(b, 'it'))
+    .map(a => '<option value="' + esc(a) + '">' + esc(a) + '</option>')
+    .join('');
+
+  const card = document.createElement('div');
+  card.className = 'sp-card';
+  card.id = 'spCard' + n;
+  card.innerHTML =
+    '<div class="sp-card-icon">🏆</div>' +
+    '<div class="sp-card-body">' +
+      '<div class="sp-card-title">' + n + ' — Scegli un attore/attrice in</div>' +
+      '<div class="sp-card-sub">' + esc(film.title) + '</div>' +
+      '<select class="sp-sel" id="spASel' + n + '" onchange="spOnActorCh(' + n + ')">' +
+        '<option value="">Seleziona un attore...</option>' + opts +
+      '</select>' +
+      '<button class="sp-btn off" id="spABtn' + n + '" disabled onclick="spOnConferma(' + n + ')">' +
+        'CONFERMA &#8594;' +
+      '</button>' +
+    '</div>';
+
+  $('spSteps').appendChild(card);
+  spScrollBot();
+}
+
+function spOnActorCh(n) {
+  const sel = $('spASel' + n), btn = $('spABtn' + n);
+  if (!sel || !btn) return;
+  btn.disabled = !sel.value;
+  btn.className = sel.value ? 'sp-btn grn' : 'sp-btn off';
+}
+
+function spOnConferma(n) {
+  const sel = $('spASel' + n);
+  if (!sel || !sel.value) return;
+  const actor = sel.value;
+  const film = _spCurrentFilm;
+  const ok = film.cast.includes(actor);
+
+  sel.disabled = true;
+  const btn = $('spABtn' + n);
+  if (btn) { btn.disabled = true; btn.className = 'sp-btn off'; }
+  $('spCard' + n).classList.add('locked');
+
+  if (!ok) {
     oscars = Math.max(0, oscars - 1);
-    const reason = (cur === selAct)
-      ? "Non puoi collegare un attore a se stesso."
-      : "Collegamento non valido. Riprova scegliendo un altro film e/o un altro attore.";
-    showMsg(`❌ ${reason} –1 Oscar.`, "err");
-    selMov = ""; selAct = ""; $("movieSel").value = ""; $("actorSel").value = "";
-    render();
-    if (oscars <= 0) endGame(false, "Oscar finiti", "Troppi errori. Il ponte è crollato.", "🏅");
-    return;
   }
-  path.push({ from:cur, movie:m.title, year:m.year, rarity:m.rarity, poster:posterImg(m), next:selAct });
-  cur = selAct; selMov = ""; selAct = ""; $("movieSel").value = ""; $("actorSel").value = "";
-  showMsg("✅ Collegamento valido! Ponte aggiornato.", "ok");
-  if (cur === TARGET) { endGame(true, "Ponte completato!", `Hai collegato ${START} a ${TARGET} in ${path.length} grado/i!`, "🏆"); return; }
-  if (path.length >= 6) { endGame(false, "Troppi gradi", `Hai superato i 6 gradi senza raggiungere ${TARGET}.`, "🎬"); return; }
-  render();
+  spAddFeedback(ok, actor, film, n);
 }
 
-function useHint() {
-  if (state !== "playing") return;
-  const m = GAME_MODES[mode];
-  if (!m.training) { showMsg("💡 In questa modalità non ci sono indizi: scegli film e attore e verifica.", "hint"); return; }
-  if (oscars < m.hintCost) { showMsg("❌ Non hai abbastanza Oscar per l'aiuto.", "err"); return; }
-  const moviesWithCur = movies.filter(mv => mv.cast.includes(cur));
-  if (!moviesWithCur.length) { showMsg("💡 Nessun film trovato nel database per l'attore attuale.", "hint"); return; }
-  const pick = moviesWithCur[Math.floor(Math.random() * moviesWithCur.length)];
-  oscars = Math.max(0, oscars - m.hintCost);
-  const costar = pick.cast.filter(a => a !== cur).slice(0,3).join(", ");
-  showMsg(`💡 <strong>${cur}</strong> appare in <em>${pick.title}</em> (${pick.year}) con: ${costar}. –1 Oscar.`, "hint");
-  renderHud();
+// ===== FEEDBACK =====
+function spAddFeedback(ok, actorName, film, stepN) {
+  const fb = document.createElement('div');
+  fb.className = 'sp-fb';
+  fb.id = 'spFb' + stepN;
+
+  const msg = ok
+    ? '<strong>' + esc(actorName) + '</strong> ha recitato in <strong>' + esc(film.title) + '</strong>'
+    : '<strong>' + esc(actorName) + '</strong> non ha recitato in <strong>' + esc(film.title) + '</strong>';
+
+  const btnHtml = ok
+    ? '<button class="sp-fb-btn grn" id="spFbBtn' + stepN + '" onclick="spOnContOk(\'' + esc(actorName).replace(/'/g,"\\'") + '\',' + stepN + ')">CONTINUA &#8594;</button>'
+    : '<button class="sp-fb-btn red" id="spFbBtn' + stepN + '" onclick="spOnRiprova(' + stepN + ')">RIPROVA &#8594;</button>';
+
+  fb.innerHTML =
+    '<img class="sp-fb-photo" id="spFbP' + stepN + '" src="' + actorImg(actorName) + '" alt=""/>' +
+    '<div class="sp-fb-body">' +
+      '<div class="sp-fb-row">' +
+        '<div class="sp-fb-ttl ' + (ok ? 'ok' : 'err') + '">' + (ok ? 'CORRETTO!' : 'SBAGLIATO!') + '</div>' +
+        btnHtml +
+      '</div>' +
+      '<div class="sp-fb-msg">' + msg + '</div>' +
+    '</div>';
+
+  $('spSteps').appendChild(fb);
+
+  if (ok) {
+    spMarkDot(_spConfirmed, true);
+    path.push({ from: cur, movie: film.title, year: film.year, rarity: film.rarity, next: actorName });
+    _spConfirmed++;
+  }
+
+  // Try to load TMDB photo
+  if (TMDB_KEY) {
+    loadActorImg(actorName).then(url => {
+      const img = $('spFbP' + stepN);
+      if (img && url) img.src = url;
+    });
+  }
+
+  spScrollBot();
+
+  if (!ok && oscars <= 0) {
+    setTimeout(() => spEndGame(false, 'oscars'), 700);
+  }
 }
 
-function endGame(won, title, txt, icon) {
-  state = won ? "won" : "lost";
+function spOnContOk(actorName, stepN) {
+  cur = actorName;
+  const btn = $('spFbBtn' + stepN);
+  if (btn) btn.style.display = 'none';
+  $('spFb' + stepN).classList.add('locked');
+
+  if (cur === TARGET) { setTimeout(() => spEndGame(true), 350); return; }
+  if (path.length >= _spDots) { setTimeout(() => spEndGame(false, 'maxdeg'), 350); return; }
+  spAddFilmStep();
+}
+
+function spOnRiprova(stepN) {
+  const fb = $('spFb' + stepN);
+  if (fb) fb.remove();
+  // re-enable actor card
+  const card = $('spCard' + stepN);
+  const sel = $('spASel' + stepN);
+  const btn = $('spABtn' + stepN);
+  if (card) card.classList.remove('locked');
+  if (sel) { sel.disabled = false; sel.value = ''; }
+  if (btn) { btn.disabled = true; btn.className = 'sp-btn off'; }
+  spScrollBot();
+}
+
+// ===== END GAME =====
+function spEndGame(won, reason) {
+  state = won ? 'won' : 'lost';
   clearInterval(tid);
-  $("selBox").style.display = "none";
-  $("resultBox").classList.add("vis");
-  $("msgBox").className = "msg";
-  $("hintBtn").disabled = true;
-  $("resIcon").textContent = icon;
-  $("resTitle").textContent = title;
-  $("resTxt").textContent = txt;
-  const sc = calcScore();
-  $("finalSc").textContent = sc;
-  $("finalDeg").textContent = path.length;
+
+  const sc = spCalcScore();
   const pc = calcPopcorn(won, sc);
-  if (pc > 0) {
-    totalPopcorn += pc;
-    localStorage.setItem("sb_pc", String(totalPopcorn));
-  }
-  $("popcornEarned").textContent = pc;
-  $("popcornReward").style.display = pc > 0 ? "flex" : "none";
-  renderProgression();
-  render();
+  if (pc > 0) { totalPopcorn += pc; localStorage.setItem('sb_pc', String(totalPopcorn)); }
+
+  const icons = { won:'🏆', timeout:'⏱', oscars:'🏅', maxdeg:'🎬' };
+  const titles = { won:'Sfida Completata!', timeout:'Tempo Scaduto!', oscars:'Oscar Esauriti!', maxdeg:'Troppi Gradi!' };
+  const key = won ? 'won' : (reason || 'oscars');
+  const msgs = {
+    won: 'Hai collegato <strong>' + esc(START) + '</strong> a <strong>' + esc(TARGET) + '</strong> in ' + path.length + ' grado/i!',
+    timeout: 'Non hai completato il ponte in tempo.',
+    oscars: 'Hai esaurito gli Oscar disponibili.',
+    maxdeg: 'Hai superato i ' + _spDots + ' gradi senza raggiungere <strong>' + esc(TARGET) + '</strong>.'
+  };
+
+  const endCard = document.createElement('div');
+  endCard.className = 'sp-card';
+  endCard.style.cssText = 'flex-direction:column;align-items:center;text-align:center;padding:22px 14px;gap:10px;border-color:rgba(255,211,77,.7);animation:spIn .3s ease both;';
+  endCard.innerHTML =
+    '<div style="font-size:48px;line-height:1;">' + icons[key] + '</div>' +
+    '<div style="font-family:\'acumin-pro\',sans-serif;font-size:clamp(18px,5.5vw,24px);font-weight:900;color:' + (won ? '#22c55e' : '#e03030') + ';letter-spacing:.03em;">' + titles[key] + '</div>' +
+    '<div style="color:rgba(255,255,255,.8);font-size:clamp(12px,3.5vw,15px);line-height:1.5;">' + msgs[key] + '</div>' +
+    '<div style="display:flex;gap:20px;margin:6px 0;">' +
+      '<div style="text-align:center;"><div style="font-size:clamp(22px,7vw,30px);font-weight:900;color:#ffd34d;font-family:\'acumin-pro\',sans-serif;">' + sc + '</div><div style="font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;">Punteggio</div></div>' +
+      '<div style="text-align:center;"><div style="font-size:clamp(22px,7vw,30px);font-weight:900;color:#ffd34d;font-family:\'acumin-pro\',sans-serif;">' + path.length + '</div><div style="font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;">Gradi</div></div>' +
+      (pc > 0 ? '<div style="text-align:center;"><div style="font-size:clamp(22px,7vw,30px);font-weight:900;color:#ffd34d;font-family:\'acumin-pro\',sans-serif;">+' + pc + '</div><div style="font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;">Pop Corn</div></div>' : '') +
+    '</div>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px;">' +
+      '<button class="sp-btn grn" style="width:auto;padding:11px 20px;" onclick="spRestart()">↻ Rigioca</button>' +
+      '<button class="sp-btn" style="width:auto;padding:11px 20px;background:rgba(255,255,255,.1);color:#fff;" onclick="spNextChallenge()">🎲 Nuova sfida</button>' +
+      '<button class="sp-btn" style="width:auto;padding:11px 20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);" onclick="goTo(\'home\')">🏠 Home</button>' +
+    '</div>';
+
+  $('spSteps').appendChild(endCard);
+  spScrollBot();
+}
+
+function spRestart() { spStartGame(START, TARGET); }
+
+function spNextChallenge() {
+  curChallenge = (curChallenge + 1) % challenges.length;
+  const ch = challenges[curChallenge];
+  spStartGame(ch.start, ch.target);
+}
+
+// ===== SCORE =====
+function spCalcScore() {
+  const m = GAME_MODES[mode];
+  const rp = path.reduce((s, x) => s + (x.rarity || 1), 0) * 10;
+  const sp2 = m.timed && m.speedDiv ? Math.floor(secsLeft / m.speedDiv) : 0;
+  const dp = path.length > 0 ? Math.max(0, 60 - path.length * 8) : 0;
+  const op = oscars * (m.oscarPts || 0);
+  return Math.round((rp + sp2 + dp + op) * m.scoreMultiplier);
 }
 
 function calcPopcorn(won, score) {
@@ -478,202 +628,64 @@ function calcPopcorn(won, score) {
   return 50 + Math.floor(score / 10);
 }
 
-function render() { renderHud(); renderCur(); updateSel(); renderPath(); }
-
-function renderHud() {
-  const m = GAME_MODES[mode];
-  $("tv").textContent = m.timed ? fmtTime(secsLeft) : "∞";
-  $("sv").textContent = m.training ? "–" : calcScore();
-  $("dv").textContent = `${path.length}/6`;
-  $("ov").textContent = m.training ? "∞" : oscars;
-  const ml = $("modeLabel");
-  if(ml){
-    const labels={"timed":"⏱ Contro il Tempo","relaxed":"🎬 Libera","training":"🎓 Allenamento"};
-    ml.textContent = labels[mode] || mode;
-  }
+// ===== UTILS =====
+function spScrollBot() {
+  const s = $('spSteps');
+  if (s) setTimeout(() => s.scrollTo({ top: s.scrollHeight, behavior: 'smooth' }), 60);
 }
 
-function renderCur() {
-  const el = $("curActor");
-  el.style.opacity = 0; el.style.transform = "translateY(5px)";
-  setTimeout(() => { el.textContent = cur; el.style.opacity = 1; el.style.transform = "translateY(0)"; }, 110);
-  // Carica foto TMDB se non ancora in cache
-  if (TMDB_KEY && (!tmdbActorImgs[START] || !tmdbActorImgs[TARGET])) {
-    Promise.all([loadActorImg(START), loadActorImg(TARGET)]).then(() => {
-      $("startImg").src = actorImg(START);
-      $("targetImg").src = actorImg(TARGET);
-    });
-  }
-  $("startImg").src = actorImg(START);
-  $("targetImg").src = actorImg(TARGET);
-  $("startName").textContent = START;
-  $("targetName").textContent = TARGET;
-  $("startCard").classList.toggle("active", cur === START);
-  $("targetCard").classList.toggle("active", cur === TARGET);
+function esc(v) {
+  return String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 }
 
-function updateSel() {
-  const m = getMovie(); const ready = !!(m && selAct);
-  $("confBtn").disabled = !ready;
-  if (!m && !selAct) $("confTxt").textContent = "Scegli un film e un attore per verificare il collegamento.";
-  else if (!m) $("confTxt").textContent = `Hai scelto ${selAct}. Ora scegli il film che lo collega a ${cur}.`;
-  else if (!selAct) $("confTxt").textContent = `Film: "${m.title}". Ora scegli l'attore da collegare a ${cur}.`;
-  else $("confTxt").textContent = `Verifica: ${cur} → ${selAct} via "${m.title}".`;
-  if (m) {
-    $("prev").classList.add("vis");
-    $("prevPoster").src = posterImg(m);
-    $("prevTitle").textContent = m.title;
-    $("prevYear").textContent = `${m.year}`;
-    $("prevGuess").textContent = selAct ? `${cur} → ${selAct}` : "Seleziona l'attore successivo, senza indizi.";
-    $("prevRarity").textContent = `Rarità ${m.rarity} · +${m.rarity*10} pt`;
-  } else { $("prev").classList.remove("vis"); }
-}
-
-function renderPath() {
-  $("stepCtr").textContent = `${path.length} / 6 gradi`;
-  $("emptyPath").style.display = path.length === 0 ? "block" : "none";
-  $("pathList").innerHTML = "";
-  path.forEach((s, i) => {
-    const el = document.createElement("article");
-    el.className = "path-step";
-    el.innerHTML = `<img src="${s.poster}" alt=""/><div><div class="step-no">Grado ${i+1}</div><div class="path-movie">${esc(s.movie)} (${s.year})</div><div class="path-actors">${esc(s.from)} → ${esc(s.next)}</div><span class="pill">Rarità ${s.rarity} · +${s.rarity*10} pt</span></div>`;
-    $("pathList").appendChild(el);
-  });
-}
-
-function showMsg(t, type) { $("msgBox").innerHTML = t; $("msgBox").className = `msg vis ${type||""}`; }
-function hideMsg() { $("msgBox").className = "msg"; $("msgBox").innerHTML = ""; }
-
-function calcScore() {
-  const m = GAME_MODES[mode];
-  const rp = path.reduce((s,x) => s + x.rarity, 0) * 10;
-  const sp = m.timed ? Math.floor(secsLeft / m.speedDiv) : 0;
-  const dp = path.length > 0 ? Math.max(0, 60 - path.length * 8) : 0;
-  const op = oscars * m.oscarPts;
-  return Math.round((rp + sp + dp + op) * m.scoreMultiplier);
-}
-
-function rarLabel(v) { return v <= 1 ? "famoso" : v <= 3 ? "medio" : "raro"; }
-function fmtTime(s) { return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,"0")}`; }
-function esc(v) { return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
-
-function filterMoviesForTraining(next){
-  const valid=movies.filter(m=>m.cast.includes(cur)&&m.cast.includes(next)&&cur!==next);
-  $("movieSel").innerHTML=valid.length
-    ? `<option value="">Film validi: ${valid.length} — scegli...</option>`
-    : `<option value="">Nessun collegamento diretto trovato</option>`;
-  valid.sort((a,b)=>a.title.localeCompare(b.title,"it")).forEach(m=>{
-    const o=document.createElement("option");
-    o.value=m.id; o.textContent=`${m.title} (${m.year})`; $("movieSel").appendChild(o);
-  });
-}
-
-function levelOf(pts){
-  for(let i=PROGRESSION.length-1;i>=0;i--) if(pts>=PROGRESSION[i].pts) return i;
+function levelOf(pts) {
+  for (let i = PROGRESSION.length - 1; i >= 0; i--) if (pts >= PROGRESSION[i].pts) return i;
   return 0;
 }
 
-function renderProgression(){
-  const chain=$("progChain"); if(!chain) return;
-  const lv=levelOf(totalPopcorn);
-  chain.innerHTML="";
-  PROGRESSION.forEach((p,i)=>{
-    if(i>0){const a=document.createElement("span");a.className="prog-arrow";a.textContent="›";chain.appendChild(a);}
-    const d=document.createElement("div");
-    d.className="prog-item"+(i<=lv?" on":"")+(i===lv?" cur":"");
-    d.innerHTML=`<img src="${ASSETS[p.img]||""}" alt="${p.label}"/><span>${p.label}</span>`;
+function renderProgression() {
+  const chain = $('progChain'); if (!chain) return;
+  const lv = levelOf(totalPopcorn);
+  chain.innerHTML = '';
+  PROGRESSION.forEach((p, i) => {
+    if (i > 0) { const a = document.createElement('span'); a.className = 'prog-arrow'; a.textContent = '›'; chain.appendChild(a); }
+    const d = document.createElement('div');
+    d.className = 'prog-item' + (i <= lv ? ' on' : '') + (i === lv ? ' cur' : '');
+    d.innerHTML = '<img src="' + ((window.ASSETS || {})[p.img] || '') + '" alt="' + p.label + '"/><span>' + p.label + '</span>';
     chain.appendChild(d);
   });
-  const lp=PROGRESSION[lv];
-  const ri=$("rewardIcon"); if(ri) ri.src=ASSETS[lp.img]||"";
-  const rn=$("rewardName"); if(rn) rn.textContent=lp.label;
 }
 
-function injectAssets(){
-  var ASSETS = window.ASSETS || {};
-  const icPc=$("icPc"); if(icPc) icPc.src=ASSETS.img_popcorn||"";
-  const icPl=$("icPl"); if(icPl) icPl.src=ASSETS.img_pellicola||"";
-  const icOs=$("icOs"); if(icOs) icOs.src=ASSETS.img_oscar||"";
-  const il=$("iconLearn"); if(il) il.src=ASSETS.img_cinepresa||"";
+function injectAssets() {
+  const A = window.ASSETS || {};
+  const si = (id, src) => { const e = $(id); if (e && src) e.src = src; };
+  si('icPc', A.img_popcorn);
+  si('icPl', A.img_pellicola);
+  si('icOs', A.img_oscar);
+  si('iconLearn', A.img_cinepresa);
 }
 
-
-// ===== SPLASH SCREEN =====
+// ===== SPLASH =====
 function runSplash() {
-  const splash = document.getElementById("splashScreen");
-  const main = document.getElementById("mainApp");
-  const bar = document.getElementById("splashBar");
-  const msg = document.getElementById("splashMsg");
+  const splash = document.getElementById('splashScreen');
+  const main   = document.getElementById('mainApp');
+  const bar    = document.getElementById('splashBar');
+  const msg    = document.getElementById('splashMsg');
   if (!splash) return;
-  // Progressione simulata
   const steps = [
-    [300,  15, "Preparando il database..."],
-    [700,  40, "Caricando gli attori..."],
-    [1200, 65, "Collegando i film..."],
-    [1700, 85, "Quasi pronto..."],
-    [2200, 100, "Pronti!"],
+    [300,15,'Preparando il database...'],
+    [700,40,'Caricando gli attori...'],
+    [1200,65,'Collegando i film...'],
+    [1700,85,'Quasi pronto...'],
+    [2200,100,'Pronti!'],
   ];
-  steps.forEach(([delay, pct, text]) => {
-    setTimeout(() => {
-      bar.style.width = pct + "%";
-      msg.textContent = text;
-    }, delay);
+  steps.forEach(([delay,pct,txt]) => {
+    setTimeout(() => { bar.style.width = pct + '%'; msg.textContent = txt; }, delay);
   });
-  // Dissolvenza
   setTimeout(() => {
-    splash.style.opacity = "0";
-    splash.style.transform = "scale(1.04)";
-    main.style.opacity = "1";
-    setTimeout(() => { splash.style.display = "none"; }, 750);
+    splash.style.opacity = '0';
+    splash.style.transform = 'scale(1.04)';
+    main.style.opacity = '1';
+    setTimeout(() => { splash.style.display = 'none'; }, 750);
   }, 2600);
 }
-
-// ── Inizializzazione gioco dall'esterno ──
-
-function bindGameEventsOnce() {
-  if (window._gameEventsBound) return;
-  const on = (id, type, fn) => {
-    const el = $(id);
-    if (el) el.addEventListener(type, fn);
-  };
-  on("movieSel", "change", () => {
-    selMov = $("movieSel").value;
-    hideMsg();
-    updateSel();
-  });
-  on("actorSel", "change", () => {
-    selAct = $("actorSel").value;
-    hideMsg();
-    if (GAME_MODES[mode].training) {
-      if (selAct) filterMoviesForTraining(selAct);
-      else fillMovies();
-    }
-    updateSel();
-  });
-  on("confBtn", "click", verify);
-  on("hintBtn", "click", useHint);
-  on("resetBtn", "click", () => startGame(START, TARGET));
-  on("playAgainBtn", "click", () => startGame(START, TARGET));
-  on("newChallengeBtn", "click", nextChallenge);
-  window._gameEventsBound = true;
-}
-
-function initGame() {
-  if (window._gameReady && !window._startMode) return;
-  try {
-    if (window._startMode) {
-      mode = window._startMode;
-      window._startMode = null;
-    }
-    bindGameEventsOnce();
-    buildChallengeButtons();
-    fillMovies();
-    fillActors();
-    if (typeof injectAssets === 'function') injectAssets();
-    startChallenge(0);
-    window._gameReady = true;
-  } catch(e) {
-    console.error('initGame error:', e);
-  }
-}
-
