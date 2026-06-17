@@ -1,2 +1,0 @@
-# starbridge
-StarBridge - Cinema game
