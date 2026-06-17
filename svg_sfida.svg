@@ -1,0 +1,35 @@
+<svg id="SVG_2" data-name="SVG 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1088" height="787" viewBox="0 0 1088 787">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #092944;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2, .cls-3 {
+        fill: none;
+        stroke: #c7901d;
+      }
+
+      .cls-2 {
+        stroke-width: 5px;
+      }
+
+      .cls-3 {
+        stroke-width: 2px;
+      }
+    </style>
+    <filter id="filter" x="2.75" y="2.75" width="1082.5" height="782.281" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="2.75" y="2.75" width="1082.5" height="782.281" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTA4Mi41IiBoZWlnaHQ9Ijc4Mi4yODEiIHZpZXdCb3g9IjAgMCAxMDgyLjUgNzgyLjI4MSI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogdXJsKCNyYWRpYWwtZ3JhZGllbnQpOwogICAgICB9CiAgICA8L3N0eWxlPgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJyYWRpYWwtZ3JhZGllbnQiIGN4PSI1NDEuMjUiIGN5PSIzOTEuMTQiIHI9IjU3My41MjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYzcyZTAyIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMS4xNiIgc3RvcC1jb2xvcj0iIzNiMDIwMSIgc3RvcC1vcGFjaXR5PSIwLjk5NiIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iMTA4Mi41IiBoZWlnaHQ9Ijc4Mi4yODEiLz4KPC9zdmc+Cg=="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path class="cls-1" d="M1085.25,42.75V745.016a40,40,0,0,1-40,40H42.748a40,40,0,0,1-40-40V42.75a40,40,0,0,1,40-40h1002.5A40,40,0,0,1,1085.25,42.75Z"/>
+  <path id="Rectangle_1_copy" data-name="Rectangle 1 copy" class="cls-2" d="M1085.25,44.75V741.516a39,39,0,0,1-39,39H41.748a39,39,0,0,1-39-39V44.75a39,39,0,0,1,39-39h1004.5A39,39,0,0,1,1085.25,44.75Z"/>
+  <path id="Rectangle_1_copy_2" data-name="Rectangle 1 copy 2" class="cls-3" d="M1070.26,52.751V733.515a32,32,0,0,1-32,32H49.741a32,32,0,0,1-32-32V52.751a32,32,0,0,1,32-32H1038.26A32,32,0,0,1,1070.26,52.751Z"/>
+</svg>
