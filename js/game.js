@@ -158,7 +158,7 @@ const movies = [
   {id:"m44", title:"Iron Man",               year:2008,rarity:1,tmdbId:1726,   cast:["Robert Downey Jr.","Gwyneth Paltrow","Jeff Bridges","Terrence Howard","Paul Bettany"]},
   {id:"m45", title:"Captain America: Civil War",year:2016,rarity:1,tmdbId:271110,cast:["Chris Evans","Robert Downey Jr.","Scarlett Johansson","Tom Holland","Jeremy Renner","Chadwick Boseman","Paul Rudd","Paul Bettany","Sebastian Stan"]},
   {id:"m46", title:"Thor: Ragnarok",         year:2017,rarity:1,tmdbId:284053, cast:["Chris Hemsworth","Tom Hiddleston","Cate Blanchett","Idris Elba","Mark Ruffalo","Jeff Goldblum","Tessa Thompson"]},
-  {id:"m47", title:"Avengers: Infinity War", year:2018,rarity:1,tmdbId:299536, cast:["Robert Downey Jr.","Chris Hemsworth","Benedict Cumberbatch","Scarlett Johansson","Chris Pratt","Tom Holland","Chadwick Boseman","Josh Brolin","Idris Elba"]},
+  {id:"m47", title:"Avengers: Infinity War", year:2018,rarity:1,tmdbId:299536, cast:["Robert Downey Jr.","Chris Hemsworth","Benedict Cumberbatch","Scarlett Johansson","Chris Pratt","Tom Holland","Chadwick Boseman","Josh Brolin","Idris Elba","Zoe Saldana"]},
   {id:"m48", title:"Guardians of the Galaxy",year:2014,rarity:1,tmdbId:118340, cast:["Chris Pratt","Zoe Saldana","Dave Bautista","Vin Diesel","Bradley Cooper","Glenn Close"]},
   {id:"m49", title:"Black Panther",          year:2018,rarity:1,tmdbId:284054, cast:["Chadwick Boseman","Michael B. Jordan","Lupita Nyong'o","Danai Gurira","Forest Whitaker","Angela Bassett","Martin Freeman"]},
   {id:"m50", title:"Doctor Strange",         year:2016,rarity:1,tmdbId:284052, cast:["Benedict Cumberbatch","Rachel McAdams","Tilda Swinton","Chiwetel Ejiofor","Mads Mikkelsen"]},
@@ -278,7 +278,7 @@ const movies = [
   {id:"m136",title:"Ali",                     year:2001,rarity:3,tmdbId:9348,  cast:["Will Smith","Jamie Foxx","Jon Voight","Mario Van Peebles","Ron Silver"]},
   {id:"m137",title:"Iron Man 3",              year:2013,rarity:1,tmdbId:68721, cast:["Robert Downey Jr.","Don Cheadle","Gwyneth Paltrow","Guy Pearce","Ben Kingsley"]},
   {id:"m138",title:"Captain Marvel",          year:2019,rarity:1,tmdbId:299537,cast:["Brie Larson","Samuel L. Jackson","Ben Mendelsohn","Jude Law","Lee Pace"]},
-  {id:"m139",title:"Avengers: Endgame",       year:2019,rarity:1,tmdbId:299534,cast:["Robert Downey Jr.","Chris Evans","Scarlett Johansson","Chris Hemsworth","Mark Ruffalo","Don Cheadle","Josh Brolin","Brie Larson","Paul Rudd","Bradley Cooper"]},
+  {id:"m139",title:"Avengers: Endgame",       year:2019,rarity:1,tmdbId:299534,cast:["Robert Downey Jr.","Chris Evans","Scarlett Johansson","Chris Hemsworth","Mark Ruffalo","Don Cheadle","Josh Brolin","Brie Larson","Paul Rudd","Bradley Cooper","Zoe Saldana"]},
   {id:"m140",title:"Everything Everywhere All at Once",year:2022,rarity:1,tmdbId:545611,cast:["Michelle Yeoh","Jamie Lee Curtis","Ke Huy Quan","Stephanie Hsu"]},
   {id:"m141",title:"Crazy Rich Asians",       year:2018,rarity:1,tmdbId:490132,cast:["Awkwafina","Michelle Yeoh","Ken Jeong","Gemma Chan"]},
   {id:"m142",title:"Atonement",               year:2007,rarity:2,tmdbId:4512,  cast:["Keira Knightley","James McAvoy","Saoirse Ronan","Benedict Cumberbatch","Brenda Blethyn"]},
@@ -369,6 +369,145 @@ const movies = [
   {id:"m222",title:"Scott Pilgrim vs. the World",year:2010,rarity:2,tmdbId:57201,cast:["Michael Cera","Mary Elizabeth Winstead","Chris Evans","Aubrey Plaza","Anna Kendrick","Brandon Routh","Alison Pill"]},
   {id:"m223",title:"12 Years a Slave",       year:2013,rarity:2,tmdbId:76203,  cast:["Chiwetel Ejiofor","Michael Fassbender","Benedict Cumberbatch","Brad Pitt","Paul Dano","Alfre Woodard","Paul Giamatti","Sarah Paulson"]},
   {id:"m224",title:"Elf",                    year:2003,rarity:1,tmdbId:109018, cast:["Will Ferrell","James Caan","Mary Steenburgen","Ed Asner","Zooey Deschanel","Mary Steenburgen"]}
+,
+  // ── CHARLIZE THERON ──
+  {id:"m225",title:"Bombshell",              year:2019,rarity:2,tmdbId:605116, cast:["Charlize Theron","Nicole Kidman","Margot Robbie","Kate McKinnon","John Lithgow"]},
+  {id:"m226",title:"The Italian Job",        year:2003,rarity:2,tmdbId:10050,  cast:["Charlize Theron","Mark Wahlberg","Edward Norton","Jason Statham","Seth Green"]},
+  {id:"m227",title:"Monster",                year:2003,rarity:2,tmdbId:12453,  cast:["Charlize Theron","Christina Ricci","Bruce Dern","Scott Wilson"]},
+  // ── UMA THURMAN ──
+  {id:"m228",title:"Gattaca",                year:1997,rarity:3,tmdbId:782,    cast:["Ethan Hawke","Uma Thurman","Jude Law","Alan Arkin","Gore Vidal"]},
+  {id:"m229",title:"Pulp Fiction extra",     year:1994,rarity:1,tmdbId:680,    cast:["Uma Thurman","Winona Ryder","John Travolta","Samuel L. Jackson"]},
+  // ── JOHNNY DEPP ──
+  {id:"m230",title:"Donnie Brasco",          year:1997,rarity:2,tmdbId:2297,   cast:["Johnny Depp","Al Pacino","Michael Madsen","Bruno Kirby","James Russo"]},
+  {id:"m231",title:"Public Enemies",         year:2009,rarity:2,tmdbId:18643,  cast:["Johnny Depp","Christian Bale","Marion Cotillard","Billy Crudup","Channing Tatum"]},
+  {id:"m232",title:"Edward Scissorhands",    year:1990,rarity:2,tmdbId:1634,   cast:["Johnny Depp","Winona Ryder","Dianne Wiest","Anthony Michael Hall"]},
+  // ── RICHARD GERE ──
+  {id:"m233",title:"Chicago",                year:2002,rarity:1,tmdbId:1574,   cast:["Richard Gere","Renée Zellweger","Catherine Zeta-Jones","Queen Latifah","John C. Reilly"]},
+  {id:"m234",title:"Runaway Bride",          year:1999,rarity:2,tmdbId:11622,  cast:["Richard Gere","Julia Roberts","Hector Elizondo","Joan Cusack","Rita Wilson"]},
+  {id:"m235",title:"Primal Fear",            year:1996,rarity:3,tmdbId:9388,   cast:["Richard Gere","Edward Norton","Laura Linney","John Mahoney","Frances McDormand"]},
+  // ── JODIE FOSTER ──
+  {id:"m236",title:"Panic Room",             year:2002,rarity:2,tmdbId:345,    cast:["Jodie Foster","Forest Whitaker","Jared Leto","Dwight Yoakam","Kristen Stewart"]},
+  {id:"m237",title:"Contact",               year:1997,rarity:2,tmdbId:686,    cast:["Jodie Foster","Matthew McConaughey","James Woods","John Hurt","David Morse","William Fichtner","Angela Bassett"]},
+  {id:"m238",title:"Elysium",               year:2013,rarity:2,tmdbId:68728,  cast:["Matt Damon","Jodie Foster","Sharlto Copley","Alice Braga","William Fichtner"]},
+  // ── HELEN MIRREN ──
+  {id:"m239",title:"RED",                   year:2010,rarity:2,tmdbId:39254,  cast:["Bruce Willis","Morgan Freeman","Helen Mirren","John Malkovich","Mary-Louise Parker","Karl Urban","Julian McMahon"]},
+  {id:"m240",title:"Gosford Park extra",    year:2001,rarity:3,tmdbId:12594,  cast:["Helen Mirren","Maggie Smith","Charles Dance","Emily Watson","Helen Hunt"]},
+  // ── ROBIN WILLIAMS ──
+  {id:"m241",title:"Mrs. Doubtfire",        year:1993,rarity:1,tmdbId:788,    cast:["Robin Williams","Sally Field","Pierce Brosnan","Harvey Fierstein","Polly Holiday"]},
+  {id:"m242",title:"Death to Smoochy",      year:2002,rarity:3,tmdbId:9598,   cast:["Robin Williams","Edward Norton","Danny DeVito","Catherine Keener","Harvey Fierstein"]},
+  // ── AMANDA SEYFRIED ──
+  {id:"m243",title:"Les Misérables",        year:2012,rarity:1,tmdbId:61791,  cast:["Hugh Jackman","Russell Crowe","Anne Hathaway","Amanda Seyfried","Helena Bonham Carter","Sacha Baron Cohen","Eddie Redmayne"]},
+  // ── PIERCE BROSNAN ──
+  {id:"m244",title:"GoldenEye",             year:1995,rarity:2,tmdbId:710,    cast:["Pierce Brosnan","Judi Dench","Sean Bean","Izabella Scorupco","Joe Don Baker"]},
+  // ── MICHELLE PFEIFFER ──
+  {id:"m245",title:"Batman Returns",        year:1992,rarity:1,tmdbId:364,    cast:["Michael Keaton","Michelle Pfeiffer","Danny DeVito","Christopher Walken","Michael Gough","Pat Hingle"]},
+  {id:"m246",title:"The Witches of Eastwick",year:1987,rarity:3,tmdbId:8969,  cast:["Jack Nicholson","Cher","Susan Sarandon","Michelle Pfeiffer","Richard Jenkins","Veronica Cartwright"]},
+  // ── ANA DE ARMAS ──
+  {id:"m247",title:"No Time to Die",        year:2021,rarity:1,tmdbId:370172, cast:["Daniel Craig","Ana de Armas","Rami Malek","Ralph Fiennes","Ben Whishaw","Naomie Harris","Jeffrey Wright","Léa Seydoux"]},
+  {id:"m248",title:"Deep Water",            year:2022,rarity:3,tmdbId:632615, cast:["Ana de Armas","Ben Affleck","Tracy Letts","Lil Rel Howery"]},
+  // ── ADRIEN BRODY / OWEN WILSON ──
+  {id:"m249",title:"Midnight in Paris",     year:2011,rarity:2,tmdbId:74643,  cast:["Owen Wilson","Adrien Brody","Rachel McAdams","Marion Cotillard","Kathy Bates","Michael Sheen"]},
+  {id:"m250",title:"The Royal Tenenbaums",  year:2001,rarity:2,tmdbId:9428,   cast:["Gene Hackman","Gwyneth Paltrow","Ben Stiller","Owen Wilson","Bill Murray","Danny Glover","Anjelica Huston","Luke Wilson"]},
+  // ── MÉLANIE LAURENT ──
+  {id:"m251",title:"Now You See Me",        year:2013,rarity:2,tmdbId:75656,  cast:["Jesse Eisenberg","Mark Ruffalo","Woody Harrelson","Isla Fisher","Dave Franco","Mélanie Laurent","Morgan Freeman","Michael Caine"]},
+  // ── ZAC EFRON ──
+  {id:"m252",title:"Neighbors",             year:2014,rarity:2,tmdbId:220974, cast:["Seth Rogen","Zac Efron","Rose Byrne","Dave Franco","Lisa Kudrow"]},
+  // ── ZOE SALDANA ──
+  {id:"m253",title:"Avatar",               year:2009,rarity:1,tmdbId:19995,  cast:["Zoe Saldana","Sam Worthington","Sigourney Weaver","Michelle Rodriguez","Stephen Lang","CCH Pounder","Joel David Moore"]},
+  // ── EMMA THOMPSON ──
+  {id:"m254",title:"Sense and Sensibility", year:1995,rarity:2,tmdbId:4348,   cast:["Emma Thompson","Kate Winslet","Hugh Grant","Alan Rickman","Hugh Laurie","Imelda Staunton","Elizabeth Spriggs"]},
+  // ── EWAN McGREGOR ──
+  {id:"m255",title:"Angels & Demons",      year:2009,rarity:2,tmdbId:12573,  cast:["Tom Hanks","Ewan McGregor","Ayelet Zurer","Stellan Skarsgård","Nikolaj Lie Kaas","Armin Mueller-Stahl"]},
+  // ── FRANCES McDORMAND ──
+  {id:"m256",title:"Three Billboards Outside Ebbing, Missouri",year:2017,rarity:1,tmdbId:359940,cast:["Frances McDormand","Woody Harrelson","Sam Rockwell","John Hawkes","Peter Dinklage","Abbie Cornish"]},
+  // ── TOBEY MAGUIRE ──
+  {id:"m257",title:"The Great Gatsby",      year:2013,rarity:1,tmdbId:116745, cast:["Leonardo DiCaprio","Tobey Maguire","Carey Mulligan","Joel Edgerton","Isla Fisher","Jason Clarke"]},
+  {id:"m258",title:"Spider-Man",            year:2002,rarity:1,tmdbId:557,    cast:["Tobey Maguire","Kirsten Dunst","Willem Dafoe","James Franco","Cliff Robertson","Rosemary Harris"]},
+  // ── KATE McKINNON ──
+  {id:"m259",title:"Ghostbusters: Afterlife",year:2021,rarity:1,tmdbId:425,   cast:["Melissa McCarthy","Kristen Wiig","Kate McKinnon","Leslie Jones","Chris Hemsworth"]},
+  // ── CAMERON DIAZ / DREW BARRYMORE ──
+  {id:"m260",title:"The Holiday",           year:2006,rarity:2,tmdbId:1581,   cast:["Kate Winslet","Cameron Diaz","Jude Law","Jack Black","Eli Wallach"]},
+  {id:"m261",title:"There's Something About Mary",year:1998,rarity:2,tmdbId:9474,cast:["Ben Stiller","Cameron Diaz","Matt Dillon","Lee Evans","Lin Shaye"]},
+  {id:"m262",title:"Music and Lyrics",      year:2007,rarity:2,tmdbId:4986,   cast:["Hugh Grant","Drew Barrymore","Brad Garrett","Haley Bennett","Kristen Johnston"]},
+  {id:"m263",title:"50 First Dates",        year:2004,rarity:2,tmdbId:12151,  cast:["Adam Sandler","Drew Barrymore","Rob Schneider","Sean Astin","Lusia Strus"]},
+  // ── DEMI MOORE ──
+  {id:"m264",title:"Ghost",                 year:1990,rarity:1,tmdbId:1585,   cast:["Demi Moore","Patrick Swayze","Whoopi Goldberg","Tony Goldwyn","Rick Aviles"]},
+  // ── JENNIFER ANISTON ──
+  {id:"m265",title:"Horrible Bosses",       year:2011,rarity:2,tmdbId:66533,  cast:["Jason Bateman","Charlie Day","Jason Sudeikis","Jennifer Aniston","Colin Farrell","Jamie Foxx","Kevin Spacey"]},
+  {id:"m266",title:"Marley & Me",           year:2008,rarity:2,tmdbId:12783,  cast:["Jennifer Aniston","Owen Wilson","Eric Dane","Kathleen Turner","Alan Arkin"]},
+  // ── X-MEN EXTENDED ──
+  {id:"m267",title:"X-Men: Days of Future Past",year:2014,rarity:1,tmdbId:127585,cast:["Hugh Jackman","Elliot Page","James McAvoy","Michael Fassbender","Jennifer Lawrence","Ian McKellen","Halle Berry","Peter Dinklage","Omar Sy","Evan Peters"]},
+  // ── ELLIOT PAGE ──
+  {id:"m268",title:"Juno",                  year:2007,rarity:2,tmdbId:8489,   cast:["Elliot Page","Michael Cera","Jennifer Garner","Jason Bateman","Allison Janney","J.K. Simmons"]},
+  // ── ZAZIE BEETZ ──
+  {id:"m269",title:"Deadpool 2",            year:2018,rarity:1,tmdbId:383498, cast:["Ryan Reynolds","Josh Brolin","Zazie Beetz","Morena Baccarin","Julian Dennison","T.J. Miller"]},
+  // ── JASON STATHAM ──
+  {id:"m270",title:"The Expendables",       year:2010,rarity:2,tmdbId:27579,  cast:["Sylvester Stallone","Jason Statham","Jet Li","Bruce Willis","Arnold Schwarzenegger","Dolph Lundgren","Terry Crews"]},
+  // ── JUDI DENCH ──
+  {id:"m271",title:"Philomena",             year:2013,rarity:2,tmdbId:152532, cast:["Judi Dench","Steve Coogan","Sophie Kennedy Clark","Anna Maxwell Martin","Michelle Fairley"]},
+  // ── AWKWAFINA ──
+  {id:"m272",title:"The Farewell",          year:2019,rarity:2,tmdbId:571582, cast:["Awkwafina","Tzi Ma","Diana Lin","Zhao Shuzhen","X Mayo"]},
+  // ── CHARLOTTE RAMPLING ──
+  {id:"m273",title:"Swimming Pool",         year:2003,rarity:3,tmdbId:9543,   cast:["Charlotte Rampling","Ludivine Sagnier","Charles Dance","Marc Fayolle"]},
+  // ── JOHN BOYEGA ──
+  {id:"m274",title:"Star Wars: The Last Jedi",year:2017,rarity:1,tmdbId:181808,cast:["John Boyega","Daisy Ridley","Oscar Isaac","Adam Driver","Carrie Fisher","Benicio del Toro","Laura Dern","Andy Serkis"]},
+  // ── AMERICA FERRERA ──
+  {id:"m275",title:"How to Train Your Dragon",year:2010,rarity:1,tmdbId:10090,cast:["Jay Baruchel","America Ferrera","Gerard Butler","Craig Ferguson","Jonah Hill"]},
+  // ── MONICA BELLUCCI ──
+  {id:"m276",title:"Spectre",              year:2015,rarity:2,tmdbId:206647, cast:["Daniel Craig","Monica Bellucci","Christoph Waltz","Ralph Fiennes","Ben Whishaw","Léa Seydoux","Naomie Harris","Andrew Scott"]},
+  // ── CYNTHIA ERIVO ──
+  {id:"m277",title:"Harriet",              year:2019,rarity:2,tmdbId:503736, cast:["Cynthia Erivo","Leslie Odom Jr.","Joe Alwyn","Janelle Monáe","Clarke Peters","Jennifer Nettles"]},
+  // ── TARAJI P. HENSON ──
+  {id:"m278",title:"Smokin' Aces",         year:2007,rarity:3,tmdbId:1428,   cast:["Taraji P. Henson","Ben Affleck","Ryan Reynolds","Andy Garcia","Ray Liotta","Alicia Keys","Common","Martin Henderson"]},
+  // ── DANAI GURIRA ──
+  {id:"m279",title:"Avengers: Endgame extra",year:2019,rarity:1,tmdbId:299534,cast:["Danai Gurira","Lupita Nyong'o","Angela Bassett","Chadwick Boseman","Winston Duke"]},
+  // ── PEDRO PASCAL ──
+  {id:"m280",title:"The Unbearable Weight of Massive Talent",year:2022,rarity:2,tmdbId:837082,cast:["Nicolas Cage","Pedro Pascal","Sharon Horgan","Tiffany Haddish","Neil Patrick Harris"]},
+  // ── MICHELLE PFEIFFER (altra) ──
+  {id:"m281",title:"Stardust",             year:2007,rarity:2,tmdbId:7013,   cast:["Charlie Cox","Claire Danes","Michelle Pfeiffer","Robert De Niro","Sienna Miller","Ricky Gervais"]},
+  // ── ANDREW GARFIELD ──
+  {id:"m282",title:"Hacksaw Ridge",        year:2016,rarity:2,tmdbId:324552, cast:["Andrew Garfield","Sam Worthington","Teresa Palmer","Hugo Weaving","Rachel Griffiths","Vince Vaughn"]},
+  {id:"m283",title:"tick, tick... BOOM!",  year:2021,rarity:2,tmdbId:736731, cast:["Andrew Garfield","Alexandra Shipp","Robin de Jesús","Joshua Henry","Vanessa Hudgens","Bradley Whitford"]},
+  // ── ARIANA DeBOSE ──
+  {id:"m284",title:"West Side Story",      year:2021,rarity:2,tmdbId:763788, cast:["Ansel Elgort","Rachel Zegler","Ariana DeBose","David Alvarez","Mike Faist","Corey Stoll","Brian d'Arcy James","Rita Moreno"]},
+  // ── HALLE BERRY ──
+  {id:"m285",title:"X-Men",               year:2000,rarity:1,tmdbId:36657,  cast:["Hugh Jackman","Patrick Stewart","Ian McKellen","Halle Berry","Famke Janssen","James Marsden","Anna Paquin","Tyler Mane"]},
+  {id:"m286",title:"John Wick: Chapter 3",year:2019,rarity:1,tmdbId:458156, cast:["Keanu Reeves","Halle Berry","Ian McShane","Mark Dacascos","Asia Kate Dillon","Lance Reddick"]},
+  // ── ANGELA BASSETT (extra) ──
+  {id:"m287",title:"Waiting to Exhale",   year:1995,rarity:3,tmdbId:10539,  cast:["Whitney Houston","Angela Bassett","Loretta Devine","Lela Rochon","Gregory Hines"]},
+  // ── JENNIFER CONNELLY ──
+  {id:"m288",title:"Requiem for a Dream", year:2000,rarity:3,tmdbId:641,    cast:["Ellen Burstyn","Jared Leto","Jennifer Connelly","Marlon Wayans","Christopher McDonald"]},
+  // ── MÉLANIE LAURENT (altra) ──
+  {id:"m289",title:"Beginners",           year:2011,rarity:3,tmdbId:59297,  cast:["Ewan McGregor","Mélanie Laurent","Christopher Plummer","Goran Visnjic"]},
+  // ── ZHANG ZIYI ──
+  {id:"m290",title:"Memoirs of a Geisha", year:2005,rarity:2,tmdbId:1835,   cast:["Zhang Ziyi","Ken Watanabe","Michelle Yeoh","Li Gong","Youki Kudoh"]},
+  // ── KATE McKINNON (altra) ──
+  {id:"m291",title:"Yesterday",           year:2019,rarity:2,tmdbId:506574, cast:["Himesh Patel","Lily James","Kate McKinnon","Ed Sheeran","Joel Fry"]},
+  // ── JULIETTE BINOCHE ──
+  {id:"m292",title:"Chocolat",            year:2000,rarity:2,tmdbId:1405,   cast:["Juliette Binoche","Johnny Depp","Alfred Molina","Judi Dench","Carrie-Anne Moss","Leslie Caron"]},
+  // ── PATRICIA ARQUETTE ──
+  {id:"m293",title:"Boyhood",             year:2014,rarity:2,tmdbId:209112, cast:["Ethan Hawke","Patricia Arquette","Ellar Coltrane","Lorelei Linklater"]}
+,
+  {id:"m294",title:"The Mummy",            year:1999,rarity:2,tmdbId:564,    cast:["Brendan Fraser","Rachel Weisz","John Hannah","Arnold Vosloo","Oded Fehr","Kevin J. O'Connor"]},
+  {id:"m295",title:"The Constant Gardener",year:2005,rarity:3,tmdbId:36960,  cast:["Ralph Fiennes","Rachel Weisz","Bill Nighy","Danny Huston","Pete Postlethwaite"]},
+  {id:"m296",title:"About a Boy",          year:2002,rarity:2,tmdbId:10351,  cast:["Hugh Grant","Toni Collette","Rachel Weisz","Nicholas Hoult","Sharon Small"]},
+  {id:"m297",title:"Aquaman",              year:2018,rarity:1,tmdbId:297802, cast:["Jason Momoa","Amber Heard","Willem Dafoe","Patrick Wilson","Dolph Lundgren","Nicole Kidman","Yahya Abdul-Mateen II"]},
+  {id:"m298",title:"Creed",               year:2015,rarity:1,tmdbId:312221, cast:["Michael B. Jordan","Sylvester Stallone","Tessa Thompson","Phylicia Rashad","Tony Bellew","Graham McTavish"]},
+  {id:"m299",title:"Without Remorse",     year:2021,rarity:2,tmdbId:619264, cast:["Michael B. Jordan","Jodie Turner-Smith","Jamie Bell","Lauren London","Guy Pearce","Jacob Scipio"]},
+  {id:"m300",title:"Mean Girls 2024",     year:2024,rarity:1,tmdbId:1008042,cast:["Tina Fey","Reneé Rapp","Angourie Rice","Jaquel Spivey","Auli'i Cravalho","Megan Thee Stallion"]},
+  {id:"m301",title:"30 Rock: The Movie",  year:2007,rarity:3,tmdbId:15580,  cast:["Tina Fey","Alec Baldwin","Tracy Morgan","Jane Krakowski","Jack McBrayer"]},
+  {id:"m302",title:"Vicky Cristina Barcelona",year:2008,rarity:2,tmdbId:11171,cast:["Penélope Cruz","Javier Bardem","Scarlett Johansson","Rebecca Hall","Patricia Clarkson"]},
+  {id:"m303",title:"Blow",                year:2001,rarity:2,tmdbId:9340,   cast:["Johnny Depp","Penélope Cruz","Rachel Griffiths","Ethan Suplee","Paul Reubens"]},
+  {id:"m304",title:"Bad Moms Christmas",  year:2017,rarity:2,tmdbId:452405, cast:["Mila Kunis","Kathryn Hahn","Kristen Bell","Susan Sarandon","Christine Baranski","Cheryl Hines"]},
+  {id:"m305",title:"WandaVision context", year:2021,rarity:2,tmdbId:85271,  cast:["Kathryn Hahn","Elizabeth Olsen","Paul Bettany","Randall Park","Kat Dennings"]},
+  {id:"m306",title:"9 to 5 extra",        year:1980,rarity:3,tmdbId:15379,  cast:["Jane Fonda","Lily Tomlin","Dolly Parton","Dabney Coleman","Sterling Hayden"]},
+  {id:"m307",title:"Barefoot in the Park",year:1967,rarity:4,tmdbId:31601,  cast:["Jane Fonda","Robert Redford","Charles Boyer","Mildred Natwick","Herb Edelman"]},
+  {id:"m308",title:"Rules Don't Apply",   year:2016,rarity:3,tmdbId:330459, cast:["Lily Collins","Warren Beatty","Alden Ehrenreich","Annette Bening","Matthew Broderick","Alec Baldwin","Martin Sheen"]},
+  {id:"m309",title:"The Blind Side extra",year:2009,rarity:2,tmdbId:26390,  cast:["Alfre Woodard","Sandra Bullock","Tim McGraw","Quinton Aaron","Kathy Bates"]},
+  {id:"m310",title:"Captain America: The Winter Soldier",year:2014,rarity:1,tmdbId:100402,cast:["Chris Evans","Scarlett Johansson","Samuel L. Jackson","Robert Redford","Anthony Mackie","Cobie Smulders","Emily VanCamp","Frank Grillo"]},
+  {id:"m311",title:"The Spectacular Now", year:2013,rarity:3,tmdbId:187252, cast:["Miles Teller","Shailene Woodley","Brie Larson","Kyle Chandler","Jennifer Jason Leigh","Hailee Steinfeld"]},
+  {id:"m312",title:"Edge of Tomorrow",   year:2014,rarity:2,tmdbId:137113, cast:["Tom Cruise","Emily Blunt","Bill Paxton","Brendan Gleeson","Noah Taylor","Charlotte Riley"]},
+  {id:"m313",title:"Bob Odenkirk standalone",year:2021,rarity:2,tmdbId:602466,cast:["Bob Odenkirk","Connie Nielsen","Aleksei Serebryakov","RZA","Michael Ironside"]}
 ];
 
 
