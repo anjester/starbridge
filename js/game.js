@@ -336,9 +336,6 @@ function spSetHeader() {
   if (ti) ti.src = actorImg(TARGET);
   if (sn) sn.textContent = START;
   if (tn) tn.textContent = TARGET;
-  // Icona target
-  const tgi = $('spTargetIco');
-  if (tgi && window.ICN_TARGET) tgi.src = window.ICN_TARGET;
 
   // Load TMDB photos for start/target
   if (TMDB_KEY) {
@@ -405,9 +402,7 @@ function spAddFilmStep() {
   card.className = 'sp-card';
   card.id = 'spCard' + n;
   card.innerHTML =
-    '<div class="sp-card-icon">' +
-    '<img src="' + (window.ICN_PELLICOLA||'') + '" class="sp-card-icon-img" alt="Film"/>' +
-    '</div>' +
+    '<div class="sp-card-icon">🎬</div>' +
     '<div class="sp-card-body">' +
       '<div class="sp-card-title">' + n + ' — Scegli un film con <b>' + esc(cur) + '</b></div>' +
       '<select class="sp-sel" id="spFSel' + n + '" onchange="spOnFilmCh(' + n + ')">' +
@@ -457,9 +452,7 @@ function spAddActorStep() {
   card.className = 'sp-card';
   card.id = 'spCard' + n;
   card.innerHTML =
-    '<div class="sp-card-icon">' +
-    '<img src="' + (window.ICN_OSCAR_H||'') + '" class="sp-card-icon-img" alt="Attore"/>' +
-    '</div>' +
+    '<div class="sp-card-icon">🏆</div>' +
     '<div class="sp-card-body">' +
       '<div class="sp-card-title">' + n + ' — Scegli un attore/attrice in</div>' +
       '<div class="sp-card-sub">' + esc(film.title) + '</div>' +
@@ -590,33 +583,22 @@ function spEndGame(won, reason) {
     maxdeg: 'Hai superato i ' + _spDots + ' gradi senza raggiungere <strong>' + esc(TARGET) + '</strong>.'
   };
 
-  // icona end: target per won, oscars per lose
-  const endIco = won
-    ? '<img src="' + (window.ICN_TARGET||'') + '" class="sp-end-ico" alt=""/>'
-    : '<span class="sp-end-emoji">' + icons[key] + '</span>';
-
-  const gradi = path.length;
-  const oscarEarned = won ? (GAME_MODES[mode].oscarsStart || 4) - oscars : 0;
-  const oscarStr  = oscarEarned > 0 ? '+' + oscarEarned : '';
-  const pcStr     = pc > 0 ? '+' + pc : '';
-
   const endCard = document.createElement('div');
-  endCard.className = 'sp-card sp-end-card';
+  endCard.className = 'sp-card';
+  endCard.style.cssText = 'flex-direction:column;align-items:center;text-align:center;padding:22px 14px;gap:10px;border-color:rgba(255,211,77,.7);animation:spIn .3s ease both;';
   endCard.innerHTML =
-    '<div class="sp-end-left">' + endIco + '</div>' +
-    '<div class="sp-end-body">' +
-      '<div class="sp-end-ttl' + (won ? '' : ' lose') + '">' + titles[key] + '</div>' +
-      '<div class="sp-end-desc">' + msgs[key] + '</div>' +
-      '<div class="sp-end-gradi">' + gradi + ' su ' + _spDots + ' gradi di separazione</div>' +
-      '<div class="sp-end-btns">' +
-        '<button class="sp-btn grn sp-end-riscatta" onclick="spRestart()">RISCATTA &#8594;</button>' +
-        (oscarStr ? '<button class="sp-btn sp-end-oscar">' + oscarStr + ' &#127942;</button>' : '') +
-        (pcStr    ? '<button class="sp-btn sp-end-pc">'   + pcStr    + ' &#127871;</button>' : '') +
-      '</div>' +
-      '<div class="sp-end-extra">' +
-        '<button class="sp-btn sp-end-mini" onclick="spNextChallenge()">&#127922; Nuova sfida</button>' +
-        '<button class="sp-btn sp-end-mini" onclick="goTo(\'home\')">&#127968; Home</button>' +
-      '</div>' +
+    '<div style="font-size:48px;line-height:1;">' + icons[key] + '</div>' +
+    '<div style="font-family:\'acumin-pro\',sans-serif;font-size:clamp(18px,5.5vw,24px);font-weight:900;color:' + (won ? '#22c55e' : '#e03030') + ';letter-spacing:.03em;">' + titles[key] + '</div>' +
+    '<div style="color:rgba(255,255,255,.8);font-size:clamp(12px,3.5vw,15px);line-height:1.5;">' + msgs[key] + '</div>' +
+    '<div style="display:flex;gap:20px;margin:6px 0;">' +
+      '<div style="text-align:center;"><div style="font-size:clamp(22px,7vw,30px);font-weight:900;color:#ffd34d;font-family:\'acumin-pro\',sans-serif;">' + sc + '</div><div style="font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;">Punteggio</div></div>' +
+      '<div style="text-align:center;"><div style="font-size:clamp(22px,7vw,30px);font-weight:900;color:#ffd34d;font-family:\'acumin-pro\',sans-serif;">' + path.length + '</div><div style="font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;">Gradi</div></div>' +
+      (pc > 0 ? '<div style="text-align:center;"><div style="font-size:clamp(22px,7vw,30px);font-weight:900;color:#ffd34d;font-family:\'acumin-pro\',sans-serif;">+' + pc + '</div><div style="font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;">Pop Corn</div></div>' : '') +
+    '</div>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px;">' +
+      '<button class="sp-btn grn" style="width:auto;padding:11px 20px;" onclick="spRestart()">↻ Rigioca</button>' +
+      '<button class="sp-btn" style="width:auto;padding:11px 20px;background:rgba(255,255,255,.1);color:#fff;" onclick="spNextChallenge()">🎲 Nuova sfida</button>' +
+      '<button class="sp-btn" style="width:auto;padding:11px 20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);" onclick="goTo(\'home\')">🏠 Home</button>' +
     '</div>';
 
   $('spSteps').appendChild(endCard);
