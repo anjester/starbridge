@@ -1,0 +1,349 @@
+/* =========================================================
+   StarBridge responsive fix v1
+   Obiettivo: testi card leggibili, più centrati, UI stabile
+   su telefoni stretti, telefoni bassi, tablet e desktop.
+   ========================================================= */
+
+/* Evita micro-scroll orizzontali dovuti a glow / immagini */
+html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
+
+/* Le schermate devono considerare sempre la nav reale */
+.screen{
+  padding-bottom:calc(var(--nav-h, 88px) + var(--safe-bot, 0px) + 6px)!important;
+}
+
+/* HOME: griglia più controllata */
+.home-wrap{
+  height:100svh!important;
+  min-height:0!important;
+}
+
+.home-scroll{
+  padding:0 clamp(8px, 2.2vw, 18px) 8px!important;
+  min-height:0!important;
+}
+
+.logo-wrap{
+  padding:clamp(2px, .8vh, 8px) 0 clamp(5px, 1.2vh, 12px)!important;
+}
+
+.logo-wrap img{
+  width:min(245px, 64vw)!important;
+  max-height:clamp(48px, 9svh, 86px)!important;
+}
+
+.grid{
+  display:grid!important;
+  grid-template-columns:repeat(2, minmax(0, 1fr))!important;
+  grid-template-rows:repeat(2, minmax(0, 1fr))!important;
+  gap:clamp(8px, 2.1vw, 18px)!important;
+  width:100%!important;
+  max-width:560px!important;
+  margin:0 auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+
+.card-wrap{
+  min-width:0!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+
+/* CARD HOME: lascia spazio al testo, poi abbassa/centra icona */
+.rcard{
+  width:100%!important;
+  max-height:100%!important;
+  min-width:0!important;
+  border-radius:clamp(12px, 3vw, 18px)!important;
+}
+
+.rcard-body{
+  padding:9% 6% 5%!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+}
+
+.rcard-top{
+  width:100%!important;
+  max-height:none!important;
+  min-height:clamp(52px, 12.5vw, 74px)!important;
+  padding-top:clamp(4px, 1.2vw, 9px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:clamp(2px, .6vw, 5px)!important;
+  overflow:visible!important;
+  text-align:center!important;
+}
+
+.rcard-name{
+  width:100%!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-wrap:balance;
+  font-size:clamp(15px, 4.05vw, 25px)!important;
+  line-height:.94!important;
+  letter-spacing:.015em!important;
+  text-align:center!important;
+}
+
+.rcard-desc{
+  width:100%!important;
+  max-width:100%!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  text-align:center!important;
+  font-size:clamp(8px, 2.25vw, 12px)!important;
+  line-height:1.12!important;
+  margin-top:1px!important;
+}
+
+.rcard-bottom{
+  flex:1 1 auto!important;
+  width:100%!important;
+  min-height:0!important;
+  padding:3% 3% 2%!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+.rcard-icon{
+  width:92%!important;
+  height:92%!important;
+  max-width:clamp(92px, 31vw, 170px)!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+
+/* Mondo / Oscar tendono ad avere descrizioni lunghe: compatta leggermente */
+#screenHome .card-wrap:nth-child(3) .rcard-name,
+#screenHome .card-wrap:nth-child(4) .rcard-name{
+  font-size:clamp(15px, 3.85vw, 24px)!important;
+}
+#screenHome .card-wrap:nth-child(4) .rcard-desc{
+  font-size:clamp(7.5px, 2vw, 11px)!important;
+}
+
+/* Schermi molto stretti: più respiro sopra al testo, icone meno aggressive */
+@media (max-width:380px){
+  .topbar{padding:6px 8px 2px!important;}
+  .counter{min-width:58px!important;max-width:78px!important;height:28px!important;font-size:11px!important;}
+  .counter img.ic{width:15px!important;height:15px!important;}
+  .plus{width:13px!important;height:13px!important;font-size:9px!important;}
+
+  .home-scroll{padding-left:7px!important;padding-right:7px!important;}
+  .grid{gap:8px!important;max-width:100%!important;}
+  .rcard-body{padding:10% 5.5% 4%!important;}
+  .rcard-top{min-height:58px!important;padding-top:5px!important;}
+  .rcard-name{font-size:clamp(14px, 4.4vw, 18px)!important;line-height:.94!important;}
+  .rcard-desc{font-size:clamp(7px, 2.25vw, 9px)!important;line-height:1.08!important;}
+  .rcard-icon{max-width:clamp(84px, 34vw, 128px)!important;width:90%!important;height:90%!important;}
+}
+
+/* Schermi bassi tipo vecchi Android: riduci logo e compatta spazi */
+@media (max-height:700px){
+  .logo-wrap img{max-height:50px!important;width:min(205px, 58vw)!important;}
+  .logo-wrap{padding:1px 0 4px!important;}
+  .grid{gap:7px!important;}
+  .rcard-body{padding:8% 5% 3%!important;}
+  .rcard-top{min-height:50px!important;padding-top:2px!important;}
+  .rcard-name{font-size:clamp(13px, 3.7vw, 19px)!important;line-height:.92!important;}
+  .rcard-desc{font-size:clamp(6.5px, 1.8vw, 9px)!important;line-height:1.05!important;}
+  .nav{height:calc(76px + var(--safe-bot, 0px))!important;}
+  :root{--nav-h:76px!important;}
+  .nav-btn img.nav-icon{width:min(44px, 10vw)!important;height:min(44px, 10vw)!important;}
+  .nav-btn span{font-size:8px!important;letter-spacing:.09em!important;}
+  .nav-btn{padding-top:5px!important;padding-bottom:4px!important;gap:3px!important;}
+}
+
+/* Telefoni più grandi / tablet: tieni tutto proporzionato */
+@media (min-width:520px){
+  .grid{max-width:620px!important;}
+  .rcard-name{font-size:clamp(20px, 3.2vw, 28px)!important;}
+  .rcard-desc{font-size:clamp(10px, 1.6vw, 13px)!important;}
+}
+
+/* MODALITÀ: prima non aveva CSS dedicato. Ora diventa solida. */
+.modes-scroll{
+  height:100%!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding:clamp(16px, 4vw, 32px) clamp(16px, 5vw, 42px) calc(var(--nav-h,88px) + 24px)!important;
+  scrollbar-width:none;
+}
+.modes-scroll::-webkit-scrollbar{display:none;}
+
+.modes-head{
+  display:flex!important;
+  align-items:center!important;
+  gap:clamp(12px, 3vw, 22px)!important;
+  margin-bottom:clamp(16px, 3svh, 30px)!important;
+}
+.modes-back{
+  width:clamp(48px, 12vw, 72px)!important;
+  height:clamp(48px, 12vw, 72px)!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid rgba(255,211,77,.35)!important;
+  border-radius:16px!important;
+  background:rgba(5,12,28,.62)!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 0 18px rgba(255,255,255,.05)!important;
+}
+.modes-back img{
+  width:62%!important;
+  height:62%!important;
+  object-fit:contain!important;
+}
+.modes-title{
+  flex:1!important;
+  margin:0!important;
+  font-family:'acumin-pro','Syne',system-ui,sans-serif!important;
+  font-weight:900!important;
+  text-transform:uppercase!important;
+  color:#ffd34d!important;
+  font-size:clamp(28px, 8.5vw, 62px)!important;
+  line-height:.95!important;
+  letter-spacing:.02em!important;
+  text-shadow:0 4px 0 rgba(140,70,0,.65), 0 0 22px rgba(255,170,20,.35)!important;
+}
+.modes-intro{
+  margin:0 auto clamp(18px, 4svh, 36px)!important;
+  max-width:720px!important;
+  color:rgba(255,255,255,.82)!important;
+  font-size:clamp(16px, 4.2vw, 25px)!important;
+  line-height:1.45!important;
+}
+
+.mode-card{
+  max-width:720px!important;
+  margin:0 auto clamp(18px, 3.2svh, 28px)!important;
+  width:100%!important;
+  aspect-ratio:auto!important;
+  overflow:visible!important;
+}
+
+.rcard-h{
+  aspect-ratio:1088/520!important;
+  min-height:clamp(150px, 36vw, 250px)!important;
+}
+.rcard-h .rcard-body{
+  padding:6% 7%!important;
+}
+.rcard-h .rcard-top{
+  min-height:0!important;
+  width:58%!important;
+  margin-left:auto!important;
+  align-items:flex-start!important;
+  text-align:left!important;
+}
+.rcard-h .rcard-name{
+  text-align:left!important;
+  font-size:clamp(24px, 6.2vw, 46px)!important;
+  line-height:.98!important;
+}
+.rcard-h-row{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+}
+.rcard-h .rcard-icon{
+  position:absolute!important;
+  left:4%!important;
+  bottom:7%!important;
+  width:38%!important;
+  height:72%!important;
+  max-width:none!important;
+  max-height:none!important;
+}
+.rcard-h-text{
+  position:absolute!important;
+  left:43%!important;
+  top:43%!important;
+  right:10%!important;
+  display:block!important;
+  min-width:0!important;
+}
+.rcard-h .rcard-desc{
+  text-align:left!important;
+  font-size:clamp(13px, 3.8vw, 21px)!important;
+  line-height:1.22!important;
+  -webkit-line-clamp:3!important;
+}
+
+/* Modalità su schermi stretti */
+@media (max-width:380px){
+  .modes-scroll{padding:14px 13px calc(var(--nav-h,76px) + 16px)!important;}
+  .modes-head{gap:10px!important;margin-bottom:14px!important;}
+  .modes-title{font-size:clamp(26px, 8vw, 36px)!important;}
+  .modes-intro{font-size:clamp(14px, 3.9vw, 17px)!important;line-height:1.38!important;margin-bottom:14px!important;}
+  .mode-card{margin-bottom:14px!important;}
+  .rcard-h{min-height:138px!important;aspect-ratio:1088/555!important;}
+  .rcard-h .rcard-name{font-size:clamp(20px, 5.9vw, 26px)!important;}
+  .rcard-h .rcard-desc{font-size:clamp(11px, 3.25vw, 14px)!important;}
+  .rcard-h-text{left:43%!important;top:45%!important;right:9%!important;}
+  .rcard-h .rcard-icon{left:4%!important;width:38%!important;height:70%!important;}
+}
+
+/* MONDO POPCORN: immagini realmente visibili e centrabili */
+.mondo-wrap{
+  height:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  padding:clamp(10px, 3vw, 22px) clamp(12px, 4vw, 28px) calc(var(--nav-h,88px) + 12px)!important;
+  overflow:hidden!important;
+}
+.mondo-header{
+  flex:0 0 auto!important;
+  width:100%!important;
+  display:flex!important;
+  justify-content:center!important;
+  margin-bottom:clamp(8px, 2svh, 18px)!important;
+}
+.mondo-logo{
+  width:min(460px, 86vw)!important;
+  height:auto!important;
+  max-height:clamp(70px, 16svh, 150px)!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.55))!important;
+}
+.mondo-board-wrap{
+  position:relative!important;
+  flex:1 1 auto!important;
+  min-height:0!important;
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.mondo-board{
+  width:auto!important;
+  height:100%!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+}
+.mondo-coming{
+  position:absolute!important;
+  inset:auto auto 9% 50%!important;
+  transform:translateX(-50%)!important;
+  text-align:center!important;
+  color:#ffd34d!important;
+  font-family:'acumin-pro','Syne',system-ui,sans-serif!important;
+  font-weight:900!important;
+  text-shadow:0 2px 10px rgba(0,0,0,.8)!important;
+  pointer-events:none!important;
+}
+.mondo-coming span{font-size:clamp(28px, 8vw, 50px)!important;display:block!important;}
+.mondo-coming p{font-size:clamp(14px, 4vw, 24px)!important;text-transform:uppercase!important;}
+
+/* Correzione generale per immagini non caricate: evita icone rotte visibili */
+img[src=""], img:not([src]){
+  visibility:hidden;
+}
