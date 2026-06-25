@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="it">
-<!-- StarBridge verified version -->
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
@@ -9,8 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=conform-1"/>
-  <link rel="stylesheet" href="css/game.css?v=conform-1"/>
+  <link rel="stylesheet" href="css/style.css?v=fix-4"/>
+  <link rel="stylesheet" href="css/game.css?v=fix-4"/>
+  <link rel="stylesheet" href="css/responsive-fix.css?v=fix-4"/>
 </head>
 <body>
 <!-- SFONDO -->
@@ -141,6 +141,7 @@
           <div class="sp-albl">Target</div>
           <div class="sp-aname" id="spTargetName"></div>
         </div>
+        <img class="sp-target-ico" id="spTargetIco" src="" alt=""/>
       </div>
     </div>
     <div class="sp-path" id="spPath"></div>
@@ -342,10 +343,17 @@
 
 <!-- MONDO -->
 <div class="screen hidden" id="screenMondo">
-  <div class="placeholder">
-    <div class="ph-icon">🍿</div>
-    <div class="ph-title">Mondo Pop Corn</div>
-    <div class="ph-sub">In arrivo — scala la progressione fino all'Oscar.</div>
+  <div class="mondo-wrap">
+    <div class="mondo-header">
+      <img id="imgLogoMondo" class="mondo-logo" src="" alt="StarBridge Mondo Popcorn"/>
+    </div>
+    <div class="mondo-board-wrap">
+      <img id="imgBoardMondo" class="mondo-board" src="" alt="Board"/>
+      <div class="mondo-coming">
+        <span>🍿</span>
+        <p>In arrivo</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -413,9 +421,9 @@
 
   <!-- Core scripts -->
 
-  <script src="js/assets-loader.js?v=fix-splash-1"></script>
-<script src="js/game.js?v=fix-splash-1"></script>
-<script src="js/navigation.js?v=fix-splash-1"></script>
-<script src="js/ui-effects.js?v=fix-splash-1"></script>
+  <script src="js/assets-loader.js?v=fix-4"></script>
+  <script src="js/ui-effects.js?v=fix-4"></script>
+  <script src="js/game.js?v=fix-4"></script>
+  <script src="js/navigation.js?v=fix-4"></script>
 </body>
 </html>
