@@ -50,3 +50,12 @@ window.ICN_TEMPO     = 'assets/icons/icn_tempo.webp';
 // Silhouettes (placeholder actor photos)
 window.SIL_MAN       = 'assets/ui/sil_man.png';
 window.SIL_WOMAN     = 'assets/ui/sil_woman.png';
+
+// Game icons (transparent PNG)
+window.ICN_PELLICOLA  = 'assets/icons/E_Pellicola.png';
+window.ICN_OSCAR_H    = 'assets/icons/H_Oscar.png';
+window.ICN_TARGET     = 'assets/icons/target.png';
+
+// Mondo Popcorn
+window.LOGO_MONDO     = 'assets/icons/Logo-Mondo-Popcorn.png';
+window.BOARD_MONDO    = 'assets/icons/Board_MondoPC.png';

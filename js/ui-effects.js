@@ -42,6 +42,9 @@ function injectImages() {
 
   // Exit alert icon
   si('exitAlertIcon', IMG.btn_play || '');
+  // Mondo Popcorn
+  if (typeof LOGO_MONDO  !== 'undefined') si('imgLogoMondo',  LOGO_MONDO);
+  if (typeof BOARD_MONDO !== 'undefined') si('imgBoardMondo', BOARD_MONDO);
 }
 
 // ── SPLASH ──
@@ -187,16 +190,7 @@ function initAnimCards() {
   });
 }
 
-// ── AVVIO ──
-document.addEventListener('DOMContentLoaded', function() {
-  injectImages();
-  spawnSparks();
-  runSplash();
-  initCardParticles();
-});
-
-
-/* Boot sicuro: carica grafiche e micro-animazioni appena il DOM è pronto */
+// ── AVVIO (unico handler) ──
 function sbBootUIEffects() {
   try { if (typeof injectImages === 'function') injectImages(); } catch(e) { console.warn('injectImages error', e); }
   try { if (typeof spawnSparks === 'function') spawnSparks(); } catch(e) { console.warn('spawnSparks error', e); }
@@ -204,7 +198,7 @@ function sbBootUIEffects() {
   try { if (typeof runSplash === 'function') runSplash(); } catch(e) { console.warn('runSplash error', e); }
 }
 if (document.readyState === 'loading') {
-  window.addEventListener('DOMContentLoaded', sbBootUIEffects);
+  document.addEventListener('DOMContentLoaded', sbBootUIEffects);
 } else {
   sbBootUIEffects();
 }
