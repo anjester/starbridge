@@ -470,20 +470,16 @@ select:focus{border-color:rgba(255,211,77,.5)}
 /* ── FEEDBACK (CORRETTO / SBAGLIATO) ── */
 .sp-fb {
   border-radius: 14px;
-  padding: clamp(10px,2vh,14px) clamp(10px,3vw,16px);
+  padding: clamp(14px,2.5vh,20px) clamp(14px,4vw,22px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
   animation: spIn .3s ease both;
 }
 .sp-fb.ok  { background: rgba(30,200,80,.12);  border: 1px solid rgba(40,200,80,.35);  }
 .sp-fb.err { background: rgba(232,48,48,.10);   border: 1px solid rgba(232,48,48,.35); }
-
-.sp-fb-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 .sp-fb-photo {
   width: clamp(40px,9vw,56px);
   height: clamp(40px,9vw,56px);
@@ -510,6 +506,13 @@ select:focus{border-color:rgba(255,211,77,.5)}
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.sp-fb-msg {
+  font-size: clamp(12px,2.4vw,14px);
+  color: rgba(226,239,255,.8);
+  line-height: 1.4;
 }
 .sp-fb-btn {
   flex: 1;
@@ -690,7 +693,10 @@ select:focus{border-color:rgba(255,211,77,.5)}
   transition: color .2s;
 }
 .nav-btn.active { color: var(--gold); }
+.nav-btn span   { font-size: clamp(7px,1.6vw,9px); display: block; }
 .nav-icon { width: clamp(22px,5vw,28px); height: clamp(22px,5vw,28px); object-fit: contain; }
+/* Icona rotta o non caricata: non occupa spazio inutile */
+.nav-icon[src=""], .nav-icon:not([src]) { display: none; }
 .nav-sep  { width: 1px; height: 26px; background: rgba(86,167,255,.12); flex-shrink: 0; }
 
 /* Select globale: mai più largo dello schermo */
@@ -734,11 +740,11 @@ select {
   .sp-fb-actions { flex-direction: column; }
   .sp-fb-btn { min-width: unset; }
 
-  /* Nav su schermi molto piccoli */
-  .nav-btn span { display: none; }
-  .nav-btn      { padding: 10px 0; }
-  .nav-icon     { width: 26px; height: 26px; }
-  .nav-sep      { height: 20px; }
+  /* Nav su schermi piccoli: icone più compatte, label visibili */
+  .nav-btn      { padding: 6px 0; gap: 2px; }
+  .nav-btn span { font-size: 7px; display: block; }
+  .nav-icon     { width: 22px; height: 22px; }
+  .nav-sep      { height: 18px; }
 }
 
 /* ── LANDSCAPE MOBILE ── */
@@ -757,9 +763,8 @@ select {
    logo grande, sfondo cinema blu, box attori importanti, percorso leggibile,
    card scelta film larga e nav nascosta durante la partita.
    ========================================================= */
-body.is-playing .nav{display:none!important;}
 body.is-playing .ad-bar{display:none!important;}
-body.is-playing #screenPlay{padding-bottom:0!important;}
+body.is-playing #screenPlay{padding-bottom:calc(var(--nav-h, 88px) + var(--safe-bot, 0px) + 6px)!important;}
 
 #screenPlay{
   height:100dvh!important;
@@ -966,4 +971,226 @@ body.is-playing #screenPlay{padding-bottom:0!important;}
   .sp-btn{height:32px!important;font-size:11px!important;border-width:1px!important;border-radius:7px!important;}
   .sp-start-lbl{font-size:13px!important;margin-bottom:7px!important;}
   .sp-logo-wrap img{width:44vw!important;max-height:34px!important;}
+}
+
+/* ============================================================ */
+/* ASSET ICONS (E_Pellicola, H_Oscar – PNG trasparenti)         */
+/* ============================================================ */
+.sp-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+}
+.sp-card-icon-img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ============================================================ */
+/* TARGET ICO — piccola icona decorativa nella box target        */
+/* ============================================================ */
+.sp-target-ico {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: .85;
+}
+
+/* ============================================================ */
+/* END CARD — SFIDA COMPLETATA / TIMEOUT / etc.                 */
+/* ============================================================ */
+.sp-end-card {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  border-color: rgba(255,211,77,.7);
+  padding: 18px 14px;
+}
+.sp-end-left {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sp-end-ico {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+.sp-end-emoji { font-size: 48px; line-height: 1; }
+.sp-end-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sp-end-ttl {
+  font-family: 'acumin-pro', 'Syne', sans-serif;
+  font-size: clamp(17px, 5vw, 22px);
+  font-weight: 900;
+  color: #22c55e;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.sp-end-ttl.lose { color: #e03030; }
+.sp-end-desc {
+  color: rgba(255,255,255,.8);
+  font-size: clamp(11px, 3.2vw, 14px);
+  line-height: 1.45;
+}
+.sp-end-gradi {
+  font-size: clamp(10px, 2.8vw, 12px);
+  color: rgba(255,211,77,.75);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+}
+.sp-end-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.sp-end-riscatta {
+  width: auto;
+  padding: 10px 18px;
+  font-size: clamp(13px, 3.5vw, 15px);
+}
+.sp-end-oscar {
+  width: auto;
+  padding: 10px 14px;
+  background: rgba(59,130,246,.85);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.sp-end-pc {
+  width: auto;
+  padding: 10px 14px;
+  background: rgba(220,38,38,.85);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.sp-end-extra {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+.sp-end-mini {
+  width: auto;
+  padding: 8px 12px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.65);
+  font-size: 12px;
+}
+
+/* ============================================================ */
+/* MONDO POPCORN SCREEN                                         */
+/* ============================================================ */
+.mondo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: calc(env(safe-area-inset-top,0px) + 16px) 16px
+           calc(var(--nav-h,88px) + var(--ad-h,56px) + env(safe-area-inset-bottom,0px) + 8px);
+  box-sizing: border-box;
+  gap: 12px;
+  overflow: hidden;
+}
+.mondo-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.mondo-logo {
+  max-width: min(340px, 90vw);
+  max-height: 90px;
+  object-fit: contain;
+}
+.mondo-board-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.mondo-board {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.mondo-coming {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(4,18,45,.45);
+  border-radius: 12px;
+}
+.mondo-coming span { font-size: 42px; }
+.mondo-coming p {
+  color: rgba(255,211,77,.9);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* sp-steps bottom padding: nav + spazio per pubblicità */
+#spSteps {
+  padding-bottom: calc(var(--nav-h, 88px) + var(--ad-h, 56px) + env(safe-area-inset-bottom, 0px) + 16px);
+}
+
+/* ── TIMER A TEMPO ── */
+.sp-timer {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 2px auto 4px;
+  padding: 5px 18px;
+  background: rgba(0,0,0,.55);
+  border: 1.5px solid rgba(86,167,255,.25);
+  border-radius: 999px;
+  font-family: 'Syne', 'acumin-pro', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: #e2efff;
+  letter-spacing: .06em;
+  min-width: 110px;
+  text-align: center;
+  transition: color .3s, border-color .3s, background .3s;
+}
+.sp-timer-icon { font-size: 16px; opacity: .8; }
+.sp-timer.warn {
+  color: #ff5555;
+  border-color: rgba(255,60,60,.6);
+  background: rgba(120,0,0,.45);
+  animation: timerPulse .7s ease-in-out infinite;
+}
+@keyframes timerPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
 }
