@@ -84,8 +84,8 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   white-space:normal!important;
   overflow:visible!important;
   text-wrap:balance;
-  font-size:clamp(15px, 4.05vw, 25px)!important;
-  line-height:.94!important;
+  font-size:clamp(17px, 4.5vw, 27px)!important;
+  line-height:.96!important;
   letter-spacing:.015em!important;
   text-align:center!important;
 }
@@ -99,8 +99,8 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   overflow:hidden!important;
   white-space:normal!important;
   text-align:center!important;
-  font-size:clamp(8px, 2.25vw, 12px)!important;
-  line-height:1.12!important;
+  font-size:clamp(9px, 2.5vw, 14px)!important;
+  line-height:1.15!important;
   margin-top:1px!important;
 }
 
@@ -125,10 +125,10 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
 /* Mondo / Oscar tendono ad avere descrizioni lunghe: compatta leggermente */
 #screenHome .card-wrap:nth-child(3) .rcard-name,
 #screenHome .card-wrap:nth-child(4) .rcard-name{
-  font-size:clamp(15px, 3.85vw, 24px)!important;
+  font-size:clamp(17px, 4.3vw, 26px)!important;
 }
 #screenHome .card-wrap:nth-child(4) .rcard-desc{
-  font-size:clamp(7.5px, 2vw, 11px)!important;
+  font-size:clamp(8.5px, 2.3vw, 13px)!important;
 }
 
 /* Schermi molto stretti: più respiro sopra al testo, icone meno aggressive */
@@ -142,8 +142,8 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   .grid{gap:8px!important;max-width:100%!important;}
   .rcard-body{padding:10% 5.5% 4%!important;}
   .rcard-top{min-height:58px!important;padding-top:5px!important;}
-  .rcard-name{font-size:clamp(14px, 4.4vw, 18px)!important;line-height:.94!important;}
-  .rcard-desc{font-size:clamp(7px, 2.25vw, 9px)!important;line-height:1.08!important;}
+  .rcard-name{font-size:clamp(15px, 4.6vw, 20px)!important;line-height:.96!important;}
+  .rcard-desc{font-size:clamp(8px, 2.5vw, 11px)!important;line-height:1.12!important;}
   .rcard-icon{max-width:clamp(84px, 34vw, 128px)!important;width:90%!important;height:90%!important;}
 }
 
@@ -154,8 +154,8 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   .grid{gap:7px!important;}
   .rcard-body{padding:8% 5% 3%!important;}
   .rcard-top{min-height:50px!important;padding-top:2px!important;}
-  .rcard-name{font-size:clamp(13px, 3.7vw, 19px)!important;line-height:.92!important;}
-  .rcard-desc{font-size:clamp(6.5px, 1.8vw, 9px)!important;line-height:1.05!important;}
+  .rcard-name{font-size:clamp(14px, 4vw, 20px)!important;line-height:.94!important;}
+  .rcard-desc{font-size:clamp(7.5px, 2vw, 10px)!important;line-height:1.08!important;}
   .nav{height:calc(76px + var(--safe-bot, 0px))!important;}
   :root{--nav-h:76px!important;}
   .nav-btn img.nav-icon{width:min(44px, 10vw)!important;height:min(44px, 10vw)!important;}
@@ -217,7 +217,7 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   margin:0 auto clamp(18px, 4svh, 36px)!important;
   max-width:720px!important;
   color:rgba(255,255,255,.82)!important;
-  font-size:clamp(16px, 4.2vw, 25px)!important;
+  font-size:clamp(18px, 4.6vw, 27px)!important;
   line-height:1.45!important;
 }
 
@@ -245,7 +245,7 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
 }
 .rcard-h .rcard-name{
   text-align:left!important;
-  font-size:clamp(24px, 6.2vw, 46px)!important;
+  font-size:clamp(26px, 6.8vw, 48px)!important;
   line-height:.98!important;
 }
 .rcard-h-row{
@@ -272,7 +272,7 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
 }
 .rcard-h .rcard-desc{
   text-align:left!important;
-  font-size:clamp(13px, 3.8vw, 21px)!important;
+  font-size:clamp(15px, 4.2vw, 23px)!important;
   line-height:1.22!important;
   -webkit-line-clamp:3!important;
 }
@@ -291,59 +291,183 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   .rcard-h .rcard-icon{left:4%!important;width:38%!important;height:70%!important;}
 }
 
-/* MONDO POPCORN: immagini realmente visibili e centrabili */
+/* MONDO POPCORN */
 .mondo-wrap{
   height:100%!important;
   display:flex!important;
   flex-direction:column!important;
   align-items:center!important;
-  padding:clamp(10px, 3vw, 22px) clamp(12px, 4vw, 28px) calc(var(--nav-h,88px) + 12px)!important;
+  padding:clamp(6px, 2vw, 14px) clamp(10px, 3vw, 20px) calc(var(--nav-h,88px) + 8px)!important;
+  gap:8px!important;
   overflow:hidden!important;
+  box-sizing:border-box!important;
 }
 .mondo-header{
   flex:0 0 auto!important;
   width:100%!important;
   display:flex!important;
-  justify-content:center!important;
-  margin-bottom:clamp(8px, 2svh, 18px)!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:2px!important;
 }
 .mondo-logo{
-  width:min(460px, 86vw)!important;
+  width:min(340px, 80vw)!important;
   height:auto!important;
-  max-height:clamp(70px, 16svh, 150px)!important;
+  max-height:clamp(50px, 11svh, 90px)!important;
   object-fit:contain!important;
-  filter:drop-shadow(0 8px 24px rgba(0,0,0,.55))!important;
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))!important;
 }
 .mondo-board-wrap{
   position:relative!important;
   flex:1 1 auto!important;
   min-height:0!important;
   width:100%!important;
+  max-width:min(420px, 92vw)!important;
+  display:flex!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+.mondo-board{ display:none!important; }
+
+/* Nasconde solo le foto attore (silhouette placeholder) quando src è vuoto,
+   NON le icone nav/UI che vengono iniettate via JS */
+.sp-aphoto[src=""], .sp-aphoto:not([src]),
+#spStartImg[src=""], #spTargetImg[src=""],
+#spStartImg:not([src]), #spTargetImg:not([src]) {
+  visibility: hidden;
+}
+
+
+/* ============================================================
+   MONDO POPCORN v1 — board più grande e 42 slot (6x7)
+   ============================================================ */
+#screenMondo{
+  overflow:hidden!important;
+}
+
+/* più spazio utile: logo/header leggermente più compatto */
+.mondo-wrap{
+  padding:calc(env(safe-area-inset-top,0px) + clamp(4px,1.4svh,12px))
+          clamp(8px,2.6vw,18px)
+          calc(var(--nav-h,88px) + env(safe-area-inset-bottom,0px) + clamp(8px,1.6svh,16px))!important;
+  gap:clamp(6px,1.2svh,12px)!important;
+}
+
+.mondo-header{
+  gap:0!important;
+}
+
+.mondo-logo{
+  width:min(360px, 84vw)!important;
+  max-height:clamp(52px,10svh,86px)!important;
+}
+
+.mondo-subtitle{
+  font-size:clamp(17px,4.6vw,27px)!important;
+  line-height:1!important;
+  margin-top:0!important;
+}
+
+/* board meno piccola: prende più larghezza e altezza disponibile */
+.mondo-board-wrap{
+  width:min(96vw, 520px)!important;
+  max-width:min(96vw, 520px)!important;
+  flex:1 1 auto!important;
+  min-height:0!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
+  padding:0!important;
 }
-.mondo-board{
-  width:auto!important;
-  height:100%!important;
-  max-width:100%!important;
-  object-fit:contain!important;
-}
-.mondo-coming{
-  position:absolute!important;
-  inset:auto auto 9% 50%!important;
-  transform:translateX(-50%)!important;
-  text-align:center!important;
-  color:#ffd34d!important;
-  font-family:'acumin-pro','Syne',system-ui,sans-serif!important;
-  font-weight:900!important;
-  text-shadow:0 2px 10px rgba(0,0,0,.8)!important;
-  pointer-events:none!important;
-}
-.mondo-coming span{font-size:clamp(28px, 8vw, 50px)!important;display:block!important;}
-.mondo-coming p{font-size:clamp(14px, 4vw, 24px)!important;text-transform:uppercase!important;}
 
-/* Correzione generale per immagini non caricate: evita icone rotte visibili */
-img[src=""], img:not([src]){
-  visibility:hidden;
+/* 6 colonne x 7 righe: 42 slot, più giocabile del 5x6 */
+.mondo-grid{
+  width:100%!important;
+  height:100%!important;
+  max-height:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(6, minmax(0,1fr))!important;
+  grid-template-rows:repeat(7, minmax(0,1fr))!important;
+  gap:2px!important;
+  padding:clamp(5px,1.2vw,8px)!important;
+  border-radius:clamp(10px,2.4vw,16px)!important;
+}
+
+/* icone leggibili anche con 6 colonne */
+.mondo-cell img{
+  max-width:78%!important;
+  max-height:72%!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.45))!important;
+}
+
+.mondo-cell-lbl{
+  font-size:clamp(7px,1.55vw,10px)!important;
+  line-height:1!important;
+}
+
+/* footer più compatto, così il board respira */
+.mondo-footer{
+  flex:0 0 auto!important;
+  width:min(92vw, 430px)!important;
+  min-height:42px!important;
+  padding:4px 10px!important;
+  gap:10px!important;
+}
+
+.mondo-stat{
+  min-height:38px!important;
+  padding:4px 10px!important;
+}
+
+.mondo-stat-ico{
+  width:28px!important;
+  height:28px!important;
+}
+
+.mondo-stat-val{
+  font-size:clamp(16px,4vw,22px)!important;
+}
+
+.mondo-drop-btn{
+  width:58px!important;
+  height:58px!important;
+  font-size:28px!important;
+}
+
+/* telefoni bassi: meno logo, più board */
+@media (max-height:740px){
+  .mondo-logo{
+    max-height:clamp(42px,8svh,62px)!important;
+  }
+  .mondo-subtitle{
+    font-size:clamp(15px,4vw,22px)!important;
+  }
+  .mondo-wrap{
+    gap:5px!important;
+  }
+  .mondo-footer{
+    min-height:38px!important;
+  }
+  .mondo-drop-btn{
+    width:50px!important;
+    height:50px!important;
+    font-size:24px!important;
+  }
+}
+
+/* telefoni stretti: 6x7 resta, ma abbasso leggermente icone e gap */
+@media (max-width:380px){
+  .mondo-board-wrap{
+    width:96vw!important;
+  }
+  .mondo-grid{
+    gap:1.5px!important;
+    padding:5px!important;
+  }
+  .mondo-cell img{
+    max-width:74%!important;
+    max-height:68%!important;
+  }
 }
