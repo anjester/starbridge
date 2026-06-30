@@ -1174,17 +1174,15 @@ body.is-playing #screenPlay{padding-bottom:calc(var(--nav-h, 88px) + var(--safe-
 .mondo-cell {
   aspect-ratio: 1 / 1;
 }
-.mondo-cell.empty {
+.mondo-cell.empty,
+.mondo-cell.filled {
   background: #98b36f;
   border: none;
-}
-.mondo-cell:nth-child(odd).empty {
-  background: #c4df9b;
-}
-.mondo-cell.filled {
-  background: transparent;
-  border: none;
   box-shadow: none;
+}
+.mondo-cell:nth-child(odd).empty,
+.mondo-cell:nth-child(odd).filled {
+  background: #c4df9b;
 }
 .mondo-cell.filled:active { transform: scale(.92); }
 .mondo-cell.selected {
