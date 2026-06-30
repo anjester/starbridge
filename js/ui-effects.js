@@ -45,6 +45,10 @@ function injectImages() {
   // Mondo Popcorn
   if (typeof LOGO_MONDO  !== 'undefined') si('imgLogoMondo',  LOGO_MONDO);
   if (typeof BOARD_MONDO !== 'undefined') si('imgBoardMondo', BOARD_MONDO);
+  if (window.PROG_ICONS) {
+    si('mondoPcIco', window.PROG_ICONS.popcorn || '');
+    si('mondoOsIco', window.PROG_ICONS.oscar || '');
+  }
 }
 
 // ── SPLASH ──

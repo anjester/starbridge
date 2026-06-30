@@ -36,6 +36,7 @@ function _navigateTo(tab) {
   }
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   if (tab === 'modes') { setTimeout(initAnimCards, 50); }
+  if (tab === 'mondo' && typeof initMondoGrid === 'function') { setTimeout(initMondoGrid, 60); }
   const _navMap = { home:'home', rank:'rank', play:'play', modes:'play', mondo:'mondo', profile:'profile' };
   const navTab = _navMap[tab] || 'home';
   const btn = document.getElementById('btn-' + navTab);

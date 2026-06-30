@@ -59,3 +59,15 @@ window.ICN_TARGET     = 'assets/icons/target.png';
 // Mondo Popcorn
 window.LOGO_MONDO     = 'assets/icons/Logo-Mondo-Popcorn.png';
 window.BOARD_MONDO    = 'assets/icons/Board_MondoPC.png';
+
+// Progression icons (Mondo Pop Corn grid)
+window.PROG_ICONS = {
+  popcorn:   'assets/icons/prog_popcorn.png',
+  machine:   'assets/icons/prog_machine.png',
+  caramel:   'assets/icons/prog_caramel.png',
+  chair:     'assets/icons/prog_chair.png',
+  pellicola: 'assets/icons/prog_pellicola.png',
+  cinepresa: 'assets/icons/prog_cinepresa.png',
+  cinema:    'assets/icons/prog_cinema.png',
+  oscar:     'assets/icons/prog_oscar.png'
+};
