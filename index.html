@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="it">
-<!-- StarBridge verified version -->
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
@@ -9,8 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=conform-1"/>
-  <link rel="stylesheet" href="css/game.css?v=conform-1"/>
+  <link rel="stylesheet" href="css/style.css?v=fix-6"/>
+  <link rel="stylesheet" href="css/game.css?v=fix-6"/>
+  <link rel="stylesheet" href="css/responsive-fix.css?v=fix-6"/>
 </head>
 <body>
 <!-- SFONDO -->
@@ -127,6 +127,10 @@
       <img id="spLogo" src="" alt="StarBridge"/>
     </div>
     <div class="sp-start-lbl" id="spModeLabel">★ Start! ★</div>
+    <div class="sp-timer" id="spTimer" style="display:none">
+      <span class="sp-timer-icon">⏱</span>
+      <span class="sp-timer-val" id="spTimerVal">3:00</span>
+    </div>
     <div class="sp-actors">
       <div class="sp-abox sp-start">
         <img class="sp-aphoto" id="spStartImg" src="" alt=""/>
@@ -141,6 +145,7 @@
           <div class="sp-albl">Target</div>
           <div class="sp-aname" id="spTargetName"></div>
         </div>
+        <img class="sp-target-ico" id="spTargetIco" src="" alt=""/>
       </div>
     </div>
     <div class="sp-path" id="spPath"></div>
@@ -342,10 +347,29 @@
 
 <!-- MONDO -->
 <div class="screen hidden" id="screenMondo">
-  <div class="placeholder">
-    <div class="ph-icon">🍿</div>
-    <div class="ph-title">Mondo Pop Corn</div>
-    <div class="ph-sub">In arrivo — scala la progressione fino all'Oscar.</div>
+  <div class="mondo-wrap">
+    <div class="mondo-header">
+      <img id="imgLogoMondo" class="mondo-logo" src="" alt="StarBridge Mondo Popcorn"/>
+      <div class="mondo-subtitle">Pop-Corn World!</div>
+    </div>
+    <div class="mondo-board-wrap">
+      <img id="imgBoardMondo" class="mondo-board" src="" alt="Board"/>
+      <div class="mondo-grid" id="mondoGrid"></div>
+    </div>
+    <div class="mondo-footer">
+      <div class="mondo-stat">
+        <img id="mondoPcIco" class="mondo-stat-ico" src="" alt=""/>
+        <span class="mondo-stat-val" id="mondoPcCount">0</span>
+      </div>
+      <div class="mondo-drop-wrap">
+        <button class="mondo-drop-btn" id="mondoDropBtn" onclick="mergeDrop()">🍿</button>
+        <span class="mondo-drop-badge" id="mondoDropBadge">0</span>
+      </div>
+      <div class="mondo-stat">
+        <img id="mondoOsIco" class="mondo-stat-ico" src="" alt=""/>
+        <span class="mondo-stat-val" id="mondoOsCount">0</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -393,14 +417,14 @@
 
   <button class="nav-btn" id="btn-play" onclick="goTo('modes')">
     <img class="nav-icon" id="btnPlay" src="" alt=""/>
-    <span>GIOCA</span>
+    <span>AZIONE</span>
   </button>
 
   <div class="nav-sep"></div>
 
   <button class="nav-btn" id="btn-mondo" onclick="goTo('mondo')">
     <img class="nav-icon" id="btnMondo" src="" alt=""/>
-    <span>POPCORN</span>
+    <span>POP-CORN</span>
   </button>
 
   <div class="nav-sep"></div>
@@ -413,9 +437,9 @@
 
   <!-- Core scripts -->
 
-  <script src="js/assets-loader.js?v=fix-splash-1"></script>
-<script src="js/game.js?v=fix-splash-1"></script>
-<script src="js/navigation.js?v=fix-splash-1"></script>
-<script src="js/ui-effects.js?v=fix-splash-1"></script>
+  <script src="js/assets-loader.js?v=fix-6"></script>
+  <script src="js/ui-effects.js?v=fix-6"></script>
+  <script src="js/game.js?v=fix-6"></script>
+  <script src="js/navigation.js?v=fix-6"></script>
 </body>
 </html>
