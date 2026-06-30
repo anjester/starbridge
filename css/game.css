@@ -1175,11 +1175,11 @@ body.is-playing #screenPlay{padding-bottom:calc(var(--nav-h, 88px) + var(--safe-
   aspect-ratio: 1 / 1;
 }
 .mondo-cell.empty {
-  background: rgba(180,220,180,.10);
+  background: #98b36f;
   border: none;
 }
 .mondo-cell:nth-child(odd).empty {
-  background: rgba(180,220,180,.18);
+  background: #c4df9b;
 }
 .mondo-cell.filled {
   background: transparent;
