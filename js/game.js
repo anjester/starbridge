@@ -1262,10 +1262,6 @@ function mergeRender() {
       img.alt = mergeLabel(lvl);
       img.draggable = false;
       cell.appendChild(img);
-      var lbl = document.createElement('span');
-      lbl.className = 'mondo-cell-lbl';
-      lbl.textContent = mergeLabel(lvl);
-      cell.appendChild(lbl);
       // oscar: tap to collect
       if (lvl === 7) {
         cell.addEventListener('click', function(e) {
