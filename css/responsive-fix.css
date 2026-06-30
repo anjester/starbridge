@@ -381,14 +381,14 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   padding:0!important;
 }
 
-/* 6 colonne x 7 righe: 42 slot, più giocabile del 5x6 */
+/* 5 colonne x 6 righe: 30 slot */
 .mondo-grid{
   width:100%!important;
   height:100%!important;
   max-height:100%!important;
   display:grid!important;
-  grid-template-columns:repeat(6, minmax(0,1fr))!important;
-  grid-template-rows:repeat(7, minmax(0,1fr))!important;
+  grid-template-columns:repeat(5, minmax(0,1fr))!important;
+  grid-template-rows:repeat(6, minmax(0,1fr))!important;
   gap:2px!important;
   padding:clamp(5px,1.2vw,8px)!important;
   border-radius:clamp(10px,2.4vw,16px)!important;
