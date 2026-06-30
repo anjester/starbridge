@@ -389,51 +389,65 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   display:grid!important;
   grid-template-columns:repeat(5, minmax(0,1fr))!important;
   grid-template-rows:repeat(6, minmax(0,1fr))!important;
-  gap:2px!important;
+  gap:0!important;
   padding:clamp(5px,1.2vw,8px)!important;
   border-radius:clamp(10px,2.4vw,16px)!important;
 }
 
-/* icone leggibili anche con 6 colonne */
+/* icone grandi, nessun nome */
 .mondo-cell img{
-  max-width:78%!important;
-  max-height:72%!important;
+  max-width:82%!important;
+  max-height:82%!important;
   object-fit:contain!important;
   filter:drop-shadow(0 4px 7px rgba(0,0,0,.45))!important;
 }
 
-.mondo-cell-lbl{
-  font-size:clamp(7px,1.55vw,10px)!important;
-  line-height:1!important;
+/* celle: nessun cambio colore durante drag/selezione */
+.mondo-cell.dragging,
+.mondo-cell.merge-target,
+.mondo-cell.selected{
+  opacity:1!important;
+  border:none!important;
+  box-shadow:none!important;
+  transform:none!important;
+  background:transparent!important;
 }
 
-/* footer più compatto, così il board respira */
+/* footer centrato: solo bottone + oscar */
 .mondo-footer{
   flex:0 0 auto!important;
   width:min(92vw, 430px)!important;
   min-height:42px!important;
   padding:4px 10px!important;
-  gap:10px!important;
+  gap:clamp(20px,6vw,48px)!important;
+  justify-content:center!important;
 }
 
-.mondo-stat{
-  min-height:38px!important;
-  padding:4px 10px!important;
+.mondo-stat-oscar{
+  align-items:center!important;
+  gap:8px!important;
 }
 
-.mondo-stat-ico{
-  width:28px!important;
-  height:28px!important;
+.mondo-stat-ico-oscar{
+  width:clamp(44px,11vw,62px)!important;
+  height:clamp(44px,11vw,62px)!important;
+  filter:drop-shadow(0 3px 12px rgba(255,180,0,.55))!important;
 }
 
 .mondo-stat-val{
-  font-size:clamp(16px,4vw,22px)!important;
+  font-size:clamp(18px,4.5vw,26px)!important;
+  font-weight:900!important;
 }
 
 .mondo-drop-btn{
-  width:58px!important;
-  height:58px!important;
-  font-size:28px!important;
+  width:clamp(62px,15vw,80px)!important;
+  height:clamp(62px,15vw,80px)!important;
+}
+
+/* logo più grande */
+.mondo-logo{
+  width:min(460px, 90vw)!important;
+  max-height:clamp(70px,15svh,110px)!important;
 }
 
 /* telefoni bassi: meno logo, più board */
