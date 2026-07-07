@@ -347,27 +347,74 @@
 
 <!-- MONDO -->
 <div class="screen hidden" id="screenMondo">
-  <div class="mondo-wrap">
-    <div class="mondo-header">
-      <img id="imgLogoMondo" class="mondo-logo" src="" alt="StarBridge Mondo Popcorn"/>
-      <div class="mondo-subtitle">Pop-Corn World!</div>
+  <div class="mondo-screen">
+
+    <!-- HUD TOP: avatar | oscar | popcorn | aiuti | shop -->
+    <header class="mondo-hud">
+      <button class="mondo-avatar-btn">
+        <img src="assets/icons/img_btn_profilo.png" class="mondo-avatar-img" alt="Profilo"/>
+      </button>
+      <div class="mondo-hud-pills">
+        <div class="mondo-pill">
+          <img src="assets/icons/prog_oscar.png" class="mpill-ico" alt="Oscar"/>
+          <span class="mpill-num" id="hudOscarNum">0</span>
+        </div>
+        <div class="mondo-pill">
+          <img src="assets/icons/prog_popcorn.png" class="mpill-ico" alt="Pop Corn"/>
+          <span class="mpill-num" id="hudPcNum">0</span>
+        </div>
+        <div class="mondo-pill mondo-pill-help">
+          <span class="mpill-bulb">💡</span>
+          <span class="mpill-num" id="hudHelpNum">3</span>
+        </div>
+      </div>
+      <button class="mondo-shop-btn">🛒</button>
+    </header>
+
+    <!-- LOGO + Titolo -->
+    <div class="mondo-logo-area">
+      <img id="imgLogoMondo" src="assets/icons/Logo-Mondo-Popcorn.png" class="mondo-logo-img" alt="StarBridge Mondo Popcorn"/>
+      <div class="mondo-world-lbl">Pop-Corn World!</div>
     </div>
-    <div class="mondo-board-wrap">
-      <img id="imgBoardMondo" class="mondo-board" src="" alt="Board"/>
-      <div class="mondo-grid" id="mondoGrid"></div>
+
+    <!-- BOARD PANEL: griglia + status + info -->
+    <div class="pop-board-panel">
+      <div class="pop-board-wrap">
+        <div class="mondo-grid" id="mondoGrid"></div>
+      </div>
+
+      <!-- Status strip -->
+      <div class="pop-status-strip">
+        <div class="pop-stat-badge">
+          <img src="assets/icons/prog_popcorn.png" class="psb-ico" alt="pc"/>
+          <span class="psb-num" id="mondoPcCount">0</span>
+        </div>
+        <div class="pop-stat-badge">
+          <img id="mondoOsIco" src="assets/icons/prog_oscar.png" class="psb-ico psb-ico-oscar" alt="oscar"/>
+          <span class="psb-num" id="mondoOsCount">0</span>
+        </div>
+      </div>
+
+      <!-- Info panel -->
+      <div class="pop-info-panel" id="mondoInfoPanel">
+        <span class="pop-info-ico">ℹ️</span>
+        <span class="pop-info-txt" id="mondoInfoTxt">Tocca un oggetto per leggerne i dettagli qui.</span>
+      </div>
     </div>
-    <div class="mondo-footer">
-      <div class="mondo-drop-wrap">
-        <button class="mondo-drop-btn" id="mondoDropBtn" onclick="mergeDrop()">
-          <img src="assets/icons/prog_popcorn.png" alt="🍿" class="mondo-drop-ico"/>
-        </button>
+
+    <!-- BOTTOM BUTTONS -->
+    <footer class="pop-actions">
+      <button class="pop-btn pop-btn-deposit" id="mondoDropBtn" onclick="mergeDrop()">
+        <img src="assets/icons/prog_popcorn.png" class="pop-btn-ico" alt=""/>
+        <span>DEPOSITA</span>
         <span class="mondo-drop-badge" id="mondoDropBadge">0</span>
-      </div>
-      <div class="mondo-stat mondo-stat-oscar">
-        <img id="mondoOsIco" class="mondo-stat-ico mondo-stat-ico-oscar" src="" alt=""/>
-        <span class="mondo-stat-val" id="mondoOsCount">0</span>
-      </div>
-    </div>
+      </button>
+      <button class="pop-btn pop-btn-help" onclick="mergeHelpFree()">
+        <span class="pop-btn-bulb">💡</span>
+        <span>AIUTI GRATIS</span>
+      </button>
+    </footer>
+
   </div>
 </div>
 
