@@ -1208,7 +1208,7 @@ function renderProgression() {
 }
 
 // ===== MONDO POP CORN — MERGE GAME =====
-var MERGE_COLS = 5, MERGE_ROWS = 6, MERGE_COST = 1;
+var MERGE_COLS = 6, MERGE_ROWS = 8, MERGE_COST = 1;
 var MERGE_CHAIN = ['popcorn','machine','caramel','chair','pellicola','cinepresa','cinema','oscar'];
 var mergeBoard = []; // flat array of MERGE_COLS*MERGE_ROWS, each cell = level index (0-7) or -1 (empty)
 var mergeSelected = -1; // index of selected cell
@@ -1266,6 +1266,7 @@ function mergeRender() {
       if (lvl === 7) {
         cell.addEventListener('click', function(e) {
           var c = e.currentTarget;
+          mergeShowInfo(7);
           mergeCollectOscar(parseInt(c.dataset.idx), c);
         });
       } else {
@@ -1297,6 +1298,32 @@ function mergeUpdateUI() {
   }
   var osCount = $('mondoOsCount');
   if (osCount) osCount.textContent = mergeOscars;
+  var hudPc = $('hudPcNum');
+  if (hudPc) hudPc.textContent = totalPopcorn;
+  var hudOs = $('hudOscarNum');
+  if (hudOs) hudOs.textContent = mergeOscars;
+}
+
+function mergeShowInfo(lvl) {
+  var txt = $('mondoInfoTxt');
+  if (!txt) return;
+  var names = ['Pop Corn','Macchina Popcorn','Caramellati','Poltrona Cinema','Pellicola','Cinepresa','Cinema','Oscar'];
+  var descs = [
+    'Unisci due sacchetti per ottenere la Macchina Popcorn.',
+    'La macchina del popcorn. Unisci due per i Caramellati.',
+    'Popcorn caramellati! Unisci due per la Poltrona Cinema.',
+    'Poltrona da cinema. Unisci due per la Pellicola.',
+    'La pellicola. Il cinema prende vita! Unisci per la Cinepresa.',
+    'La cinepresa. Motore, azione! Unisci due per il Cinema.',
+    'Il grande cinema. Unisci due per ottenere l\'Oscar.',
+    'L\'Oscar! Toccalo per raccoglierlo e incrementare il punteggio.'
+  ];
+  txt.textContent = (names[lvl] || '') + ' — ' + (descs[lvl] || '');
+}
+
+function mergeHelpFree() {
+  var txt = $('mondoInfoTxt');
+  if (txt) txt.textContent = 'Aiuti in arrivo! Questa funzione sarà presto disponibile.';
 }
 
 function mergeHasEmpty() {
@@ -1396,6 +1423,7 @@ function _mdBegin(cell, cx, cy) {
   document.body.appendChild(_dragClone);
 
   cell.classList.add('dragging');
+  mergeShowInfo(mergeBoard[idx]);
 }
 
 function _mdMove(cx, cy) {
