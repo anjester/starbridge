@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=ui-patch-1"/>
-  <link rel="stylesheet" href="css/game.css?v=ui-patch-1"/>
-  <link rel="stylesheet" href="css/responsive-fix.css?v=ui-patch-1"/>
+  <link rel="stylesheet" href="css/style.css?v=economy-fix-1"/>
+  <link rel="stylesheet" href="css/game.css?v=economy-fix-1"/>
+  <link rel="stylesheet" href="css/responsive-fix.css?v=economy-fix-1"/>
 </head>
 <body>
 <!-- SFONDO -->
@@ -341,10 +341,10 @@
 <div class="screen hidden" id="screenRank">
   <div class="rank-screen">
 
-      <div class="sb-hud">
+      <div class="sb-hud mondo-hud-compact">
         <div class="sb-avatar" aria-label="Avatar">🎬</div>
         <div class="sb-pill"><img src="assets/icons/extra_oscar_sm.png" alt=""><div><strong>1.245</strong><span>Oscar</span></div></div>
-        <div class="sb-pill"><img src="assets/icons/extra_popcorn_sm.png" alt=""><div><strong>8.730</strong><span>Pop-Corn</span></div></div>
+        <div class="sb-pill sb-pill-pop"><img src="assets/icons/extra_popcorn_sm.png" alt=""><div><strong id="mondoHudPopCount">12</strong><span>Da inserire</span></div></div>
         <div class="sb-pill"><span class="emoji-icon">💡</span><div><strong>12</strong><span>Aiuti</span></div></div>
         <div class="sb-shop" aria-label="Shop">🛒</div>
       </div>
@@ -451,14 +451,22 @@
       </div>
 
       <div class="pop-status-strip">
-        <div class="pop-status-badge"><img src="assets/icons/extra_popcorn_sm.png" alt="">8.730</div>
-        <div class="pop-status-badge"><img src="assets/icons/extra_oscar_sm.png" alt="">1.245</div>
+        <button class="pop-status-badge pop-insert-btn" id="popInsertBtn" type="button" aria-label="Inserisci un Pop-Corn nella board">
+          <img src="assets/icons/extra_popcorn_sm.png" alt="">
+          <strong id="popcornInsertCount">12</strong>
+          <span>da inserire</span>
+        </button>
+        <div class="pop-status-badge oscar-score">
+          <img src="assets/icons/extra_oscar_sm.png" alt="">
+          <strong>1.245</strong>
+          <span>Oscar totali</span>
+        </div>
       </div>
     </section>
 
     <div class="pop-info-panel">
       <div class="pop-info-icon">i</div>
-      <div>TOCCA un oggetto per leggerne i dettagli qui.</div>
+      <div><strong>Tap sul badge Pop-Corn</strong> per inserirne uno nella board. Quando li hai inseriti tutti, il conteggio torna a 0. Tocca un oggetto per leggerne i dettagli qui.</div>
     </div>
 
     <div class="pop-actions">
@@ -553,9 +561,66 @@
 
   <!-- Core scripts -->
 <div class="sb-ad-placeholder" aria-hidden="true"></div>
-<script src="js/assets-loader.js?v=ui-patch-1"></script>
-<script src="js/game.js?v=ui-patch-1"></script>
-<script src="js/navigation.js?v=ui-patch-1"></script>
-<script src="js/ui-effects.js?v=ui-patch-1"></script>
+<script src="js/assets-loader.js?v=economy-fix-1"></script>
+<script src="js/game.js?v=economy-fix-1"></script>
+<script src="js/navigation.js?v=economy-fix-1"></script>
+<script src="js/ui-effects.js?v=economy-fix-1"></script>
+
+<script>
+(function(){
+  function bootMondoPopcornEconomy(){
+    var count = 12;
+    var insertBtn = document.getElementById('popInsertBtn');
+    var countEl = document.getElementById('popcornInsertCount');
+    var hudCount = document.getElementById('mondoHudPopCount');
+    var board = document.querySelector('#screenMondo .pop-board-grid');
+    if(!insertBtn || !countEl || !hudCount || !board) return;
+
+    function firstEmptyCell(){
+      var cells = board.querySelectorAll('.pop-cell.is-empty');
+      return cells.length ? cells[0] : null;
+    }
+
+    function render(){
+      countEl.textContent = String(count);
+      hudCount.textContent = String(count);
+      if(count <= 0 || !firstEmptyCell()){
+        insertBtn.disabled = true;
+        insertBtn.classList.add('is-empty');
+      } else {
+        insertBtn.disabled = false;
+        insertBtn.classList.remove('is-empty');
+      }
+    }
+
+    insertBtn.addEventListener('click', function(){
+      var cell = firstEmptyCell();
+      if(count <= 0 || !cell) { render(); return; }
+      var img = cell.querySelector('img');
+      if(!img){
+        img = document.createElement('img');
+        img.className = 'pop-item';
+        cell.appendChild(img);
+      }
+      img.src = 'assets/icons/prog_popcorn.png';
+      img.alt = 'Pop-Corn';
+      cell.classList.remove('is-empty');
+      cell.classList.add('filled-later');
+      setTimeout(function(){ cell.classList.remove('filled-later'); }, 260);
+      count -= 1;
+      render();
+    });
+
+    render();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bootMondoPopcornEconomy);
+  } else {
+    bootMondoPopcornEconomy();
+  }
+})();
+</script>
+
 </body>
 </html>
