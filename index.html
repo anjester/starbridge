@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=economy-fix-1"/>
-  <link rel="stylesheet" href="css/game.css?v=economy-fix-1"/>
-  <link rel="stylesheet" href="css/responsive-fix.css?v=economy-fix-1"/>
+  <link rel="stylesheet" href="css/style.css?v=pop-anim-1"/>
+  <link rel="stylesheet" href="css/game.css?v=pop-anim-1"/>
+  <link rel="stylesheet" href="css/responsive-fix.css?v=pop-anim-1"/>
 </head>
 <body>
 <!-- SFONDO -->
@@ -561,63 +561,267 @@
 
   <!-- Core scripts -->
 <div class="sb-ad-placeholder" aria-hidden="true"></div>
-<script src="js/assets-loader.js?v=economy-fix-1"></script>
-<script src="js/game.js?v=economy-fix-1"></script>
-<script src="js/navigation.js?v=economy-fix-1"></script>
-<script src="js/ui-effects.js?v=economy-fix-1"></script>
+<script src="js/assets-loader.js?v=pop-anim-1"></script>
+<script src="js/game.js?v=pop-anim-1"></script>
+<script src="js/navigation.js?v=pop-anim-1"></script>
+<script src="js/ui-effects.js?v=pop-anim-1"></script>
+
 
 <script>
 (function(){
-  function bootMondoPopcornEconomy(){
-    var count = 12;
-    var insertBtn = document.getElementById('popInsertBtn');
-    var countEl = document.getElementById('popcornInsertCount');
-    var hudCount = document.getElementById('mondoHudPopCount');
-    var board = document.querySelector('#screenMondo .pop-board-grid');
-    if(!insertBtn || !countEl || !hudCount || !board) return;
+  const MERGE_CHAIN = [
+    'prog_popcorn',
+    'prog_machine',
+    'prog_caramel',
+    'prog_chair',
+    'prog_pellicola',
+    'prog_cinepresa',
+    'prog_cinema',
+    'prog_oscar'
+  ];
+
+  const ITEM_SRC = {
+    prog_popcorn: 'assets/icons/prog_popcorn.png',
+    prog_machine: 'assets/icons/prog_machine.png',
+    prog_caramel: 'assets/icons/prog_caramel.png',
+    prog_chair: 'assets/icons/prog_chair.png',
+    prog_pellicola: 'assets/icons/prog_pellicola.png',
+    prog_cinepresa: 'assets/icons/prog_cinepresa.png',
+    prog_cinema: 'assets/icons/prog_cinema.png',
+    prog_oscar: 'assets/icons/prog_oscar.png'
+  };
+
+  function srcToType(src){
+    if(!src) return null;
+    for(const key of MERGE_CHAIN){
+      if(src.indexOf(key + '.png') !== -1) return key;
+    }
+    return null;
+  }
+
+  function cellType(cell){
+    if(!cell || cell.classList.contains('is-empty')) return null;
+    const img = cell.querySelector('.pop-item');
+    return img ? srcToType(img.getAttribute('src') || img.src || '') : null;
+  }
+
+  function setCell(cell, type){
+    if(!cell) return;
+    let img = cell.querySelector('.pop-item');
+    if(!type){
+      cell.classList.add('is-empty');
+      cell.removeAttribute('data-item');
+      if(img){ img.removeAttribute('src'); img.alt = ''; }
+      return;
+    }
+    if(!img){
+      img = document.createElement('img');
+      img.className = 'pop-item';
+      cell.appendChild(img);
+    }
+    img.src = ITEM_SRC[type];
+    img.alt = type.replace('prog_', '').replace('_', ' ');
+    cell.classList.remove('is-empty');
+    cell.dataset.item = type;
+  }
+
+  function nextType(type){
+    const i = MERGE_CHAIN.indexOf(type);
+    if(i < 0 || i >= MERGE_CHAIN.length - 1) return null;
+    return MERGE_CHAIN[i + 1];
+  }
+
+  function getCenter(rect){
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+  }
+
+  function animateFly(fromEl, toCell, imgSrc, done){
+    if(!fromEl || !toCell || !imgSrc){
+      if(done) done();
+      return;
+    }
+    const fromRect = fromEl.getBoundingClientRect();
+    const toRect = toCell.getBoundingClientRect();
+    const from = getCenter(fromRect);
+    const to = getCenter(toRect);
+
+    const clone = document.createElement('img');
+    clone.className = 'pop-fly-clone';
+    clone.src = imgSrc;
+    clone.alt = '';
+    document.body.appendChild(clone);
+
+    const size = Math.min(46, Math.max(30, toRect.width * .72));
+    clone.style.width = size + 'px';
+    clone.style.height = size + 'px';
+    clone.style.left = (from.x - size / 2) + 'px';
+    clone.style.top = (from.y - size / 2) + 'px';
+
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const lift = Math.min(90, Math.max(42, Math.abs(dy) * .20));
+
+    const anim = clone.animate([
+      { transform: 'translate(0,0) scale(.72) rotate(-8deg)', opacity: 0 },
+      { transform: `translate(${dx * .45}px, ${dy * .45 - lift}px) scale(1.12) rotate(8deg)`, opacity: 1, offset: .55 },
+      { transform: `translate(${dx}px, ${dy}px) scale(.88) rotate(0deg)`, opacity: 1 }
+    ], {
+      duration: 520,
+      easing: 'cubic-bezier(.22,.88,.24,1)',
+      fill: 'forwards'
+    });
+
+    anim.onfinish = function(){
+      clone.remove();
+      if(done) done();
+    };
+  }
+
+  function bootMondoPopcornGame(){
+    const screen = document.getElementById('screenMondo');
+    const board = screen ? screen.querySelector('.pop-board-grid') : null;
+    const insertBtn = document.getElementById('popInsertBtn');
+    const countEl = document.getElementById('popcornInsertCount');
+    const hudCount = document.getElementById('mondoHudPopCount');
+    if(!board || !insertBtn || !countEl || !hudCount) return;
+
+    let availablePopcorn = parseInt(localStorage.getItem('sb_popcorn_available') || '12', 10);
+    if(Number.isNaN(availablePopcorn)) availablePopcorn = 12;
+    let selectedCell = null;
+    let locked = false;
+
+    const cells = Array.from(board.querySelectorAll('.pop-cell'));
 
     function firstEmptyCell(){
-      var cells = board.querySelectorAll('.pop-cell.is-empty');
-      return cells.length ? cells[0] : null;
+      return cells.find(c => c.classList.contains('is-empty'));
     }
 
-    function render(){
-      countEl.textContent = String(count);
-      hudCount.textContent = String(count);
-      if(count <= 0 || !firstEmptyCell()){
-        insertBtn.disabled = true;
-        insertBtn.classList.add('is-empty');
-      } else {
-        insertBtn.disabled = false;
-        insertBtn.classList.remove('is-empty');
-      }
+    function updateCounter(){
+      countEl.textContent = String(availablePopcorn);
+      hudCount.textContent = String(availablePopcorn);
+      localStorage.setItem('sb_popcorn_available', String(availablePopcorn));
+
+      const canInsert = availablePopcorn > 0 && !!firstEmptyCell();
+      insertBtn.disabled = !canInsert;
+      insertBtn.classList.toggle('is-empty', !canInsert);
+    }
+
+    function clearSelection(){
+      cells.forEach(c => c.classList.remove('is-selected','is-merge-target','is-move-target','is-invalid'));
+      selectedCell = null;
+    }
+
+    function showTargets(type){
+      cells.forEach(c => {
+        if(c === selectedCell) return;
+        const t = cellType(c);
+        if(!t) c.classList.add('is-move-target');
+        if(t === type && nextType(type)) c.classList.add('is-merge-target');
+      });
+    }
+
+    function animateCellPop(cell){
+      if(!cell) return;
+      cell.classList.remove('cell-pop');
+      void cell.offsetWidth;
+      cell.classList.add('cell-pop');
+      setTimeout(() => cell.classList.remove('cell-pop'), 300);
+    }
+
+    function invalid(cell){
+      if(!cell) return;
+      cell.classList.remove('is-invalid');
+      void cell.offsetWidth;
+      cell.classList.add('is-invalid');
+      setTimeout(() => cell.classList.remove('is-invalid'), 330);
     }
 
     insertBtn.addEventListener('click', function(){
-      var cell = firstEmptyCell();
-      if(count <= 0 || !cell) { render(); return; }
-      var img = cell.querySelector('img');
-      if(!img){
-        img = document.createElement('img');
-        img.className = 'pop-item';
-        cell.appendChild(img);
+      if(locked) return;
+      const target = firstEmptyCell();
+      if(availablePopcorn <= 0 || !target){
+        updateCounter();
+        return;
       }
-      img.src = 'assets/icons/prog_popcorn.png';
-      img.alt = 'Pop-Corn';
-      cell.classList.remove('is-empty');
-      cell.classList.add('filled-later');
-      setTimeout(function(){ cell.classList.remove('filled-later'); }, 260);
-      count -= 1;
-      render();
+      locked = true;
+      animateFly(insertBtn, target, ITEM_SRC.prog_popcorn, function(){
+        setCell(target, 'prog_popcorn');
+        target.classList.add('filled-later');
+        animateCellPop(target);
+        setTimeout(() => target.classList.remove('filled-later'), 260);
+        availablePopcorn--;
+        clearSelection();
+        updateCounter();
+        locked = false;
+      });
     });
 
-    render();
+    cells.forEach(cell => {
+      cell.addEventListener('click', function(){
+        if(locked) return;
+
+        const type = cellType(cell);
+
+        if(!selectedCell){
+          if(type){
+            selectedCell = cell;
+            cell.classList.add('is-selected');
+            showTargets(type);
+          }
+          return;
+        }
+
+        if(cell === selectedCell){
+          clearSelection();
+          return;
+        }
+
+        const selectedType = cellType(selectedCell);
+        const targetType = cellType(cell);
+
+        if(!selectedType){
+          clearSelection();
+          return;
+        }
+
+        if(!targetType){
+          locked = true;
+          animateFly(selectedCell, cell, ITEM_SRC[selectedType], function(){
+            setCell(cell, selectedType);
+            setCell(selectedCell, null);
+            animateCellPop(cell);
+            clearSelection();
+            locked = false;
+          });
+          return;
+        }
+
+        if(targetType === selectedType && nextType(selectedType)){
+          const merged = nextType(selectedType);
+          locked = true;
+          animateFly(selectedCell, cell, ITEM_SRC[selectedType], function(){
+            setCell(cell, merged);
+            setCell(selectedCell, null);
+            cell.classList.add('merge-success');
+            animateCellPop(cell);
+            setTimeout(() => cell.classList.remove('merge-success'), 420);
+            clearSelection();
+            locked = false;
+          });
+          return;
+        }
+
+        invalid(cell);
+      });
+    });
+
+    updateCounter();
   }
 
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bootMondoPopcornEconomy);
+    document.addEventListener('DOMContentLoaded', bootMondoPopcornGame);
   } else {
-    bootMondoPopcornEconomy();
+    bootMondoPopcornGame();
   }
 })();
 </script>
