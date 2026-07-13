@@ -781,3 +781,62 @@ html,body{height:100%;overflow:hidden;
   .pop-actions{gap:7px;}
   .profile-stats{grid-template-columns:1fr 1fr;}
 }
+
+
+/* === POP-CORN ECONOMY FIX === */
+.mondo-hud-compact .sb-pill-pop{
+  background:linear-gradient(180deg,#fff4d6,#efcc7b);
+}
+.mondo-hud-compact .sb-pill-pop span{
+  font-size:6.8px;
+}
+.pop-status-badge strong{
+  font-family:'acumin-pro','Syne',system-ui,sans-serif;
+  font-size:clamp(16px,5vw,24px);
+  line-height:1;
+}
+.pop-status-badge span{
+  display:block;
+  font-size:9px;
+  line-height:1;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:rgba(255,255,255,.72);
+}
+.pop-insert-btn{
+  appearance:none;
+  -webkit-appearance:none;
+  cursor:pointer;
+}
+.pop-insert-btn::after{
+  content:'+';
+  width:18px;
+  height:18px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:#39b54a;
+  color:#fff;
+  font-size:14px;
+  line-height:1;
+  border:2px solid rgba(255,255,255,.85);
+  margin-left:4px;
+  box-shadow:0 3px 8px rgba(0,0,0,.35);
+  flex:0 0 auto;
+}
+.pop-insert-btn:disabled, .pop-insert-btn.is-empty{
+  opacity:.55;
+  filter:grayscale(.35);
+  cursor:default;
+}
+.pop-insert-btn:disabled::after, .pop-insert-btn.is-empty::after{
+  content:'0';
+  background:#777;
+}
+.pop-cell.filled-later{
+  animation:sbPopIn .22s ease-out;
+}
+@keyframes sbPopIn{
+  0%{transform:scale(.82);}
+  100%{transform:scale(1);}
+}
