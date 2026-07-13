@@ -178,7 +178,25 @@ const PROGRESSION=[
   {key:"cinema",   label:"Teatro",     img:"img_cinema",   pts:1000},
   {key:"oscar",    label:"Oscar",      img:"img_oscar",    pts:1500},
 ];
-let totalPopcorn=parseInt(localStorage.getItem("sb_pc")||"0");
+let totalPopcorn=parseInt(localStorage.getItem("sb_pc")||"4");
+let totalOscars=parseInt(localStorage.getItem("sb_oscars")||"0");
+let totalHints=parseInt(localStorage.getItem("sb_hints")||"0");
+// Migrazione una tantum: gli Oscar di Mondo Pop Corn erano salvati dentro sb_merge.oscars
+(function migrateLegacyOscars(){
+  if (totalOscars > 0) return;
+  try {
+    var legacy = JSON.parse(localStorage.getItem('sb_merge') || '{}');
+    if (legacy.oscars > 0) {
+      totalOscars = legacy.oscars;
+      localStorage.setItem('sb_oscars', String(totalOscars));
+    }
+  } catch(e) {}
+})();
+function persistTotals() {
+  localStorage.setItem('sb_pc', String(totalPopcorn));
+  localStorage.setItem('sb_oscars', String(totalOscars));
+  localStorage.setItem('sb_hints', String(totalHints));
+}
 
 const challenges = [
   { start:"Tom Hanks",          target:"Kevin Bacon",         label:"Classico" },
@@ -191,6 +209,9 @@ const challenges = [
   { start:"Joaquin Phoenix",    target:"Margot Robbie",       label:"Oscars" },
   { start:"Chadwick Boseman",   target:"Ryan Gosling",         label:"Marvel" },
   { start:"Cillian Murphy",     target:"Emma Stone",          label:"Nolan" },
+  { start:"Colin Farrell",      target:"Woody Harrelson",     label:"Nuovi Volti" },
+  { start:"Zoë Kravitz",        target:"Kevin Bacon",         label:"Sei Gradi" },
+  { start:"Ben Affleck",        target:"Rami Malek",          label:"Oscar Recenti" },
 ];
 
 // DATABASE ATTORI (120+)
@@ -217,7 +238,15 @@ const actorList = [
   "Tom Hardy","Joseph Gordon-Levitt","Chadwick Boseman","Adam Driver","Colin Firth",
   "Ed Harris","Jake Gyllenhaal","Hugh Grant","Laurence Fishburne","Michael Caine",
   "Matthew McConaughey","Martin Sheen","Richard Gere","Paul Dano","Barry Keoghan",
-  "Jacob Elordi","Pedro Pascal","Ethan Hawke"
+  "Jacob Elordi","Pedro Pascal","Ethan Hawke",
+  // Espansione
+  "Colin Farrell","Robert Pattinson","John David Washington","Daniel Kaluuya","Brendan Fraser",
+  "Brendan Gleeson","Kenneth Branagh","Jesse Plemons","Steve Carell","Jeffrey Wright",
+  "Andy Serkis","Diego Luna","Jeff Goldblum","Sam Neill","Paul Bettany",
+  "Anthony Mackie","Tony Leung","Simu Liu","Mark Rylance","Dave Bautista",
+  "Joel Edgerton","Michael Sheen","Stanley Tucci","Robert Redford","Alfred Molina",
+  "John Turturro","Jon Bernthal","Jon Hamm","Glen Powell","Miles Teller",
+  "Jared Leto","Christopher Plummer","Woody Harrelson"
 ];
 const actressList = [
   "Meryl Streep","Amy Adams","Robin Wright","Margot Robbie","Natalie Portman","Julia Roberts",
@@ -235,11 +264,17 @@ const actressList = [
   "Sophia Loren","Uma Thurman","Patricia Arquette","Kathryn Hahn","Jessica Chastain","Emily Blunt",
   "Bryce Dallas Howard","Helena Bonham Carter","Winona Ryder","Mélanie Laurent","Amanda Seyfried",
   "Rose Byrne","Zazie Beetz","Zoe Saldana","Rebecca Ferguson","Charlotte Rampling","Laura Harring",
-  "Kirsten Dunst","Helen Hunt","Jennifer Connelly","Naomi Watts","Carrie-Anne Moss","Laura Linney",
+  "Kirsten Dunst","Helen Hunt","Jennifer Connelly","Carrie-Anne Moss","Laura Linney",
   "Kate McKinnon","America Ferrera","Olivia Colman","Cynthia Erivo","Halle Bailey","Ariana DeBose",
-  "Jamie Lee Curtis","Sigourney Weaver","Alfre Woodard","Angela Bassett",
+  "Jamie Lee Curtis","Alfre Woodard","Angela Bassett",
   // Nuove
-  "Elliot Page","Emma Watson","Hailee Steinfeld","Sydney Sweeney","Anya Taylor-Joy"
+  "Elliot Page","Emma Watson","Hailee Steinfeld","Sydney Sweeney",
+  // Espansione
+  "Zoë Kravitz","Elizabeth Debicki","Janelle Monáe","Kate Hudson","Jean Smart",
+  "Sadie Sink","Hong Chau","Lily Gladstone","Rebecca Hall","Annette Bening",
+  "Catherine Zeta-Jones","Isla Fisher","Patricia Clarkson","Kristen Bell","Lady Gaga",
+  "Olivia Wilde","Marisa Tomei","Jennifer Jason Leigh","Shailene Woodley","Elizabeth Olsen",
+  "Toni Collette"
 ];
 const allActors = [...actorList, ...actressList];
 
@@ -654,7 +689,6 @@ const movies = [
   {id:"m319",title:"Toy Story",              year:1995,rarity:1,tmdbId:862,    cast:["Tom Hanks","Tim Allen","Don Rickles","Jim Varney","Wallace Shawn"]},
   {id:"m320",title:"The Da Vinci Code",      year:2006,rarity:1,tmdbId:591,    cast:["Tom Hanks","Audrey Tautou","Ian McKellen","Jean Reno","Paul Bettany","Alfred Molina"]},
   {id:"m321",title:"Killers of the Flower Moon",year:2023,rarity:2,tmdbId:466420,cast:["Leonardo DiCaprio","Robert De Niro","Lily Gladstone","Jesse Plemons","Brendan Fraser"]},
-  {id:"m322",title:"The Great Gatsby",       year:2013,rarity:1,tmdbId:64682,  cast:["Leonardo DiCaprio","Tobey Maguire","Carey Mulligan","Joel Edgerton","Isla Fisher"]},
   {id:"m323",title:"Blood Diamond",          year:2006,rarity:2,tmdbId:16163,  cast:["Leonardo DiCaprio","Jennifer Connelly","Djimon Hounsou","Michael Sheen"]},
   {id:"m324",title:"Babel",                  year:2006,rarity:2,tmdbId:1164,   cast:["Brad Pitt","Cate Blanchett","Gael García Bernal","Adriana Barraza"]},
   {id:"m325",title:"The Curious Case of Benjamin Button",year:2008,rarity:2,tmdbId:4922,cast:["Brad Pitt","Cate Blanchett","Tilda Swinton","Taraji P. Henson","Julia Ormond"]},
@@ -682,7 +716,15 @@ const movies = [
   {id:"m347",title:"Promising Young Woman",  year:2020,rarity:2,tmdbId:582014, cast:["Carey Mulligan","Bo Burnham","Alison Brie","Laverne Cox","Clancy Brown"]},
   {id:"m348",title:"A Star Is Born",         year:2018,rarity:1,tmdbId:332562, cast:["Bradley Cooper","Lady Gaga","Sam Elliott","Andrew Dice Clay","Dave Chappelle"]},
   {id:"m349",title:"The Whale",              year:2022,rarity:2,tmdbId:785084, cast:["Brendan Fraser","Sadie Sink","Hong Chau","Ty Simpkins","Samantha Morton"]},
-  {id:"m350",title:"Furiosa: A Mad Max Saga",year:2024,rarity:2,tmdbId:786892, cast:["Anya Taylor-Joy","Chris Hemsworth","Tom Burke","Alyla Browne","Charlee Fraser"]}
+  {id:"m350",title:"Furiosa: A Mad Max Saga",year:2024,rarity:2,tmdbId:786892, cast:["Anya Taylor-Joy","Chris Hemsworth","Tom Burke","Alyla Browne","Charlee Fraser"]},
+  // ── ESPANSIONE ──
+  {id:"m352",title:"House of Gucci",          year:2021,rarity:2,tmdbId:598387, cast:["Lady Gaga","Adam Driver","Jared Leto","Al Pacino","Jeremy Irons"]},
+  {id:"m353",title:"Passengers",              year:2016,rarity:2,tmdbId:227306, cast:["Jennifer Lawrence","Chris Pratt","Michael Sheen"]},
+  {id:"m354",title:"Doctor Sleep",            year:2019,rarity:3,tmdbId:472451, cast:["Ewan McGregor","Rebecca Ferguson"]},
+  {id:"m356",title:"Molly's Game",            year:2017,rarity:2,tmdbId:396422, cast:["Jessica Chastain","Idris Elba","Kevin Costner"]},
+  {id:"m357",title:"Zombieland",              year:2009,rarity:2,tmdbId:19908,  cast:["Woody Harrelson","Emma Stone","Jesse Eisenberg","Abigail Breslin"]},
+  {id:"m359",title:"Jurassic Park",           year:1993,rarity:1,tmdbId:329,    cast:["Sam Neill","Jeff Goldblum","Laura Dern","Richard Attenborough"]},
+  {id:"m360",title:"Argo",                    year:2012,rarity:2,tmdbId:68734,  cast:["Ben Affleck","Bryan Cranston","John Goodman","Alan Arkin"]}
 ];
 
 
@@ -1104,7 +1146,12 @@ function spEndGame(won, reason) {
 
   const sc = spCalcScore();
   const pc = calcPopcorn(won, sc);
-  if (pc > 0) { totalPopcorn += pc; localStorage.setItem('sb_pc', String(totalPopcorn)); }
+  const oscarEarned = won ? 1 : 0;
+  const hintEarned  = won ? 1 : 0;
+  if (pc > 0) totalPopcorn += pc;
+  if (oscarEarned > 0) totalOscars += oscarEarned;
+  if (hintEarned > 0) totalHints += hintEarned;
+  if (pc > 0 || oscarEarned > 0 || hintEarned > 0) { persistTotals(); syncCounters(); }
 
   const icons = { won:'🏆', timeout:'⏱', oscars:'🏅', maxdeg:'🎬' };
   const titles = { won:'Sfida Completata!', timeout:'Tempo Scaduto!', oscars:'Oscar Esauriti!', maxdeg:'Troppi Gradi!' };
@@ -1122,9 +1169,9 @@ function spEndGame(won, reason) {
     : '<span class="sp-end-emoji">' + icons[key] + '</span>';
 
   const gradi = path.length;
-  const oscarEarned = won ? (GAME_MODES[mode].oscarsStart || 4) - oscars : 0;
   const oscarStr  = oscarEarned > 0 ? '+' + oscarEarned : '';
   const pcStr     = pc > 0 ? '+' + pc : '';
+  const hintStr   = hintEarned > 0 ? '+' + hintEarned : '';
 
   const endCard = document.createElement('div');
   endCard.className = 'sp-card sp-end-card';
@@ -1138,6 +1185,7 @@ function spEndGame(won, reason) {
         '<button class="sp-btn grn sp-end-riscatta" onclick="spRestart()">RISCATTA &#8594;</button>' +
         (oscarStr ? '<button class="sp-btn sp-end-oscar">' + oscarStr + ' &#127942;</button>' : '') +
         (pcStr    ? '<button class="sp-btn sp-end-pc">'   + pcStr    + ' &#127871;</button>' : '') +
+        (hintStr  ? '<button class="sp-btn sp-end-hint">' + hintStr  + ' &#128161;</button>' : '') +
       '</div>' +
       '<div class="sp-end-extra">' +
         '<button class="sp-btn sp-end-mini" onclick="spNextChallenge()">&#127922; Nuova sfida</button>' +
@@ -1168,8 +1216,8 @@ function spCalcScore() {
 }
 
 function calcPopcorn(won, score) {
-  if (!won) return Math.floor(score / 30);
-  return 50 + Math.floor(score / 10);
+  if (won) return 2; // ricompensa fissa: 1 oscar + 2 pop corn + 1 aiuto (vedi spEndGame)
+  return Math.floor(score / 30);
 }
 
 // ===== UTILS =====
@@ -1212,20 +1260,18 @@ var MERGE_COLS = 6, MERGE_ROWS = 8, MERGE_COST = 1;
 var MERGE_CHAIN = ['popcorn','machine','caramel','chair','pellicola','cinepresa','cinema','oscar'];
 var mergeBoard = []; // flat array of MERGE_COLS*MERGE_ROWS, each cell = level index (0-7) or -1 (empty)
 var mergeSelected = -1; // index of selected cell
-var mergeOscars = 0; // oscars earned in merge
 
 function mergeLoad() {
   try {
     var d = JSON.parse(localStorage.getItem('sb_merge') || '{}');
     mergeBoard = d.board || [];
-    mergeOscars = d.oscars || 0;
-  } catch(e) { mergeBoard = []; mergeOscars = 0; }
+  } catch(e) { mergeBoard = []; }
   var sz = MERGE_COLS * MERGE_ROWS;
   while (mergeBoard.length < sz) mergeBoard.push(-1);
   if (mergeBoard.length > sz) mergeBoard.length = sz;
 }
 function mergeSave() {
-  localStorage.setItem('sb_merge', JSON.stringify({ board: mergeBoard, oscars: mergeOscars }));
+  localStorage.setItem('sb_merge', JSON.stringify({ board: mergeBoard }));
 }
 
 function mergeIcon(lvl) {
@@ -1241,7 +1287,7 @@ function initMondoGrid() {
   mergeLoad();
   mergeSelected = -1;
   mergeRender();
-  mergeUpdateUI();
+  syncCounters();
 }
 
 function mergeRender() {
@@ -1266,7 +1312,6 @@ function mergeRender() {
       if (lvl === 7) {
         cell.addEventListener('click', function(e) {
           var c = e.currentTarget;
-          mergeShowInfo(7);
           mergeCollectOscar(parseInt(c.dataset.idx), c);
         });
       } else {
@@ -1279,7 +1324,7 @@ function mergeRender() {
   }
 }
 
-function mergeUpdateUI() {
+function syncCounters() {
   var pcCount = $('mondoPcCount');
   if (pcCount) pcCount.textContent = totalPopcorn;
   var dropBtn = $('mondoDropBtn');
@@ -1297,33 +1342,18 @@ function mergeUpdateUI() {
     badge.style.background = canDrop ? '#e53935' : 'rgba(100,100,100,.6)';
   }
   var osCount = $('mondoOsCount');
-  if (osCount) osCount.textContent = mergeOscars;
+  if (osCount) osCount.textContent = totalOscars;
   var hudPc = $('hudPcNum');
   if (hudPc) hudPc.textContent = totalPopcorn;
   var hudOs = $('hudOscarNum');
-  if (hudOs) hudOs.textContent = mergeOscars;
-}
-
-function mergeShowInfo(lvl) {
-  var txt = $('mondoInfoTxt');
-  if (!txt) return;
-  var names = ['Pop Corn','Macchina Popcorn','Caramellati','Poltrona Cinema','Pellicola','Cinepresa','Cinema','Oscar'];
-  var descs = [
-    'Unisci due sacchetti per ottenere la Macchina Popcorn.',
-    'La macchina del popcorn. Unisci due per i Caramellati.',
-    'Popcorn caramellati! Unisci due per la Poltrona Cinema.',
-    'Poltrona da cinema. Unisci due per la Pellicola.',
-    'La pellicola. Il cinema prende vita! Unisci per la Cinepresa.',
-    'La cinepresa. Motore, azione! Unisci due per il Cinema.',
-    'Il grande cinema. Unisci due per ottenere l\'Oscar.',
-    'L\'Oscar! Toccalo per raccoglierlo e incrementare il punteggio.'
-  ];
-  txt.textContent = (names[lvl] || '') + ' — ' + (descs[lvl] || '');
-}
-
-function mergeHelpFree() {
-  var txt = $('mondoInfoTxt');
-  if (txt) txt.textContent = 'Aiuti in arrivo! Questa funzione sarà presto disponibile.';
+  if (hudOs) hudOs.textContent = totalOscars;
+  // Contatori topbar Home
+  var homeOs = $('oscarCount');
+  if (homeOs) homeOs.textContent = totalOscars.toLocaleString('it-IT');
+  var homePc = $('popcornCount');
+  if (homePc) homePc.textContent = totalPopcorn;
+  var homeHint = $('hintCount');
+  if (homeHint) homeHint.textContent = totalHints;
 }
 
 function mergeHasEmpty() {
@@ -1334,8 +1364,8 @@ function mergeDrop() {
   if (totalPopcorn < MERGE_COST) return;
   if (!mergeHasEmpty()) return;
   totalPopcorn -= MERGE_COST;
-  localStorage.setItem('sb_pc', String(totalPopcorn));
-  mergeUpdateUI();
+  persistTotals();
+  syncCounters();
 
   var empties = [];
   for (var i = 0; i < mergeBoard.length; i++) if (mergeBoard[i] === -1) empties.push(i);
@@ -1372,7 +1402,7 @@ function mergeDrop() {
     mergeSave();
     mergeSelected = -1;
     mergeRender();
-    mergeUpdateUI();
+    syncCounters();
     var landed = $('mondoGrid').children[idx];
     if (landed) { landed.style.animation = 'none'; landed.offsetHeight; landed.style.animation = 'mondoLand .3s ease both'; }
   }, 450);
@@ -1423,7 +1453,6 @@ function _mdBegin(cell, cx, cy) {
   document.body.appendChild(_dragClone);
 
   cell.classList.add('dragging');
-  mergeShowInfo(mergeBoard[idx]);
 }
 
 function _mdMove(cx, cy) {
@@ -1455,7 +1484,7 @@ function _mdEnd(cx, cy) {
       if (_dragClone) _dragClone.remove();
       _dragClone = null;
       mergeRender();
-      mergeUpdateUI();
+      syncCounters();
       var merged = $('mondoGrid').children[over];
       if (merged) { merged.style.animation='none'; merged.offsetHeight; merged.style.animation='mergeFlash .5s ease both'; }
       _dragIdx = -1;
@@ -1537,9 +1566,9 @@ function mergeCollectOscar(idx, cell) {
 
   setTimeout(function() {
     flyer.remove();
-    mergeOscars++;
-    mergeSave();
-    mergeUpdateUI();
+    totalOscars++;
+    persistTotals();
+    syncCounters();
     // Flash the oscar counter
     var osEl = $('mondoOsCount');
     if (osEl) {
@@ -1553,4 +1582,5 @@ function mergeCollectOscar(idx, cell) {
 // ── DOMContentLoaded finale ──
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof renderProgression === 'function') renderProgression();
+  if (typeof syncCounters === 'function') syncCounters();
 });

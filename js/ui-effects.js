@@ -10,8 +10,7 @@ function injectImages() {
   // Top bar counters
   si('icOscar',   EXTRA.ic_oscar  || EXTRA.oscar_sm  || '');
   si('icPopcorn', EXTRA.ic_popcorn|| EXTRA.popcorn_sm|| '');
-  si('icHeart',   EXTRA.ic_heart  || '');
-  ['pillOscar','pillPopcorn','pillHeart'].forEach(id => si(id, EXTRA.ic_pill || ''));
+  ['pillOscar','pillPopcorn','pillHint'].forEach(id => si(id, EXTRA.ic_pill || ''));
 
   // Logo home
   si('logoImg', EXTRA.logo || '');
