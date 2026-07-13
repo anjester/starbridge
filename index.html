@@ -41,17 +41,17 @@
         <div class="counter">
           <img class="counter-bg" id="pillOscar" src="" alt=""/>
           <img class="ic" id="icOscar" src="" alt=""/>
-          <span id="oscarCount">1.618</span>
+          <span id="oscarCount">0</span>
         </div>
         <div class="counter">
           <img class="counter-bg" id="pillPopcorn" src="" alt=""/>
           <img class="ic" id="icPopcorn" src="" alt=""/>
-          <span>25</span><div class="plus">+</div>
+          <span id="popcornCount">0</span><div class="plus">+</div>
         </div>
         <div class="counter">
-          <img class="counter-bg" id="pillHeart" src="" alt=""/>
-          <img class="ic" id="icHeart" src="" alt=""/>
-          <span>5</span><div class="plus">+</div>
+          <img class="counter-bg" id="pillHint" src="" alt=""/>
+          <img class="ic" id="icHint" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 21h6M9.5 18h5M12 2a6.5 6.5 0 0 0-3.8 11.8c.7.5 1.3 1.3 1.3 2.2h5c0-.9.6-1.7 1.3-2.2A6.5 6.5 0 0 0 12 2Z' fill='%23ffd34d' stroke='%23ffd34d' stroke-width='1.2' stroke-linejoin='round'/></svg>" alt=""/>
+          <span id="hintCount">0</span>
         </div>
       </div>
     </div>
@@ -349,7 +349,7 @@
 <div class="screen hidden" id="screenMondo">
   <div class="mondo-screen">
 
-    <!-- HUD TOP: avatar | oscar | popcorn | aiuti | shop -->
+    <!-- HUD TOP: avatar | oscar | popcorn | shop -->
     <header class="mondo-hud">
       <button class="mondo-avatar-btn">
         <img src="assets/icons/img_btn_profilo.png" class="mondo-avatar-img" alt="Profilo"/>
@@ -362,10 +362,6 @@
         <div class="mondo-pill">
           <img src="assets/icons/prog_popcorn.png" class="mpill-ico" alt="Pop Corn"/>
           <span class="mpill-num" id="hudPcNum">0</span>
-        </div>
-        <div class="mondo-pill mondo-pill-help">
-          <span class="mpill-bulb">💡</span>
-          <span class="mpill-num" id="hudHelpNum">3</span>
         </div>
       </div>
       <button class="mondo-shop-btn">🛒</button>
@@ -383,37 +379,19 @@
         <div class="mondo-grid" id="mondoGrid"></div>
       </div>
 
-      <!-- Status strip -->
+      <!-- Status strip: bolle pop corn (tap per depositare) + oscar -->
       <div class="pop-status-strip">
-        <div class="pop-stat-badge">
+        <button class="pop-stat-bubble pop-stat-bubble-pc" id="mondoDropBtn" onclick="mergeDrop()">
           <img src="assets/icons/prog_popcorn.png" class="psb-ico" alt="pc"/>
           <span class="psb-num" id="mondoPcCount">0</span>
-        </div>
-        <div class="pop-stat-badge">
+          <span class="mondo-drop-badge" id="mondoDropBadge">0</span>
+        </button>
+        <div class="pop-stat-bubble pop-stat-bubble-oscar">
           <img id="mondoOsIco" src="assets/icons/prog_oscar.png" class="psb-ico psb-ico-oscar" alt="oscar"/>
           <span class="psb-num" id="mondoOsCount">0</span>
         </div>
       </div>
-
-      <!-- Info panel -->
-      <div class="pop-info-panel" id="mondoInfoPanel">
-        <span class="pop-info-ico">ℹ️</span>
-        <span class="pop-info-txt" id="mondoInfoTxt">Tocca un oggetto per leggerne i dettagli qui.</span>
-      </div>
     </div>
-
-    <!-- BOTTOM BUTTONS -->
-    <footer class="pop-actions">
-      <button class="pop-btn pop-btn-deposit" id="mondoDropBtn" onclick="mergeDrop()">
-        <img src="assets/icons/prog_popcorn.png" class="pop-btn-ico" alt=""/>
-        <span>DEPOSITA</span>
-        <span class="mondo-drop-badge" id="mondoDropBadge">0</span>
-      </button>
-      <button class="pop-btn pop-btn-help" onclick="mergeHelpFree()">
-        <span class="pop-btn-bulb">💡</span>
-        <span>AIUTI GRATIS</span>
-      </button>
-    </footer>
 
   </div>
 </div>
