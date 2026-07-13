@@ -1256,7 +1256,7 @@ function renderProgression() {
 }
 
 // ===== MONDO POP CORN — MERGE GAME =====
-var MERGE_COLS = 6, MERGE_ROWS = 8, MERGE_COST = 1;
+var MERGE_COLS = 5, MERGE_ROWS = 7, MERGE_COST = 1;
 var MERGE_CHAIN = ['popcorn','machine','caramel','chair','pellicola','cinepresa','cinema','oscar'];
 var mergeBoard = []; // flat array of MERGE_COLS*MERGE_ROWS, each cell = level index (0-7) or -1 (empty)
 var mergeSelected = -1; // index of selected cell
