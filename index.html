@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://use.typekit.net/yox3csi.css"/>
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=fix-6"/>
-  <link rel="stylesheet" href="css/game.css?v=fix-6"/>
-  <link rel="stylesheet" href="css/responsive-fix.css?v=fix-6"/>
+  <link rel="stylesheet" href="css/style.css?v=ui-patch-1"/>
+  <link rel="stylesheet" href="css/game.css?v=ui-patch-1"/>
+  <link rel="stylesheet" href="css/responsive-fix.css?v=ui-patch-1"/>
 </head>
 <body>
 <!-- SFONDO -->
@@ -337,90 +337,183 @@
 
 
 <!-- CLASSIFICA -->
+
 <div class="screen hidden" id="screenRank">
-  <div class="placeholder">
-    <div class="ph-icon">🏆</div>
-    <div class="ph-title">Classifica</div>
-    <div class="ph-sub">In arrivo — chi ha collezionato più Oscar?</div>
+  <div class="rank-screen">
+
+      <div class="sb-hud">
+        <div class="sb-avatar" aria-label="Avatar">🎬</div>
+        <div class="sb-pill"><img src="assets/icons/extra_oscar_sm.png" alt=""><div><strong>1.245</strong><span>Oscar</span></div></div>
+        <div class="sb-pill"><img src="assets/icons/extra_popcorn_sm.png" alt=""><div><strong>8.730</strong><span>Pop-Corn</span></div></div>
+        <div class="sb-pill"><span class="emoji-icon">💡</span><div><strong>12</strong><span>Aiuti</span></div></div>
+        <div class="sb-shop" aria-label="Shop">🛒</div>
+      </div>
+
+    <h1 class="sb-screen-title">Classifica<br>Oscar</h1>
+
+    <div class="rank-tabs" role="tablist" aria-label="Classifica">
+      <button class="rank-tab active" type="button">Globale</button>
+      <button class="rank-tab" type="button">Settimanale</button>
+    </div>
+
+    <section class="rank-panel">
+      <div class="rank-podium">
+        <div class="podium-card">
+          <div class="podium-pos">2</div>
+          <div class="podium-avatar">🎥</div>
+          <div class="podium-name">Luna</div>
+          <div class="podium-score">9.820 Oscar</div>
+        </div>
+        <div class="podium-card first">
+          <div class="podium-pos">1</div>
+          <div class="podium-avatar">🏆</div>
+          <div class="podium-name">StarKing</div>
+          <div class="podium-score">12.450 Oscar</div>
+        </div>
+        <div class="podium-card">
+          <div class="podium-pos">3</div>
+          <div class="podium-avatar">🎬</div>
+          <div class="podium-name">Marty</div>
+          <div class="podium-score">8.610 Oscar</div>
+        </div>
+      </div>
+
+      <div class="rank-list">
+        <div class="rank-row"><div class="rank-pos">4</div><div class="rank-avatar">🍿</div><div class="rank-name">CineMax</div><div class="rank-score"><img src="assets/icons/extra_oscar_sm.png" alt="">7.940</div></div>
+        <div class="rank-row"><div class="rank-pos">5</div><div class="rank-avatar">🎭</div><div class="rank-name">NoirKid</div><div class="rank-score"><img src="assets/icons/extra_oscar_sm.png" alt="">6.720</div></div>
+        <div class="rank-row me"><div class="rank-pos">24</div><div class="rank-avatar">Tu</div><div class="rank-name">Antonio</div><div class="rank-score"><img src="assets/icons/extra_oscar_sm.png" alt="">1.245</div></div>
+        <div class="rank-row"><div class="rank-pos">25</div><div class="rank-avatar">⭐</div><div class="rank-name">BridgeFan</div><div class="rank-score"><img src="assets/icons/extra_oscar_sm.png" alt="">1.180</div></div>
+      </div>
+    </section>
   </div>
 </div>
 
-<!-- MONDO -->
+
 <div class="screen hidden" id="screenMondo">
   <div class="mondo-screen">
 
-    <!-- HUD TOP: avatar | oscar | popcorn | shop -->
-    <header class="mondo-hud">
-      <button class="mondo-avatar-btn">
-        <img src="assets/icons/img_btn_profilo.png" class="mondo-avatar-img" alt="Profilo"/>
-      </button>
-      <div class="mondo-hud-pills">
-        <div class="mondo-pill">
-          <img src="assets/icons/prog_oscar.png" class="mpill-ico" alt="Oscar"/>
-          <span class="mpill-num" id="hudOscarNum">0</span>
-        </div>
-        <div class="mondo-pill">
-          <img src="assets/icons/prog_popcorn.png" class="mpill-ico" alt="Pop Corn"/>
-          <span class="mpill-num" id="hudPcNum">0</span>
-        </div>
+      <div class="sb-hud">
+        <div class="sb-avatar" aria-label="Avatar">🎬</div>
+        <div class="sb-pill"><img src="assets/icons/extra_oscar_sm.png" alt=""><div><strong>1.245</strong><span>Oscar</span></div></div>
+        <div class="sb-pill"><img src="assets/icons/extra_popcorn_sm.png" alt=""><div><strong>8.730</strong><span>Pop-Corn</span></div></div>
+        <div class="sb-pill"><span class="emoji-icon">💡</span><div><strong>12</strong><span>Aiuti</span></div></div>
+        <div class="sb-shop" aria-label="Shop">🛒</div>
       </div>
-      <button class="mondo-shop-btn">🛒</button>
-    </header>
 
-    <!-- LOGO + Titolo -->
-    <div class="mondo-logo-area">
-      <img id="imgLogoMondo" src="assets/icons/Logo-Mondo-Popcorn.png" class="mondo-logo-img" alt="StarBridge Mondo Popcorn"/>
-      <div class="mondo-world-lbl">Pop-Corn World!</div>
+    <div class="mondo-logo">
+      <img src="assets/ui/extra_logo.png" alt="StarBridge"/>
+      <div class="mondo-title">Pop-Corn World!</div>
     </div>
 
-    <!-- BOARD PANEL: griglia + status + info -->
-    <div class="pop-board-panel">
-      <div class="pop-board-wrap">
-        <div class="mondo-grid" id="mondoGrid"></div>
+    <section class="mondo-board-panel" aria-label="Mondo Pop-Corn">
+      <div class="pop-board-grid">
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_popcorn.png" alt="Pop-Corn"></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_machine.png" alt="Macchina Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_caramel.png" alt="Caramellati"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_chair.png" alt="Sedie"></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_popcorn.png" alt="Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_pellicola.png" alt="Pellicola"></div>
+
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_popcorn.png" alt="Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_cinepresa.png" alt="Cinepresa"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_cinema.png" alt="Cinema"></div>
+
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_machine.png" alt="Macchina Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_oscar.png" alt="Oscar"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_caramel.png" alt="Caramellati"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_popcorn.png" alt="Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_chair.png" alt="Sedie"></div>
+
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_pellicola.png" alt="Pellicola"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_cinema.png" alt="Cinema"></div>
+
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_popcorn.png" alt="Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_machine.png" alt="Macchina Pop-Corn"></div>
+        <div class="pop-cell is-empty"><img class="pop-item" src="" alt=""></div>
+        <div class="pop-cell"><img class="pop-item" src="assets/icons/prog_oscar.png" alt="Oscar"></div>
       </div>
 
-      <!-- Status strip: bolle pop corn (tap per depositare) + oscar -->
       <div class="pop-status-strip">
-        <button class="pop-stat-bubble pop-stat-bubble-pc" id="mondoDropBtn" onclick="mergeDrop()">
-          <img src="assets/icons/prog_popcorn.png" class="psb-ico" alt="pc"/>
-          <span class="psb-num" id="mondoPcCount">0</span>
-          <span class="mondo-drop-badge" id="mondoDropBadge">0</span>
-        </button>
-        <div class="pop-stat-bubble pop-stat-bubble-oscar">
-          <img id="mondoOsIco" src="assets/icons/prog_oscar.png" class="psb-ico psb-ico-oscar" alt="oscar"/>
-          <span class="psb-num" id="mondoOsCount">0</span>
+        <div class="pop-status-badge"><img src="assets/icons/extra_popcorn_sm.png" alt="">8.730</div>
+        <div class="pop-status-badge"><img src="assets/icons/extra_oscar_sm.png" alt="">1.245</div>
+      </div>
+    </section>
+
+    <div class="pop-info-panel">
+      <div class="pop-info-icon">i</div>
+      <div>TOCCA un oggetto per leggerne i dettagli qui.</div>
+    </div>
+
+    <div class="pop-actions">
+      <button class="pop-action-btn deposit">DEPOSITO</button>
+      <button class="pop-action-btn help">💡 AIUTI GRATIS</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="screen hidden" id="screenProfile">
+  <div class="profile-screen">
+
+      <div class="sb-hud">
+        <div class="sb-avatar" aria-label="Avatar">🎬</div>
+        <div class="sb-pill"><img src="assets/icons/extra_oscar_sm.png" alt=""><div><strong>1.245</strong><span>Oscar</span></div></div>
+        <div class="sb-pill"><img src="assets/icons/extra_popcorn_sm.png" alt=""><div><strong>8.730</strong><span>Pop-Corn</span></div></div>
+        <div class="sb-pill"><span class="emoji-icon">💡</span><div><strong>12</strong><span>Aiuti</span></div></div>
+        <div class="sb-shop" aria-label="Shop">🛒</div>
+      </div>
+
+    <h1 class="sb-screen-title">Account</h1>
+
+    <section class="profile-panel">
+      <div class="profile-card">
+        <div class="profile-avatar">🎬</div>
+        <div class="profile-name">
+          <label for="profileNickname">Nickname</label>
+          <input id="profileNickname" type="text" value="Antonio" maxlength="18">
         </div>
       </div>
-    </div>
 
+      <div class="profile-stats">
+        <div class="profile-stat"><strong>12</strong><span>Livello</span></div>
+        <div class="profile-stat"><strong>1.245</strong><span>Oscar</span></div>
+        <div class="profile-stat"><strong>8.730</strong><span>Pop-Corn</span></div>
+        <div class="profile-stat"><strong>12</strong><span>Aiuti</span></div>
+        <div class="profile-stat"><strong>48</strong><span>Partite</span></div>
+        <div class="profile-stat"><strong>31</strong><span>Vittorie</span></div>
+      </div>
+
+      <div class="profile-section-title">Impostazioni</div>
+      <div class="profile-settings">
+        <div class="setting-row"><span>Audio effetti</span><span class="switch on" aria-hidden="true"></span></div>
+        <div class="setting-row"><span>Musica</span><span class="switch on" aria-hidden="true"></span></div>
+        <div class="setting-row"><span>Notifiche</span><span class="switch" aria-hidden="true"></span></div>
+      </div>
+
+      <button class="profile-save" type="button">SALVA MODIFICHE</button>
+    </section>
   </div>
 </div>
 
-<!-- PROFILO -->
-<div class="screen hidden" id="screenProfile">
-  <div class="placeholder">
-    <div class="ph-icon">👤</div>
-    <div class="ph-title">Profilo</div>
-    <div class="ph-sub">In arrivo — statistiche e impostazioni.</div>
-  </div>
-</div>
 
-
-<!-- ALERT USCITA -->
-<div id="exitAlert" style="display:none;position:fixed;inset:0;z-index:8000;align-items:center;justify-content:center;">
-  <div style="position:absolute;inset:0;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(2,8,20,.7)" onclick="closeExitAlert()"></div>
-  <div style="position:relative;z-index:1;background:linear-gradient(150deg,#0b2068 0%,#060f38 100%);border:2.5px solid rgba(50,110,230,.6);border-radius:26px;padding:30px 26px 26px;max-width:340px;width:92%;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.75),inset 0 0 60px rgba(15,50,180,.12)">
-    <img id="exitAlertIcon" src="" style="width:76px;height:76px;object-fit:contain;margin-bottom:10px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))">
-    <h3 style="font-family:'acumin-pro','Syne',sans-serif;font-size:27px;font-weight:900;color:#ffaa00;margin-bottom:10px;text-transform:uppercase;letter-spacing:.01em;line-height:1.15;text-shadow:0 3px 10px rgba(0,0,0,.8),0 0 24px rgba(255,150,0,.35)">VUOI USCIRE<br>DALLA PARTITA?</h3>
-    <p style="color:rgba(220,235,255,.78);font-size:14px;line-height:1.55;margin-bottom:26px">Il tuo progresso andrà perso.<br>Vuoi uscire?</p>
-    <div style="display:flex;gap:12px;justify-content:center">
-      <button onclick="confirmExit()" style="flex:1;background:linear-gradient(135deg,#e83030,#b81818);border:none;color:#fff;border-radius:999px;padding:15px 10px;font-family:'acumin-pro','Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:.03em;box-shadow:0 5px 18px rgba(220,30,30,.45)">✕ ESCI</button>
-      <button onclick="closeExitAlert()" style="flex:1;background:linear-gradient(135deg,#38c428,#1e9a10);border:none;color:#fff;border-radius:999px;padding:15px 10px;font-family:'acumin-pro','Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:.03em;box-shadow:0 5px 18px rgba(40,180,30,.45)">RIMANI &gt;</button>
-    </div>
-  </div>
-</div>
-
-<!-- NAV -->
 <nav class="nav" id="mainNav">
   <div class="nav-bg"></div>
 
@@ -459,10 +552,10 @@
 </nav>
 
   <!-- Core scripts -->
-
-  <script src="js/assets-loader.js?v=fix-6"></script>
-  <script src="js/ui-effects.js?v=fix-6"></script>
-  <script src="js/game.js?v=fix-6"></script>
-  <script src="js/navigation.js?v=fix-6"></script>
+<div class="sb-ad-placeholder" aria-hidden="true"></div>
+<script src="js/assets-loader.js?v=ui-patch-1"></script>
+<script src="js/game.js?v=ui-patch-1"></script>
+<script src="js/navigation.js?v=ui-patch-1"></script>
+<script src="js/ui-effects.js?v=ui-patch-1"></script>
 </body>
 </html>
