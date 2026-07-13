@@ -431,29 +431,48 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   justify-content:center!important;
 }
 
-/* ---- GRIGLIA 6×8 con aspect-ratio ---- */
-.mondo-grid{
-  display:grid!important;
-  grid-template-columns:repeat(6, minmax(0,1fr))!important;
-  grid-template-rows:repeat(8, minmax(0,1fr))!important;
-  aspect-ratio:6/8!important;
+/* ---- CORNICE: Board_MondoPC.png (bordo oro/blu + scacchiera 5×7 disegnata) ---- */
+.mondo-board-frame{
+  position:relative!important;
   max-height:100%!important;
-  max-width:min(96vw, 400px)!important;
+  max-width:min(94vw, 420px)!important;
+  aspect-ratio:1100/1412!important;
+  height:100%!important;
   width:auto!important;
-  height:auto!important;
-  gap:0!important;
-  padding:0!important;
-  border-radius:clamp(8px,2vw,14px)!important;
-  overflow:hidden!important;
-  border:2px solid rgba(255,211,77,.35)!important;
-  box-shadow:0 4px 24px rgba(0,0,0,.5)!important;
+  margin:0 auto!important;
+}
+.mondo-board-bg{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  pointer-events:none!important;
+  filter:drop-shadow(0 4px 24px rgba(0,0,0,.5))!important;
 }
 
-/* ---- CELLE: scacchiera vera 6 colonne ---- */
-/* Custom property preserva il colore per filled/drag/oscar */
+/* ---- GRIGLIA 5×7 sovrapposta, allineata alla scacchiera dell'immagine ---- */
+.mondo-grid{
+  position:absolute!important;
+  left:15.45%!important;
+  right:15.45%!important;
+  top:12.04%!important;
+  bottom:12.89%!important;
+  display:grid!important;
+  grid-template-columns:repeat(5, minmax(0,1fr))!important;
+  grid-template-rows:repeat(7, minmax(0,1fr))!important;
+  gap:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:none!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  overflow:visible!important;
+}
+
+/* ---- CELLE: trasparenti, la scacchiera è nell'immagine di sfondo ---- */
 .mondo-cell{
-  --cb:#98b36f!important;
-  background:var(--cb)!important;
+  background:transparent!important;
   aspect-ratio:1/1!important;
   position:relative!important;
   display:flex!important;
@@ -461,38 +480,18 @@ html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
   justify-content:center!important;
   cursor:pointer!important;
   border-radius:0!important;
-  border:none!important;
-  box-shadow:none!important;
-  transition:none!important;
 }
-/* Scacchiera per 6 colonne (periodo 12 = 2 righe × 6 col) */
-.mondo-cell:nth-child(12n+1),
-.mondo-cell:nth-child(12n+3),
-.mondo-cell:nth-child(12n+5),
-.mondo-cell:nth-child(12n+8),
-.mondo-cell:nth-child(12n+10),
-.mondo-cell:nth-child(12n+12){ --cb:#c4df9b!important; }
-
-/* Tutte le varianti di stato mantengono il colore scacchiera */
 .mondo-cell.empty,
-.mondo-cell.filled,
-.mondo-cell.dragging,
-.mondo-cell.merge-target,
-.mondo-cell.selected,
-.mondo-cell.oscar{
-  background:var(--cb)!important;
-  opacity:1!important;
-  transform:none!important;
-  border:none!important;
-  box-shadow:none!important;
+.mondo-cell.filled{
+  background:transparent!important;
 }
 /* Oscar: animazione sull'icona, NON sulla cella */
 .mondo-cell.oscar{ animation:none!important; cursor:pointer!important; }
 .mondo-cell.oscar img{ animation:oscarPulse 1.4s ease-in-out infinite!important; }
 
 .mondo-cell img{
-  width:80%!important;
-  height:80%!important;
+  width:84%!important;
+  height:84%!important;
   object-fit:contain!important;
   filter:drop-shadow(0 2px 5px rgba(0,0,0,.5))!important;
   pointer-events:none!important;
